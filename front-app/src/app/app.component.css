@@ -1,0 +1,9 @@
+.drag-box {
+    width: 150px;
+    height: 150px;
+    background-color: gainsboro;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}

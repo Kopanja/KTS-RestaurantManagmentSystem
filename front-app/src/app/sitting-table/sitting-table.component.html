@@ -1,0 +1,17 @@
+<!--div id="bounding-box2" >
+    <div *ngFor = "let table of sittingTableList" cdkDrag [cdkDragDisabled]= true  cdkDragBoundary="#bounding-box2" [cdkDragFreeDragPosition]="{x:calcXPosition(table), y:calcXPosition(table)}" class="drag-box">
+        <img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50">
+        
+    </div>
+</div-->
+<div>
+    <h1>FLOOR PREVIEW</h1>
+<div id="restaurant-floor" style = "margin-left: 600px;">
+    <div *ngFor = "let table of restaurantLayout" class="drag-box" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXPosition(table), 'top.px' : calcYPosition(table)}" (click)="tableClick(table)">
+        
+        <img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50">
+    
+    </div>
+</div>
+
+</div>

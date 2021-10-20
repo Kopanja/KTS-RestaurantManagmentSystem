@@ -1,0 +1,110 @@
+package com.kts.Restaurant.dto;
+
+public class TableDTO {
+
+	private Long tableId;
+	private Long typeId;
+	private Long restaurantId;
+	private int x;
+	private int y;
+	private int numOfSeats;
+	private String icon;
+	
+	
+	public TableDTO() {
+		super();
+	}
+
+
+	public TableDTO(Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon) {
+		super();
+		this.tableId = tableId;
+		this.typeId = typeId;
+		this.restaurantId = restaurantId;
+		this.x = x;
+		this.y = y;
+		this.numOfSeats = numOfSeats;
+		this.icon = icon;
+	}
+
+
+	public Long getTableId() {
+		return tableId;
+	}
+
+
+	public void setTableId(Long tableId) {
+		this.tableId = tableId;
+	}
+
+
+	public Long getTypeId() {
+		return typeId;
+	}
+
+
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	public int getNumOfSeats() {
+		return numOfSeats;
+	}
+
+
+	public void setNumOfSeats(int numOfSeats) {
+		this.numOfSeats = numOfSeats;
+	}
+
+
+	public String getIcon() {
+		return icon;
+	}
+
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+
+	public Long getRestaurantId() {
+		return restaurantId;
+	}
+
+
+	public void setRestaurantId(Long restaurantId) {
+		this.restaurantId = restaurantId;
+	}
+
+
+	@Override
+	public String toString() {
+		return "TableDTO [tableId=" + tableId + ", typeId=" + typeId + ", restaurantId=" + restaurantId + ", x=" + x
+				+ ", y=" + y + ", numOfSeats=" + numOfSeats + ", icon=" + icon + "]";
+	}
+	
+	
+	
+	
+}

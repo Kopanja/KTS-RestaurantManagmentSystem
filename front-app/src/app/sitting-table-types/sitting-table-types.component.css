@@ -1,0 +1,17 @@
+.drag-item{
+    padding: 1em;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+.drag-box {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    padding: 1em;
+    border: 1px solid gray;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
