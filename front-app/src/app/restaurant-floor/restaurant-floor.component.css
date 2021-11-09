@@ -1,21 +1,16 @@
-.drag-box {
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    padding: 1em;
-    border: 1px solid gray;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    
-}
 
-#bounding-box {
-    width: 500px;
+
+#restaurant-floor {
+    width: 1132px;
     height: 500px;
-    border: 1px solid gainsboro;
+    border: 3px solid gainsboro;
+    background: url("../../assets/floor.png");
 }
 
 .table-types {
     justify-self: right;
 }
+
+.item {
+    flex-basis: auto; /* default auto */
+  }

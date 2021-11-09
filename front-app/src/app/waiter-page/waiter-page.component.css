@@ -1,0 +1,14 @@
+.container {
+    margin-left: 50px;
+    display: flex; 
+    flex-direction: row;
+  }
+
+.container-2 {
+    display: flex; 
+    flex-direction: column;
+  }
+
+  .item {
+    flex-basis: auto; /* default auto */
+  }

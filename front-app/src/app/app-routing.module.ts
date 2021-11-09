@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SittingTableComponent } from './sitting-table/sitting-table.component';
+import { CreatorToolComponent } from './creator-tool/creator-tool.component';
 import { RestaurantFloorComponent } from './restaurant-floor/restaurant-floor.component';
+import { WaiterPageComponent } from './waiter-page/waiter-page.component';
 const routes: Routes = [
-  {path: 'floor-layout', component: SittingTableComponent},
-  {path: 'create-layout', component: RestaurantFloorComponent},
+  {path: 'floor-layout', component: WaiterPageComponent},
+  {path: 'create-layout', component: CreatorToolComponent},
 ];
 
 @NgModule({

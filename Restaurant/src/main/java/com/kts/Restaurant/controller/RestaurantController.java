@@ -28,6 +28,7 @@ public class RestaurantController {
 	
 	@Autowired
 	TableService tableService;
+	
 
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<RestaurantDTO>> getAllRestaurants() {
@@ -69,6 +70,14 @@ public class RestaurantController {
         }
 
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
+	
+	@RequestMapping(value="/deleteAll",method = RequestMethod.DELETE)
+    public ResponseEntity<Table> deleteAll() {
+		
+		tableService.deleteAll();
+		System.out.println("DELETED");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

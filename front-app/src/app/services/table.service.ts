@@ -8,6 +8,7 @@ import { SittingTableClass } from '../model/sitting-table-class.model';
 export class TableService {
 
   private readonly path = "http://localhost:8080/api/restaurant";
+  
   constructor(private http : HttpClient) { }
 
   submitTableLayout(sittingTableList : SittingTableClass[]){
@@ -20,4 +21,8 @@ export class TableService {
     return this.http.get<SittingTableClass[]>(this.path + "/table-layout");
   }
 
+  deleteTableLayout(){
+    console.log("USAO");
+    return this.http.delete(this.path + "/deleteAll");
+  }
 }

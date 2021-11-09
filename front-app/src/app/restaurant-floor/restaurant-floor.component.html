@@ -1,46 +1,11 @@
-<div>
-    <h1>CREATOR TOOL</h1>
-<div id="bounding-box" >
-    <div *ngFor = "let table of sittingTableList" (cdkDragEnded) = "onItemDrop($event, table)" cdkDrag   cdkDragBoundary="#bounding-box" class="drag-box">
-        <img src= "../../assets/{{table.getIcon()}}" alt="Girl in a jacket" width="50" height="50">
-        
-    </div>
-</div>
-<div class="table-types">
-    <ul>
-        <li>
-            <input type="image" *ngFor = "let tableType of sittingTableTypeList" (click)="onClick(tableType)" src="../../assets/{{tableType.getIcon()}}" width="50" height="50"/>
-        </li>
-        <li>
-            <button (click) = "save()">Save Restaurant Floor Layout</button>
-        </li>
-    </ul>
-   
-</div>
 
-<!--div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="sittingTableList">
-    <div cdkDrag class="drag-box" *ngFor = "let table of sittingTableTypeList">
-        [cdkDragFreeDragPosition]= "{x:table.getX(),y:table.getY()}"
-        <div>
-            Num of Seats: {{table.getNumOfSeats()}}
-        </div>
+<div id="restaurant-floor" class = "item">
+    <div *ngFor = "let table of restaurantLayout" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXPosition(table), 'top.px' : calcYPosition(table)}">   
+        <app-table [table] = "table"></app-table>
+        <!--img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50"-->   
     </div>
-</div-->
-
-<!--div cdkDropListGroup>
-        <div id="bounding-box">
-            <div cdkDrag *ngFor = "let table of sittingTableList" cdkDragBoundary="#bounding-box" class="drag-box">
-                {{table.getNumOfSeats()}}
-            </div>
-        </div>
-        <br>
-        <br>
-        <div cdkDropList [cdkDropListData] = "sittingTableTypeList" (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="sittingTableTypeList">
-            <div cdkDrag class="drag-box" *ngFor = "let table of sittingTableTypeList">
-                <div>
-                    {{table.getNumOfSeats()}}
-                </div>
-            </div>
-        </div>
-</div-->
+    
 </div>
+<!--button (click) = "deleteFloorLayout()">Delete Floor Layout</button-->
+
+

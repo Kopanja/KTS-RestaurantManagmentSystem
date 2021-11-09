@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SittingTableComponent } from './sitting-table.component';
+import { WaiterPageComponent } from './waiter-page.component';
 
-describe('SittingTableComponent', () => {
-  let component: SittingTableComponent;
-  let fixture: ComponentFixture<SittingTableComponent>;
+describe('WaiterPageComponent', () => {
+  let component: WaiterPageComponent;
+  let fixture: ComponentFixture<WaiterPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SittingTableComponent ]
+      declarations: [ WaiterPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SittingTableComponent);
+    fixture = TestBed.createComponent(WaiterPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

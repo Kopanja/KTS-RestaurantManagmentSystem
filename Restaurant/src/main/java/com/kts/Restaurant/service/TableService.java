@@ -33,6 +33,9 @@ public class TableService {
 	@Autowired
 	TableTypeRepository tableTypeRepo;
 	
+	@Autowired
+	OrderService orderService;
+	
 	TableMapper mapper = new TableMapper();
 	
 	public void saveTableList(List<TableDTO> tables) {
@@ -60,10 +63,28 @@ public class TableService {
 		List<TableDTO> tableDTOs = new ArrayList<TableDTO>();
 		for(Table t : tables) {
 			//Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon
-			tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getRestaurant().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon()));
+			if(t.getOrder() != null && t.getOrder().getItems() != null) {
+				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getRestaurant().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder())));
+
+			}else {
+				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getRestaurant().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon()));
+
+			}
 			
 		}
 		return tableDTOs;
+	}
+	
+	public void deleteAll() {
+		tableRepo.deleteAll();
+	}
+	
+	public Table findById(Long id) {
+		return tableRepo.findById(id).orElse(null);
+	}
+	
+	public Table save(Table table) {
+		return tableRepo.save(table);
 	}
 
 }

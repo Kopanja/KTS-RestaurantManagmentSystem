@@ -1,0 +1,20 @@
+<div>
+    <h1>CREATOR TOOL</h1>
+<div id="bounding-box" >
+    <div *ngFor = "let table of sittingTableList" (cdkDragEnded) = "onItemDrop($event, table)" cdkDrag   cdkDragBoundary="#bounding-box" class="drag-box">
+        <img src= "../../assets/{{table.getIcon()}}" alt="Girl in a jacket" width="50" height="50">
+        
+    </div>
+</div>
+<div class="table-types">
+    <ul>
+        <li>
+            <input type="image" *ngFor = "let tableType of sittingTableTypeList" (click)="onClick(tableType)" src="../../assets/{{tableType.getIcon()}}" width="50" height="50"/>
+        </li>
+        <li>
+            <button (click) = "save()">Save Restaurant Floor Layout</button>
+        </li>
+    </ul>
+   
+</div>
+</div>

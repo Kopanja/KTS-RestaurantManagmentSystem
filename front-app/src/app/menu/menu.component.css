@@ -1,0 +1,12 @@
+.menu{
+    width: 1132px;
+    height: 328px;
+    left: 308px;
+    top: 696px;
+    border: 3px solid gainsboro;
+    background: #FFE68C;
+}
+
+.item {
+    flex-basis: auto; /* default auto */
+  }

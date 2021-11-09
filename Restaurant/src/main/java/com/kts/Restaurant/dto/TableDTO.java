@@ -9,7 +9,7 @@ public class TableDTO {
 	private int y;
 	private int numOfSeats;
 	private String icon;
-	
+	private OrderDTO order;
 	
 	public TableDTO() {
 		super();
@@ -25,6 +25,21 @@ public class TableDTO {
 		this.y = y;
 		this.numOfSeats = numOfSeats;
 		this.icon = icon;
+	}
+
+
+	
+	public TableDTO(Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon,
+			OrderDTO order) {
+		super();
+		this.tableId = tableId;
+		this.typeId = typeId;
+		this.restaurantId = restaurantId;
+		this.x = x;
+		this.y = y;
+		this.numOfSeats = numOfSeats;
+		this.icon = icon;
+		this.order = order;
 	}
 
 
@@ -95,6 +110,17 @@ public class TableDTO {
 
 	public void setRestaurantId(Long restaurantId) {
 		this.restaurantId = restaurantId;
+	}
+
+
+	
+	public OrderDTO getOrder() {
+		return order;
+	}
+
+
+	public void setOrder(OrderDTO order) {
+		this.order = order;
 	}
 
 

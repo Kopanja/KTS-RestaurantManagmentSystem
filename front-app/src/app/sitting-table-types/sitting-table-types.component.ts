@@ -23,4 +23,5 @@ export class SittingTableTypesComponent implements OnInit {
   changeToFloorLayout(){
     this.router.navigate(['/floor-layout']);
   }
+
 }

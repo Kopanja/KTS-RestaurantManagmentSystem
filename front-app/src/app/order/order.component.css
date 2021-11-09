@@ -1,0 +1,22 @@
+.order {
+width: 312px;
+height: 834px;
+left: -1px;
+top: 0px;
+border: 3px solid gainsboro;
+
+}
+
+.text{
+margin-top: 10px;
+font-style: normal;
+font-weight: 900;
+font-size: 22px;
+align-items: center;
+text-align: center;
+letter-spacing: -0.015em;
+color: #000000;
+}
+.item {
+    flex-basis: auto; /* default auto */
+  }

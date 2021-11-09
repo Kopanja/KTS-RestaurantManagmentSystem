@@ -22,6 +22,11 @@ public class Table {
 	
 	@Relationship(type = "IS_TYPE", direction = Direction.OUTGOING)
 	public TableType type;
+	
+	@Relationship(type = "HAS_ORDER", direction = Direction.OUTGOING)
+	public Order order;
+	
+	
 
 	
 	
@@ -51,13 +56,14 @@ public class Table {
 	
 
 
-	public Table(Long id, int x, int y, Restaurant restaurant, TableType type) {
+	public Table(Long id, int x, int y, Restaurant restaurant, TableType type, Order order) {
 		super();
 		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.restaurant = restaurant;
 		this.type = type;
+		this.order = order;
 	}
 
 
@@ -128,6 +134,16 @@ public class Table {
 
 	public void setType(TableType type) {
 		this.type = type;
+	}
+
+
+	public Order getOrder() {
+		return order;
+	}
+
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 	
 	
