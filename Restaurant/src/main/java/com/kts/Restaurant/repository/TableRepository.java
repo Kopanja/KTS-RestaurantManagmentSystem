@@ -40,6 +40,6 @@ public interface TableRepository extends Neo4jRepository<Table, Long> {
 			+ "\r\n"
 			+ "MERGE (tl1)-[:IS_TYPE]->(tl)\r\n"
 			+ "MERGE (tl2)-[:IS_TYPE]->(tl)\r\n"
-			+ "MERGE (tl3)-[:IS_TYPE]->(tl)-[:IS_TYPE]->(tt)")
+			+ "MERGE (tl3)-[:IS_TYPE]->(tl)")
 	public void createDBData();
 }
