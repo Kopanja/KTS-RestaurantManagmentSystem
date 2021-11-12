@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SittingTableClass } from '../model/sitting-table-class.model';
+import { SelectedTableService } from '../services/selected-table.service';
 
 @Component({
   selector: 'app-order',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
-  constructor() { }
+  table : SittingTableClass;
+  
+  constructor(private selectedTableService : SelectedTableService) {
+    this.selectedTableService.getTable().subscribe(data => {this.table = data; console.log(this.table)});
+   }
 
   ngOnInit(): void {
+    
   }
 
 }

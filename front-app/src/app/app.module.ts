@@ -12,6 +12,7 @@ import { TableComponent } from './table/table.component';
 import { OrderComponent } from './order/order.component';
 import { MenuComponent } from './menu/menu.component';
 import { WaiterPageComponent } from './waiter-page/waiter-page.component';
+import { DevPageComponent } from './dev-page/dev-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { WaiterPageComponent } from './waiter-page/waiter-page.component';
     OrderComponent,
     MenuComponent,
     WaiterPageComponent,
+    DevPageComponent,
   
   ],
   imports: [

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SittingTableClass } from '../model/sitting-table-class.model';
+import { SittingTableTypeClass } from '../model/sitting-table-type-class.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
+import { TableTypeService } from '../services/table-type.service';
 @Component({
   selector: 'app-sitting-table-types',
   templateUrl: './sitting-table-types.component.html',
@@ -9,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class SittingTableTypesComponent implements OnInit {
 
-  
-  constructor(private router : Router) { }
+  public sittingTableTypeList : SittingTableTypeClass[];
+  constructor(private router : Router, private tableTypeService : TableTypeService) { }
 
   ngOnInit(): void {
     

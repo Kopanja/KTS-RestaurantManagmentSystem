@@ -4,7 +4,6 @@ public class TableDTO {
 
 	private Long tableId;
 	private Long typeId;
-	private Long restaurantId;
 	private int x;
 	private int y;
 	private int numOfSeats;
@@ -16,11 +15,10 @@ public class TableDTO {
 	}
 
 
-	public TableDTO(Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon) {
+	public TableDTO(Long tableId, Long typeId, int x, int y, int numOfSeats, String icon) {
 		super();
 		this.tableId = tableId;
 		this.typeId = typeId;
-		this.restaurantId = restaurantId;
 		this.x = x;
 		this.y = y;
 		this.numOfSeats = numOfSeats;
@@ -29,12 +27,11 @@ public class TableDTO {
 
 
 	
-	public TableDTO(Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon,
+	public TableDTO(Long tableId, Long typeId, int x, int y, int numOfSeats, String icon,
 			OrderDTO order) {
 		super();
 		this.tableId = tableId;
 		this.typeId = typeId;
-		this.restaurantId = restaurantId;
 		this.x = x;
 		this.y = y;
 		this.numOfSeats = numOfSeats;
@@ -103,16 +100,6 @@ public class TableDTO {
 	}
 
 
-	public Long getRestaurantId() {
-		return restaurantId;
-	}
-
-
-	public void setRestaurantId(Long restaurantId) {
-		this.restaurantId = restaurantId;
-	}
-
-
 	
 	public OrderDTO getOrder() {
 		return order;
@@ -126,7 +113,7 @@ public class TableDTO {
 
 	@Override
 	public String toString() {
-		return "TableDTO [tableId=" + tableId + ", typeId=" + typeId + ", restaurantId=" + restaurantId + ", x=" + x
+		return "TableDTO [tableId=" + tableId + ", typeId=" + typeId + ", restaurantId="  + ", x=" + x
 				+ ", y=" + y + ", numOfSeats=" + numOfSeats + ", icon=" + icon + "]";
 	}
 	

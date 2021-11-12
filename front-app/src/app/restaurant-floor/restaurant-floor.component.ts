@@ -24,7 +24,7 @@ export class RestaurantFloorComponent implements OnInit {
 
   calcXPosition(table:SittingTableClass):number{
     let box = document.getElementById("restaurant-floor");
-    if(box !== null){
+    if(box !== null && table.x !== undefined){
       let boundingClientRect = box.getBoundingClientRect();
       return (table.x + boundingClientRect.x)
     }
@@ -34,7 +34,7 @@ export class RestaurantFloorComponent implements OnInit {
 
   calcYPosition(table:SittingTableClass):number{
     let box = document.getElementById("restaurant-floor");
-    if(box !== null){
+    if(box !== null && table.y !== undefined){
       let boundingClientRect = box.getBoundingClientRect();
       return (table.y + boundingClientRect.y)
     }

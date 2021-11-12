@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kts.Restaurant.dto.RestaurantDTO;
 import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.Table;
-import com.kts.Restaurant.service.RestaurantService;
 import com.kts.Restaurant.service.TableService;
 
 
@@ -23,32 +21,25 @@ import com.kts.Restaurant.service.TableService;
 @RequestMapping(value="api/restaurant")
 public class RestaurantController {
 	
-	@Autowired
-	RestaurantService restaurantService;
-	
+
 	@Autowired
 	TableService tableService;
 	
 
-	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<RestaurantDTO>> getAllRestaurants() {
-		
-		List<RestaurantDTO> restaurants = restaurantService.findAll();
-		if(restaurants == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-        return new ResponseEntity<>(restaurants, HttpStatus.OK);
-    }
-	
-	@RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public ResponseEntity<RestaurantDTO> getRestaurantFormById(@PathVariable Long id) {
-        
-		RestaurantDTO restaurant = restaurantService.findById(id);
-        if(restaurant == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value="/reset-db",method = RequestMethod.GET)
+    public ResponseEntity<String> resetDB() {
+        String s = "";
+        try {
+        	tableService.resetDB();
+        	s = "success";
+        }catch(Exception e) {
+        	  s = "fail";
         }
-        return new ResponseEntity<>(restaurant, HttpStatus.OK);
+		
+        return new ResponseEntity<>(s, HttpStatus.OK);
     }
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/table-layout",method = RequestMethod.GET)
     public ResponseEntity<List<TableDTO>> getTableLayout() {
@@ -58,8 +49,9 @@ public class RestaurantController {
     }
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value= "/table-layout",method = RequestMethod.POST)
-	public ResponseEntity<String> createNewLocation(@RequestBody List<TableDTO> tables){
+	public ResponseEntity<String> createNewTableLayout(@RequestBody List<TableDTO> tables){
         System.out.println("USAO");
+        tableService.deleteAll();
         for(TableDTO dto : tables) {
         	System.out.println(dto);
         }

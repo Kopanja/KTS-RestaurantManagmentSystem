@@ -3,6 +3,7 @@ import { SittingTableClass } from '../model/sitting-table-class.model';
 import { SittingTableTypeClass } from '../model/sitting-table-type-class.model';
 import { CdkDragEnd} from '@angular/cdk/drag-drop';
 import { TableService } from '../services/table.service';
+import { TableTypeService } from '../services/table-type.service';
 
 
 @Component({
@@ -13,11 +14,14 @@ import { TableService } from '../services/table.service';
 export class CreatorToolComponent implements OnInit {
   public sittingTableList : SittingTableClass[] = [];
   public sittingTableTypeList : SittingTableTypeClass[] = [];
-  constructor(private tableService : TableService) { }
+  constructor(private tableService : TableService, private tableTypeService : TableTypeService) { }
 
   ngOnInit(): void {
-    this.sittingTableTypeList = [new SittingTableTypeClass(1,2,"2Seat", "tableSmall.png"), new SittingTableTypeClass(2,4,"4Seat", "tableMedium.png"), new SittingTableTypeClass(3,6, "6seat", "tableLarge.png")]
-    //this.sittingTableList = [new SittingTableClass(1,50,134, 2), new SittingTableClass(1,180,225, 3), new SittingTableClass(1,117,-137, 4)]
+    this.tableTypeService.getTableTypes().subscribe(data =>{
+      this.sittingTableTypeList = data; 
+      console.log(this.sittingTableTypeList);
+     
+    })
   }
 
   onItemDrop($event : CdkDragEnd, table : SittingTableClass){ 
@@ -28,14 +32,15 @@ export class CreatorToolComponent implements OnInit {
     let xOffset = boundingClientRect.x - parentPosition.x;
     let yOffset = boundingClientRect.y - parentPosition.y;
 
-    table.setX(xOffset);
-    table.setY(yOffset)
+    table.x = xOffset;
+    table.y = yOffset;
     console.log(table);   
   }
 
 
   onClick(tableType : SittingTableTypeClass) {
-    this.sittingTableList.push(new SittingTableClass(undefined,tableType.getId(),0,0,0,tableType.getNumOfSeats(), tableType.getIcon(), undefined))
+
+    this.sittingTableList.push(new SittingTableClass(undefined,tableType.id,0,0,tableType.numOfSeats, tableType.icon, undefined))
   }
 
  

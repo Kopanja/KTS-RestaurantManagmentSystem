@@ -13,7 +13,7 @@ public class TableMapper implements DTOMapperInterface<Table, TableDTO> {
 
 	@Override
 	public TableDTO toDto(Table entity) {
-		return new TableDTO(entity.getId(), entity.getType().getId(), entity.getRestaurant().getId(), entity.getX(), entity.getY(),entity.getType().getNumOfSeats(), entity.getType().getIcon());
+		return new TableDTO(entity.getId(), entity.getType().getId(), entity.getX(), entity.getY(),entity.getType().getNumOfSeats(), entity.getType().getIcon());
 	}
 
 }

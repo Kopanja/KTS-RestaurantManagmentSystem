@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
+import { SelectedTableService } from '../services/selected-table.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class TableComponent implements OnInit {
   public l = ["a", "b", "c"]
   public tableSize : number;
 
-  constructor() {
+  constructor(private selectedTableService : SelectedTableService) {
     
     this.tableStyles = ["free"];
     
@@ -26,9 +27,9 @@ export class TableComponent implements OnInit {
   }
 
   tableClick(){
-    //this.tableStyle = "occupied";
-    this.tableStyles.push("occupied");
+    //this.tableStyles.push("occupied");
     this.tableStyles.push("table-selected");
+    this.selectedTableService.changeState(this.table);
     let box = document.getElementById("table" + this.table.tableId);
     if(box !== null){
       let boundingClientRect = box.getBoundingClientRect();
@@ -60,7 +61,15 @@ export class TableComponent implements OnInit {
   }
 
   getStyleObject(){
-    
+    this.selectedTableService.getTable().subscribe(data => {
+      if(data.tableId === this.table.tableId){
+        this.tableStyles.push("table-selected")
+      }else{
+        if(this.tableStyles.includes("table-selected")){
+          this.removeStyleClass("table-selected");
+        }
+      }
+    });
     return this.tableStyles;
   }
 

@@ -3,9 +3,10 @@ package com.kts.Restaurant.repository;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kts.Restaurant.model.Restaurant;
+import com.kts.Restaurant.model.Floor;
+
 
 @Repository
-public interface RestaurantRepository extends Neo4jRepository<Restaurant, Long>{
+public interface FloorRepository extends Neo4jRepository<Floor, Long> {
 
 }

@@ -1,8 +1,8 @@
 export class SittingTableTypeClass {
-    private id: number;
-    private numOfSeats: number;
-    private name: string;
-    private icon: string;
+    id: number;
+    numOfSeats: number;
+    name: string;
+    icon: string;
 
     constructor(id: number,numOfSeats : number, name: string, icon: string) {
         this.id = id;
@@ -24,7 +24,7 @@ export class SittingTableTypeClass {
         return this.name;
     }
 
-    getIcon():string{
+    public getIcon():string{
         return this.icon;
     }
 }

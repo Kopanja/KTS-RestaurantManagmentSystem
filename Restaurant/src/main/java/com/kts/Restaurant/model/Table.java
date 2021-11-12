@@ -17,9 +17,6 @@ public class Table {
 	
 	private int y;
 	
-	@Relationship(type = "FROM", direction = Direction.OUTGOING)
-	public Restaurant restaurant;
-	
 	@Relationship(type = "IS_TYPE", direction = Direction.OUTGOING)
 	public TableType type;
 	
@@ -44,24 +41,14 @@ public class Table {
 	}
 
 
-	public Table(Long id, int x, int y, Restaurant restaurant) {
-		super();
-		this.id = id;
-		this.x = x;
-		this.y = y;
-		this.restaurant = restaurant;
-	}
-
-
 	
 
 
-	public Table(Long id, int x, int y, Restaurant restaurant, TableType type, Order order) {
+	public Table(Long id, int x, int y, TableType type, Order order) {
 		super();
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.restaurant = restaurant;
 		this.type = type;
 		this.order = order;
 	}
@@ -106,20 +93,6 @@ public class Table {
 
 	public void setY(int y) {
 		this.y = y;
-	}
-
-
-
-
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-
-
-
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
 	}
 
 
