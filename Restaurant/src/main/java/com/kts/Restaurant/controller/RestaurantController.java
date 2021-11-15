@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kts.Restaurant.dto.TableDTO;
+import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.service.TableService;
 
@@ -25,10 +26,12 @@ public class RestaurantController {
 	@Autowired
 	TableService tableService;
 	
+	
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/reset-db",method = RequestMethod.GET)
     public ResponseEntity<String> resetDB() {
+		
         String s = "";
         try {
         	tableService.resetDB();
@@ -36,7 +39,6 @@ public class RestaurantController {
         }catch(Exception e) {
         	  s = "fail";
         }
-		
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
 

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import {BehaviorSubject} from "rxjs"
+import { Item } from '../model/item.model';
+import { Order } from '../model/order.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,4 +22,17 @@ export class SelectedTableService {
   getTable() {
     return this.state$.asObservable();
   }
+
+  addItemToOrder(item : Item){
+    if(this.state$.getValue().order){
+      this.state$.getValue().order?.items.push(item);
+    
+    }else{
+      this.state$.getValue().order = new Order();
+      this.state$.getValue().order?.items.push(item);
+    }
+    
+  }
+
+  
 }

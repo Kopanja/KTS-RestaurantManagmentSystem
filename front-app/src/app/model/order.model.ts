@@ -4,7 +4,7 @@ export class Order {
     items: Item[];
 
 
-    constructor(items:Item[]) {
-        this.items = items;
+    constructor() {
+        this.items = [];
       }
 }

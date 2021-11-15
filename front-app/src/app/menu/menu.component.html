@@ -1,4 +1,7 @@
 <div class = "menu item">
-
+    <div *ngFor = "let item of items">   
+        <img src= "../../assets/ramen 1.png" alt="Girl in a jacket" width="50" height="50" (click)="onItemClick(item)">
+        <p>{{item.name}}</p>   
+    </div>
 </div>
 

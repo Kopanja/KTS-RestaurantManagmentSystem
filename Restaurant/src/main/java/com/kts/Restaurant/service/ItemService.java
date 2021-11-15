@@ -1,5 +1,8 @@
 package com.kts.Restaurant.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +24,11 @@ public class ItemService {
 		return mapper.toDto(item);
 	}
 
+	public List<ItemDTO> getAll(){
+		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
+		for(Item i : itemRepo.findAll()) {
+			dtos.add(mapper.toDto(i));
+		}
+		return dtos;
+	}
 }

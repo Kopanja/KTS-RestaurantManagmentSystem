@@ -8,5 +8,12 @@
 }
 
 .item {
-    flex-basis: auto; /* default auto */
+    align-self: center;
   }
+.item-back{
+    width: 100px;
+    height: 100px;
+
+    background: #FFFFFF;
+    border-radius: 49px;
+}

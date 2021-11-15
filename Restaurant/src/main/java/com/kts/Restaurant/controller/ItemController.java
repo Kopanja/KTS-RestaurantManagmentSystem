@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kts.Restaurant.dto.ItemDTO;
+import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.Order;
@@ -18,6 +20,7 @@ import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.repository.ItemRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.repository.ОrderRepository;
+import com.kts.Restaurant.service.ItemService;
 
 @RestController
 @RequestMapping(value="api/item")
@@ -25,6 +28,9 @@ public class ItemController {
 
 	@Autowired
 	ItemRepository itemRepo;
+	
+	@Autowired
+	ItemService itemService;
 	
 	@Autowired
 	ОrderRepository orderRepo;
@@ -43,5 +49,13 @@ public class ItemController {
 		order.setItems(orderItems);
 		orderRepo.save(order);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
+    }
+	
+	
+	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<ItemDTO>> getTableLayout() {
+        
+		List<ItemDTO> tables = itemService.getAll();
+        return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 }

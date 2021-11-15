@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Order } from '../model/order.model';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { SelectedTableService } from '../services/selected-table.service';
 
@@ -23,6 +24,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTableSize();
+    this.table.order = new Order();
     console.log(this.table);
   }
 
@@ -89,6 +91,13 @@ export class TableComponent implements OnInit {
     if (index > -1) {
       this.tableStyles.splice(index, 1);
 }
+  }
+
+  doesOrderExist():boolean{
+    if(this.table.order?.items.length === 0){
+      return false;
+    }
+    return true;
   }
 
 }
