@@ -40,7 +40,7 @@ export class CreatorToolComponent implements OnInit {
 
   onClick(tableType : SittingTableTypeClass) {
 
-    this.sittingTableList.push(new SittingTableClass(undefined,tableType.id,0,0,tableType.numOfSeats, tableType.icon, undefined))
+    this.sittingTableList.push(new SittingTableClass(undefined,tableType.id,0,0,tableType.numOfSeats, tableType.icon, undefined, ""))
   }
 
  

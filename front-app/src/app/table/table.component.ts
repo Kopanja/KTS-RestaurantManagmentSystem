@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Item } from '../model/item.model';
 import { Order } from '../model/order.model';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { SelectedTableService } from '../services/selected-table.service';
@@ -13,7 +14,7 @@ export class TableComponent implements OnInit {
 
   @Input() table : SittingTableClass;
   public tableStyles : string[];
-  public l = ["a", "b", "c"]
+  public itemsPreOrder : Item[] = [];
   public tableSize : number;
 
   constructor(private selectedTableService : SelectedTableService) {
@@ -24,18 +25,19 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTableSize();
-    this.table.order = new Order();
     console.log(this.table);
   }
 
   tableClick(){
     //this.tableStyles.push("occupied");
+    this.selectedTableService.changeTableState(this.table);
+    this.selectedTableService.changeItemsState(this.itemsPreOrder);
+    
     this.tableStyles.push("table-selected");
-    this.selectedTableService.changeState(this.table);
     let box = document.getElementById("table" + this.table.tableId);
     if(box !== null){
       let boundingClientRect = box.getBoundingClientRect();
-      console.log(boundingClientRect.x)
+      
     }
     
   }
@@ -94,10 +96,10 @@ export class TableComponent implements OnInit {
   }
 
   doesOrderExist():boolean{
-    if(this.table.order?.items.length === 0){
-      return false;
+    if(this.table.order){
+      return true;
     }
-    return true;
+    return false;
   }
 
 }

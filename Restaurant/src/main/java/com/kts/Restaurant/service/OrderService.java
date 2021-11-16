@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.OrderDTO;
+import com.kts.Restaurant.dto.OrderedItemDTO;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.Order;
+import com.kts.Restaurant.model.OrderedItem;
 import com.kts.Restaurant.repository.ОrderRepository;
 
 @Service
@@ -19,17 +21,29 @@ public class OrderService {
 	ОrderRepository orderRepo;
 	
 	@Autowired
+	OrderedItemService orderedItemService;
+	
+	@Autowired
 	ItemService itemService;
 	
 	
+	
+	
 	public OrderDTO toDto(Order order) {
-		List<Item> items = order.getItems();
-		List<ItemDTO> itemDTOs = new ArrayList<ItemDTO>();
-		for(Item i : items) {
-			itemDTOs.add(itemService.toDto(i));
+		List<OrderedItem> items = order.getItems();
+		List<OrderedItemDTO> itemDTOs = new ArrayList<OrderedItemDTO>();
+		for(OrderedItem i : items) {
+			itemDTOs.add(orderedItemService.toDto(i));
+			
 		}
 		return new OrderDTO(itemDTOs);
 		
+	}
+	
+	public Order createOrderFromItemList(List<Item> items) {
+		List<OrderedItem> orderedItems = orderedItemService.createOrderedItemListFromItems(items);
+		
+		return new Order(orderedItems);
 	}
 	
 }

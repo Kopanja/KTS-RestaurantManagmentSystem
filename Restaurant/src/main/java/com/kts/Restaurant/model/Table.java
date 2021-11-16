@@ -13,6 +13,8 @@ public class Table {
 	@Id @GeneratedValue
 	private Long id;
 	
+	private String name;
+	
 	private int x;
 	
 	private int y;
@@ -42,6 +44,14 @@ public class Table {
 
 
 	
+
+
+	public Table(String name, int x, int y) {
+		super();
+		this.name = name;
+		this.x = x;
+		this.y = y;
+	}
 
 
 	public Table(Long id, int x, int y, TableType type, Order order) {
@@ -117,6 +127,16 @@ public class Table {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

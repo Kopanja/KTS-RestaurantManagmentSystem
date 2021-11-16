@@ -3,13 +3,15 @@ package com.kts.Restaurant.model;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.stereotype.Indexed;
+
 
 @Node
 public abstract class Item {
 
 	@Id @GeneratedValue
 	private Long id;
-	
+
 	private String name;
 	
 	private String description;
@@ -25,6 +27,15 @@ public abstract class Item {
 	}
 	
 	
+
+	public Item(String name, int price, int cost) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.cost = cost;
+	}
+
+
 
 	public Item(Long id, String name, String description, int price, int cost) {
 		super();

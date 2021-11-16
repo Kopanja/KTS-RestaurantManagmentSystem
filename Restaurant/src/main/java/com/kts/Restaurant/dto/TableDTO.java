@@ -4,6 +4,7 @@ public class TableDTO {
 
 	private Long tableId;
 	private Long typeId;
+	private String name;
 	private int x;
 	private int y;
 	private int numOfSeats;
@@ -15,7 +16,7 @@ public class TableDTO {
 	}
 
 
-	public TableDTO(Long tableId, Long typeId, int x, int y, int numOfSeats, String icon) {
+	public TableDTO(Long tableId, Long typeId, int x, int y, int numOfSeats, String icon,String name) {
 		super();
 		this.tableId = tableId;
 		this.typeId = typeId;
@@ -23,12 +24,13 @@ public class TableDTO {
 		this.y = y;
 		this.numOfSeats = numOfSeats;
 		this.icon = icon;
+		this.name = name;
 	}
 
 
 	
 	public TableDTO(Long tableId, Long typeId, int x, int y, int numOfSeats, String icon,
-			OrderDTO order) {
+			OrderDTO order, String name) {
 		super();
 		this.tableId = tableId;
 		this.typeId = typeId;
@@ -37,6 +39,7 @@ public class TableDTO {
 		this.numOfSeats = numOfSeats;
 		this.icon = icon;
 		this.order = order;
+		this.name = name;
 	}
 
 
@@ -111,11 +114,24 @@ public class TableDTO {
 	}
 
 
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	@Override
 	public String toString() {
-		return "TableDTO [tableId=" + tableId + ", typeId=" + typeId + ", restaurantId="  + ", x=" + x
-				+ ", y=" + y + ", numOfSeats=" + numOfSeats + ", icon=" + icon + "]";
+		return "TableDTO [tableId=" + tableId + ", typeId=" + typeId + ", name=" + name + ", x=" + x + ", y=" + y
+				+ ", numOfSeats=" + numOfSeats + ", icon=" + icon + ", order=" + order + "]";
 	}
+
+	
+	
 	
 	
 	

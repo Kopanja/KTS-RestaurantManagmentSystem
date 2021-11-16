@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kts.Restaurant.dto.TableDTO;
+import com.kts.Restaurant.model.Item;
+import com.kts.Restaurant.model.Order;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.model.TableType;
 import com.kts.Restaurant.repository.TableRepository;
@@ -21,8 +23,6 @@ public class TableService {
 	
 	@Autowired
 	TableTypeService tableTypeService;
-
-	
 	
 	@Autowired
 	TableTypeRepository tableTypeRepo;
@@ -31,6 +31,10 @@ public class TableService {
 	OrderService orderService;
 	
 	TableMapper mapper = new TableMapper();
+	
+	public Table findByName(String name) {
+		return tableRepo.findByName(name);
+	}
 	
 	public void saveTableList(List<TableDTO> tables) {
 		for(TableDTO dto : tables) {
@@ -55,10 +59,10 @@ public class TableService {
 		for(Table t : tables) {
 			//Long tableId, Long typeId, Long restaurantId, int x, int y, int numOfSeats, String icon
 			if(t.getOrder() != null && t.getOrder().getItems() != null) {
-				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder())));
+				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder()), t.getName()));
 
 			}else {
-				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon()));
+				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), t.getName()));
 
 			}
 			
@@ -66,6 +70,17 @@ public class TableService {
 		return tableDTOs;
 	}
 	
+	public TableDTO placeOrderForTable(String tableName, List<Item> items) {
+		Table table = tableRepo.findByName(tableName);
+		Order order = orderService.createOrderFromItemList(items);
+		table.setOrder(order);
+		table = tableRepo.save(table);
+		return this.toDto(table);
+	}
+	
+	public TableDTO toDto(Table table) {
+		return new TableDTO(table.getId(), table.getType().getId(), table.getX(), table.getY(),table.getType().getNumOfSeats(), table.getType().getIcon(), orderService.toDto(table.getOrder()), table.getName());
+	}
 	public void deleteAll() {
 		tableRepo.deleteAll();
 	}

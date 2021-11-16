@@ -9,4 +9,5 @@ import com.kts.Restaurant.model.Item;
 @Repository
 public interface ItemRepository extends Neo4jRepository<Item, Long> {
 
+	public Item findByName(String name);
 }

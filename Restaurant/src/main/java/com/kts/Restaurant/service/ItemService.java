@@ -24,6 +24,9 @@ public class ItemService {
 		return mapper.toDto(item);
 	}
 
+	public Item toEntity(ItemDTO dto) {
+		return itemRepo.findByName(dto.getName());
+	}
 	public List<ItemDTO> getAll(){
 		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
 		for(Item i : itemRepo.findAll()) {

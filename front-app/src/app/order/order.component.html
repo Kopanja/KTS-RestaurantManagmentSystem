@@ -3,10 +3,18 @@
     <div class = "order-box container-column item">
         <div class = "container-row item" *ngFor="let item of order?.items">
             <p class = "text item">.</p>
+            <p class = "text item">{{item.item.name}}</p>
+            <p class = "text item">{{item.item.price}}</p>
+            <p class = "text item">-</p>    
+        </div>
+        
+        <div class = "container-row item" *ngFor="let item of itemsPreOrder">
+            <p class = "text item">.</p>
             <p class = "text item">{{item.name}}</p>
             <p class = "text item">{{item.price}}</p>
             <p class = "text item">-</p>    
         </div>
     </div>
     <p class = "text item">Total Price: {{calcPrice()}}</p>
+    <button (click)="placeOrderClicked()">Place Order</button>
 </div>

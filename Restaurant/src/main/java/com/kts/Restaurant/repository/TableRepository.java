@@ -2,15 +2,20 @@ package com.kts.Restaurant.repository;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.kts.Restaurant.model.Table;
 
-
+@Repository
 public interface TableRepository extends Neo4jRepository<Table, Long> {
 
 	@Query("MATCH (n)\r\n"
 			+ "DETACH DELETE n")
 	public void deleteEveryNodeAndRel();
+	
+	
+	public Table findByName(String name);
+	
 	
 	@Query("CREATE (tl:TableType {icon : \"tableLarge.png\", name : \"6seat\", numOfSeats : 6})\r\n"
 			+ "CREATE (tm:TableType {icon : \"tableMedium.png\", name : \"4seat\", numOfSeats : 4})\r\n"

@@ -1,7 +1,8 @@
-import { Item } from "./item.model";
+import { OrderedItem } from "./ordered-item.model";
+
 
 export class Order {
-    items: Item[];
+    items: OrderedItem[];
 
 
     constructor() {

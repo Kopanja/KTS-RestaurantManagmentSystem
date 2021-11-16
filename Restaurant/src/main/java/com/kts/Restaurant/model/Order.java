@@ -15,7 +15,7 @@ public class Order {
 	private Long id;
 	
 	@Relationship(type = "HAS", direction = Direction.OUTGOING)
-	public List<Item> items;
+	public List<OrderedItem> items;
 	
 	@Relationship(type = "ORDERED_BY", direction = Direction.OUTGOING)
 	public User user;
@@ -27,8 +27,17 @@ public class Order {
 	}
 
 
+	
 
-	public Order(Long id, List<Item> items, User user) {
+	public Order(List<OrderedItem> items) {
+		super();
+		this.items = items;
+	}
+
+
+
+
+	public Order(Long id, List<OrderedItem> items, User user) {
 		super();
 		this.id = id;
 		this.items = items;
@@ -49,13 +58,13 @@ public class Order {
 
 
 
-	public List<Item> getItems() {
+	public List<OrderedItem> getItems() {
 		return items;
 	}
 
 
 
-	public void setItems(List<Item> items) {
+	public void setItems(List<OrderedItem> items) {
 		this.items = items;
 	}
 

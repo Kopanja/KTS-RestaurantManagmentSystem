@@ -39,17 +39,7 @@ public class ItemController {
 	UserRepository userRepo;
 	
 	
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(value= "/add-item",method = RequestMethod.POST)
-	public ResponseEntity<String> createNewLocation(@RequestBody FoodItem item){
-		User user = userRepo.findById(5L).orElse(null);
-		List<Item> orderItems = itemRepo.findAll();
-		Order order = new Order();
-		order.setUser(user);
-		order.setItems(orderItems);
-		orderRepo.save(order);
-        return new ResponseEntity<>("OK", HttpStatus.CREATED);
-    }
+	
 	
 	
 	@RequestMapping(method = RequestMethod.GET)

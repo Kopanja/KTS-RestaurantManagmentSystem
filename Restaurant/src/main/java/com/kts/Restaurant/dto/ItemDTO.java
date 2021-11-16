@@ -34,6 +34,11 @@ public class ItemDTO {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
+	@Override
+	public String toString() {
+		return "ItemDTO [name=" + name + ", price=" + price + ", cost=" + cost + "]";
+	}
+	
 	
 	
 }
