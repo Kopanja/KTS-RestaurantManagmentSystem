@@ -15,8 +15,8 @@ export class OrderComponent implements OnInit {
   order : Order|undefined;
   itemsPreOrder : Item[];
   constructor(private selectedTableService : SelectedTableService) {
-    this.selectedTableService.getTable().subscribe(data => {this.order = data.order; this.tableName = data.name; console.log(this.order)});
-    this.selectedTableService.getItemsPreOrder().subscribe(data => {this.itemsPreOrder = data});
+    this.selectedTableService.getTableAndPreOrderItems().subscribe(data => {this.order = data.table.order; this.tableName = data.table.name; this.itemsPreOrder = data.items});
+    //this.selectedTableService.getItemsPreOrder().subscribe(data => {this.itemsPreOrder = data});
    }
 
   ngOnInit(): void {
@@ -25,16 +25,24 @@ export class OrderComponent implements OnInit {
 
   calcPrice(){
     let price = 0;
-    if(this.order?.items.length !== 0){
+    if(this.order?.items !== undefined){
       this.order?.items.forEach(item => {
         price += item.item.price;
+      });
+    }if(this.itemsPreOrder.length !== 0){
+      this.itemsPreOrder.forEach(item=> {
+        price += item.price;
       });
     }
     return price;
   }
 
   placeOrderClicked(){
-    this.selectedTableService.placeOrder().subscribe(data => {this.selectedTableService.changeTableState(data)});
+   this.selectedTableService.placeOrder().subscribe(data => {this.selectedTableService.changeTableState(data)});
+    //this.selectedTableService.placeOrder();
   }
 
+  deleteClick(item : Item){
+    this.selectedTableService.removeItemFromOrder(item);
+  }
 }

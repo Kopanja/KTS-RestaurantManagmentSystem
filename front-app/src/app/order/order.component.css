@@ -32,6 +32,9 @@ color: #000000;
     flex-basis: auto; /* default auto */
   }
 
+.order-item-text{
+  color: #C8C000;
+}
 .order-box{
   background: #FFFFFF;
   border: 2px solid #000000;

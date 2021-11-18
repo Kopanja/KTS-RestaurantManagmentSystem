@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Item } from '../model/item.model';
 import { Order } from '../model/order.model';
 import { SittingTableClass } from '../model/sitting-table-class.model';
+import { TableAndItemsPreOrder } from '../model/table-and-items-pre-order.model';
 import { SelectedTableService } from '../services/selected-table.service';
 
 
@@ -13,37 +14,59 @@ import { SelectedTableService } from '../services/selected-table.service';
 export class TableComponent implements OnInit {
 
   @Input() table : SittingTableClass;
-  public tableStyles : string[];
+  public tableStyles : string[] = [];
   public itemsPreOrder : Item[] = [];
-  public tableSize : number;
+  public tableAndItemsPreOrder : TableAndItemsPreOrder;
+  public isOrder : boolean = false;
+  public isSelected : boolean = false;
 
+  
   constructor(private selectedTableService : SelectedTableService) {
-    
-    this.tableStyles = ["free"];
     
    }
 
   ngOnInit(): void {
     this.getTableSize();
-    console.log(this.table);
+    this.tableAndItemsPreOrder = {table : this.table, items : this.itemsPreOrder};
+    this.selectedTableService.getTableAndPreOrderItems().subscribe(data => {this.tableStyle(data.table)});
+    if(this.table.order){
+      this.isOrder = true;
+    }
+    //this.getStyleObject();
+    
   }
 
-  tableClick(){
-    //this.tableStyles.push("occupied");
-    this.selectedTableService.changeTableState(this.table);
-    this.selectedTableService.changeItemsState(this.itemsPreOrder);
-    
-    this.tableStyles.push("table-selected");
-    let box = document.getElementById("table" + this.table.tableId);
-    if(box !== null){
-      let boundingClientRect = box.getBoundingClientRect();
-      
+
+  tableStyle(data : SittingTableClass){
+
+    if(data.tableId === this.tableAndItemsPreOrder.table.tableId){
+      this.table = data;
+      if(this.tableAndItemsPreOrder.table.order !== null){
+        
+        this.isOrder = true;
+      }else{
+        this.isOrder = false;
+      }
+      this.isSelected = true;
+    }else{
+      this.isSelected = false;
     }
     
   }
 
+  updateItemsPreOrder(data : Item[]){
+
+  }
+  tableClick(){
+    //this.tableStyles.push("occupied");
+    //this.selectedTableService.changeTableState(this.table);
+    //this.selectedTableService.changeItemsState(this.itemsPreOrder);
+    this.selectedTableService.changeTableAndPreOrderItems(this.tableAndItemsPreOrder);
+  }
+
+
   calcXDrink(){
-    let box = document.getElementById("table" + this.table.tableId);
+    let box = document.getElementById("table" + this.tableAndItemsPreOrder.table.tableId);
     if(box !== null){
       let boundingClientRect = box.getBoundingClientRect();
       return 0;
@@ -54,7 +77,7 @@ export class TableComponent implements OnInit {
   }
 
   calcYDrink(){
-    let box = document.getElementById("table" + this.table.tableId);
+    let box = document.getElementById("table" + this.tableAndItemsPreOrder.table.tableId);
     if(box !== null){
       let boundingClientRect = box.getBoundingClientRect();
       return 0;
@@ -62,19 +85,6 @@ export class TableComponent implements OnInit {
     }
     
     return 0;
-  }
-
-  getStyleObject(){
-    this.selectedTableService.getTable().subscribe(data => {
-      if(data.tableId === this.table.tableId){
-        this.tableStyles.push("table-selected")
-      }else{
-        if(this.tableStyles.includes("table-selected")){
-          this.removeStyleClass("table-selected");
-        }
-      }
-    });
-    return this.tableStyles;
   }
 
   getTableSize(): void {
@@ -95,11 +105,5 @@ export class TableComponent implements OnInit {
 }
   }
 
-  doesOrderExist():boolean{
-    if(this.table.order){
-      return true;
-    }
-    return false;
-  }
 
 }

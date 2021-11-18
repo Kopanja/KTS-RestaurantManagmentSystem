@@ -45,5 +45,17 @@ public class OrderService {
 		
 		return new Order(orderedItems);
 	}
+
+	public Order findById(Long id) {
+		return orderRepo.findById(id).orElse(null);
+	}
+
+	public Order addItemsToExistingOrder(Order order, List<Item> items) {
+		List<OrderedItem> orderedItems = orderedItemService.createOrderedItemListFromItems(items);
+		for(OrderedItem i : orderedItems) {
+			order.getItems().add(i);
+		}
+		return orderRepo.save(order);
+	}
 	
 }

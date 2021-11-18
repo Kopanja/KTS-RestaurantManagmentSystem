@@ -70,11 +70,19 @@ public class TableService {
 		return tableDTOs;
 	}
 	
-	public TableDTO placeOrderForTable(String tableName, List<Item> items) {
+	public TableDTO placeNewOrderForTable(String tableName, List<Item> items) {
 		Table table = tableRepo.findByName(tableName);
 		Order order = orderService.createOrderFromItemList(items);
 		table.setOrder(order);
 		table = tableRepo.save(table);
+		return this.toDto(table);
+	}
+	
+	public TableDTO updateOrderForTable(String tableName, List<Item> newItems) {
+		Table table = tableRepo.findByName(tableName);
+		Order order = orderService.findById(table.getOrder().getId());
+		order = orderService.addItemsToExistingOrder(order, newItems);
+		table.setOrder(order);
 		return this.toDto(table);
 	}
 	
@@ -97,5 +105,7 @@ public class TableService {
 		tableRepo.deleteEveryNodeAndRel();
 		tableRepo.createDBData();
 	}
+
+	
 
 }

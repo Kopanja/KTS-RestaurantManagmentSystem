@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs"
 import { Item } from '../model/item.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from '../model/order.model';
+import { TableAndItemsPreOrder } from '../model/table-and-items-pre-order.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,39 +12,57 @@ export class SelectedTableService {
 
   selectedTable : SittingTableClass = {};
   itemsPreOrder : Item[] = [];
-  private tableState$ = new BehaviorSubject<SittingTableClass>(this.selectedTable);
-  private itemsPreOrderState$ = new BehaviorSubject<Item[]>(this.itemsPreOrder);
+  tableAndPreOrderItems : TableAndItemsPreOrder = {table : this.selectedTable, items : this.itemsPreOrder};
+  private tableAndPreOrderItems$ = new BehaviorSubject<TableAndItemsPreOrder>(this.tableAndPreOrderItems);
   private readonly path = "http://localhost:8080/api/table";
   constructor(private http : HttpClient) { }
 
   changeTableState(table : SittingTableClass) {
-    this.tableState$.next(table);
-    console.log(table);
+    this.tableAndPreOrderItems$.getValue().table = table;
+    this.changeTableAndPreOrderItems(this.tableAndPreOrderItems$.getValue());
   }
 
+  changeTableAndPreOrderItems(table : TableAndItemsPreOrder){
+    this.tableAndPreOrderItems$.next(table);
+  }
+
+  getTableAndPreOrderItems(){
+    return this.tableAndPreOrderItems$.asObservable();
+  }
   changeItemsState(items : Item[]){
-    this.itemsPreOrderState$.next(items);
+    this.tableAndPreOrderItems$.getValue().items = items;
+    this.changeTableAndPreOrderItems(this.tableAndPreOrderItems$.getValue());
   }
 
-  getTable() {
-    return this.tableState$.asObservable();
-  }
-
-  getItemsPreOrder(){
-    return this.itemsPreOrderState$.asObservable();
-  }
 
   addItemToOrder(item : Item){
-    this.itemsPreOrderState$.getValue().push(item);
+    this.tableAndPreOrderItems$.getValue().items.push(item);
     
   }
 
+  removeItemFromOrder(item : Item){
+    const index = this.tableAndPreOrderItems$.getValue().items.indexOf(item);
+    if (index > -1) {
+      this.tableAndPreOrderItems$.getValue().items.splice(index, 1);
+    }
+  }
   placeOrder(){
-    let items : Item[] = this.itemsPreOrderState$.getValue();
-    this.changeItemsState([]);
-    let path = this.path + "/" + this.tableState$.getValue().name + "/place-order";
+    
+    
+    let items : Item[] = this.tableAndPreOrderItems$.getValue().items;
+    let path = this.path + "/" + this.tableAndPreOrderItems$.getValue().table.name + "/place-order";
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<SittingTableClass>(path, JSON.stringify(items), {headers});
+    this.tableAndPreOrderItems$.getValue().items = [];
+    this.changeTableAndPreOrderItems(this.tableAndPreOrderItems$.getValue());
+    if(this.tableAndPreOrderItems$.getValue().table.order){
+      console.log("Order Exists");
+      console.log(items);
+      //PUT
+      return this.http.put<SittingTableClass>(path, JSON.stringify(items), {headers});
+    }else{   
+      return this.http.post<SittingTableClass>(path, JSON.stringify(items), {headers});
+    }
+    
   }
 
   

@@ -13,6 +13,8 @@ import { OrderComponent } from './order/order.component';
 import { MenuComponent } from './menu/menu.component';
 import { WaiterPageComponent } from './waiter-page/waiter-page.component';
 import { DevPageComponent } from './dev-page/dev-page.component';
+import { CookPageComponent } from './cook-page/cook-page.component';
+import { BartenderPageComponent } from './bartender-page/bartender-page.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { DevPageComponent } from './dev-page/dev-page.component';
     MenuComponent,
     WaiterPageComponent,
     DevPageComponent,
+    CookPageComponent,
+    BartenderPageComponent,
   
   ],
   imports: [

@@ -1,4 +1,4 @@
 <div>
-<img [id] = "'table' + table.tableId" src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50" (click) = "tableClick()"  [ngClass]="getStyleObject()">
-<img *ngIf="doesOrderExist()" src= "../../assets/drinkTableItem.png" class = "notification" alt="Girl in a jacket" width="20" height="20" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXDrink(), 'top.px' : calcYDrink()}">
+<img [id] = "'table' + table.tableId" src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="100" height="100" (click) = "tableClick()"  [ngClass]="{'occupied' : this.isOrder, 'table-selected' : this.isSelected}">
+<img *ngIf="isOrder" src= "../../assets/drinkTableItem.png" class = "notification" alt="Girl in a jacket" width="20" height="20" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXDrink(), 'top.px' : calcYDrink()}">
 </div>

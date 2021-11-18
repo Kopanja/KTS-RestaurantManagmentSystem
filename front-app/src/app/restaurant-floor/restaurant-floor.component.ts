@@ -17,7 +17,6 @@ export class RestaurantFloorComponent implements OnInit {
   ngOnInit(): void {
     this.tableService.getTableLayout().subscribe(data =>{
       this.restaurantLayout = data; 
-      console.log(this.restaurantLayout);
      
     })
   }

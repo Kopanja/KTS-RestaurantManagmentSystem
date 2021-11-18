@@ -40,12 +40,23 @@ public class TableController {
 	
 	
 	@RequestMapping(value="/{name}/place-order",method = RequestMethod.POST)
-    public ResponseEntity<TableDTO> placeOrderToTable(@PathVariable String name, @RequestBody List<ItemDTO> items) {
+    public ResponseEntity<TableDTO> placeNewOrderToTable(@PathVariable String name, @RequestBody List<ItemDTO> items) {
 		List<Item> newItems = new ArrayList<Item>();
 		for(ItemDTO i : items) {
 			newItems.add(itemRepo.findByName(i.getName()));
 		}
-		TableDTO table = tableService.placeOrderForTable(name, newItems);
+		TableDTO table = tableService.placeNewOrderForTable(name, newItems);
+		System.out.println(table);
+        return new ResponseEntity<>(table, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/{name}/place-order",method = RequestMethod.PUT)
+    public ResponseEntity<TableDTO> updateExistingOrder(@PathVariable String name, @RequestBody List<ItemDTO> items) {
+		List<Item> newItems = new ArrayList<Item>();
+		for(ItemDTO i : items) {
+			newItems.add(itemRepo.findByName(i.getName()));
+		}
+		TableDTO table = tableService.updateOrderForTable(name, newItems);
 		System.out.println(table);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
