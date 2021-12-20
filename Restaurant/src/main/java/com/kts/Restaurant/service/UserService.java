@@ -29,7 +29,7 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO create(UserDTO userDTO) {
 
         //if username already exists
         if (userRepository.findByUsername(userDTO.getUsername()) != null) {
@@ -56,6 +56,7 @@ public class UserService {
         // role
         Role role = roleRepository.findByRole(userDTO.getRole());
         newUser.setRole(role);
+        newUser.setActive(true);
         userRepository.save(newUser);
 //        return new UserDTO(newUser.getFirstname(), newUser.getLastname(), newUser.getUsername(), newUser.getPassword(), newUser.getRole().getRole(), newUser.getPin(),salary.getSalaryAmount());
         UserMapper userMapper = new UserMapper();
@@ -64,7 +65,7 @@ public class UserService {
 
 
 
-    public UserDTO updateUser (UserDTO userDTO){
+    public UserDTO update(UserDTO userDTO){
 
         // dobavi User obj iz baze
         // uporedi mu value polja, sta se razlikuje, to treba da se apdejtuje
@@ -94,31 +95,74 @@ public class UserService {
         user.setPin(userDTO.getPin());
         user.setPassword(userDTO.getPassword());
 
-        // salary check if amount of active is changed
         Salary salaryDb =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
+        // salary check if amount of active is changed
+        // or if user got fired, make
         // if true:
         // 1) oldOne active = false && dateTo=now()
         // 2) change in user salaries that one with updated fields
         if(userDTO.getSalaryAmount() != salaryDb.getSalaryAmount()){
-            Salary oldOne = salaryDb;
+            int index = user.getSalaries().indexOf(salaryDb);
             // changes on User at the end
             // old to false
             // and 'to' date
             // add new Salary
-            salaryDb.setSalaryAmount(userDTO.getSalaryAmount());
             salaryDb.setActive(false);
             salaryDb.setTo(new Date());
+            salaryService.saveSalary(salaryDb);
+
             //on User
-            int index = user.getSalaries().indexOf(oldOne);
             user.getSalaries().add(index, salaryDb);
+            Salary newSalary = new Salary(userDTO.getSalaryAmount(), new Date(), null, true);
+            user.getSalaries().add(newSalary);
         }
+
         userRepository.save(user);
         UserMapper userMapper = new UserMapper();
         return userMapper.toDto(user);
-
-
     }
 
 
+    // setting active to false
+    public UserDTO logicalDelete(String username){
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new UserWIthUsernameNotFound();
+        }
+        Salary salary =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
+        int index = user.getSalaries().indexOf(salary);
+        salary.setTo(new Date());
+        salaryService.saveSalary(salary);
+        user.setActive(false);
+        userRepository.save(user);
+        UserMapper userMapper = new UserMapper();
+        return userMapper.toDto(user);
+    }
+
+
+    public List<UserDTO> getAll(){
+        List<UserDTO> dtos = new ArrayList<>();
+        UserMapper userMapper = new UserMapper();
+        List<User> users = userRepository.findAll();
+        for (User user: users) {
+            dtos.add(userMapper.toDto(user));
+        }
+        return dtos;
+    }
+
+    public List<UserDTO> getAllByRole(String roleName){
+        List<UserDTO> dtos = new ArrayList<>();
+        Role role = roleRepository.findByRole(roleName);
+        List<User> users =  userRepository.findAllByRole(role);
+        if(users.size() == 0){
+            return null;
+        }
+        UserMapper userMapper = new UserMapper();
+        for (User u: users) {
+            dtos.add(userMapper.toDto(u));
+        }
+        return dtos;
+
+    }
 }
 

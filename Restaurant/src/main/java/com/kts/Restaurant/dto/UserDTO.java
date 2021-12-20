@@ -21,12 +21,14 @@ public class UserDTO {
 
     private double salaryAmount;
 
+    private Boolean active;
+
     public UserDTO() {
 
     }
 
 
-    public UserDTO(String firstname, String lastname, String username, String password, String role, String pin, double salaryAmount) {
+    public UserDTO(String firstname, String lastname, String username, String password, String role, String pin, double salaryAmount, Boolean active) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -34,6 +36,7 @@ public class UserDTO {
         this.role = role;
         this.pin = pin;
         this.salaryAmount = salaryAmount;
+        this.active = active;
     }
 
     public String getFirstname() {
@@ -90,5 +93,13 @@ public class UserDTO {
 
     public void setSalaryAmount(double salaryAmount) {
         this.salaryAmount = salaryAmount;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

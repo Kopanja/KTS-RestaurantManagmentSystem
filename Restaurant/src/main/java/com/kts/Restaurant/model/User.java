@@ -31,11 +31,13 @@ public class User {
 	@Relationship(type = "HAS_SALARY", direction =  Relationship.Direction.OUTGOING)
 	private List<Salary> salaries;
 
+	private Boolean active;
+
 	public User() {
 		super();
 	}
 
-	public User(Long id, String firstname, String lastname, String username, Role role, String password, String pin, List<Salary> salaries) {
+	public User(Long id, String firstname, String lastname, String username, Role role, String password, String pin, List<Salary> salaries, Boolean active) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -44,6 +46,7 @@ public class User {
 		this.password = password;
 		this.pin = pin;
 		this.salaries = salaries;
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -109,4 +112,13 @@ public class User {
 	public void setSalaries(List<Salary> salaries) {
 		this.salaries = salaries;
 	}
+
+	public Boolean isActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 }
