@@ -102,7 +102,7 @@ export class TableComponent implements OnInit {
     const index = this.tableStyles.indexOf(value);
     if (index > -1) {
       this.tableStyles.splice(index, 1);
-}
+    }
   }
 
 

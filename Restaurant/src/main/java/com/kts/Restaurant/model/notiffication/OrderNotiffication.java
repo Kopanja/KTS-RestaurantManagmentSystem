@@ -1,4 +1,4 @@
-package com.kts.Restaurant.model;
+package com.kts.Restaurant.model.notiffication;
 
 import java.util.List;
 
@@ -8,42 +8,29 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.Relationship.Direction;
 
+import com.kts.Restaurant.model.OrderedItem;
 @Node
-public class Order {
+public class OrderNotiffication implements Notiffication {
 
 	@Id @GeneratedValue
 	private Long id;
 	
-	@Relationship(type = "HAS", direction = Direction.OUTGOING)
-	public List<OrderedItem> items;
-	
-	@Relationship(type = "ORDERED_BY", direction = Direction.OUTGOING)
-	public User user;
-
+	@Relationship(type = "HAS_ORDERED_ITEM", direction = Direction.OUTGOING)
+	private List<OrderedItem> items;
 	
 	
-	public Order() {
-		super();
-	}
-
-
 	
-
-	public Order(List<OrderedItem> items) {
+	public OrderNotiffication(List<OrderedItem> items) {
 		super();
 		this.items = items;
 	}
 
 
-
-
-	public Order(Long id, List<OrderedItem> items, User user) {
+	public OrderNotiffication(Long id, List<OrderedItem> items) {
 		super();
 		this.id = id;
 		this.items = items;
-		this.user = user;
 	}
-
 
 
 	public Long getId() {
@@ -51,11 +38,9 @@ public class Order {
 	}
 
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 
 	public List<OrderedItem> getItems() {
@@ -63,31 +48,17 @@ public class Order {
 	}
 
 
-
 	public void setItems(List<OrderedItem> items) {
 		this.items = items;
 	}
 
 
-
-	public User getUser() {
-		return user;
-	}
-
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
-
-
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", items=" + items + ", user=" + user + "]";
+		return "OrderNotiffication [id=" + id + ", items=" + items + "]";
 	}
 	
 	
 	
+
 }

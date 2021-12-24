@@ -75,6 +75,13 @@ public class OrderedItem {
 	public void setPrepared(boolean prepared) {
 		this.prepared = prepared;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "OrderedItem [id=" + id + ", item=" + item + ", prepared=" + prepared + "]";
+	}
 	
 	
 	
