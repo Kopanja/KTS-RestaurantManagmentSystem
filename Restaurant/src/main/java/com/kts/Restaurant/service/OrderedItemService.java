@@ -37,4 +37,25 @@ public class OrderedItemService {
 		}
 		return orderedItems;
 	}
+	
+	public List<OrderedItemDTO> findAll(){
+		List<OrderedItemDTO> orderedItems = new ArrayList<OrderedItemDTO>();
+		for(OrderedItem item : orderedItemRepo.findAll()) {
+			orderedItems.add(this.toDto(item));
+		}
+		return orderedItems;
+	}
+	
+	public List<OrderedItemDTO>  findDrinkOrderedItemByOrderId(Long orderId){
+		List<OrderedItemDTO> orderedItems = new ArrayList<OrderedItemDTO>();
+		for(OrderedItem item : orderedItemRepo.findDrinkOrderedItemByOrderId(orderId)) {
+			System.out.println("-------------------------------------------------");
+			System.out.println(item);
+			System.out.println("-------------------------------------------------");
+			orderedItems.add(this.toDto(item));
+		}
+		return orderedItems;
+	}
+	
+	
 }
