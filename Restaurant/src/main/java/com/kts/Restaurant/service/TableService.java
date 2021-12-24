@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.Order;
-import com.kts.Restaurant.model.OrderedItem;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.model.TableType;
 import com.kts.Restaurant.repository.TableRepository;
@@ -30,9 +29,6 @@ public class TableService {
 	
 	@Autowired
 	OrderService orderService;
-	
-	@Autowired
-	OrderedItemService orderedItemService;
 	
 	TableMapper mapper = new TableMapper();
 	
@@ -79,31 +75,14 @@ public class TableService {
 		Order order = orderService.createOrderFromItemList(items);
 		table.setOrder(order);
 		table = tableRepo.save(table);
-		
-		orderService.orderNotiffication(table.getOrder());
-		
-		
-		
-		/*Ovde notify bar/kitchen
-		List<OrderedItem> orItems = table.getOrder().getItems();
-		for(OrderedItem i : orItems) {
-			System.out.println(i);
-		}
-		*/
 		return this.toDto(table);
 	}
 	
 	public TableDTO updateOrderForTable(String tableName, List<Item> newItems) {
-		
-		for(Item i : newItems) {
-			System.out.println(i);
-		}
-		
 		Table table = tableRepo.findByName(tableName);
 		Order order = orderService.findById(table.getOrder().getId());
 		order = orderService.addItemsToExistingOrder(order, newItems);
 		table.setOrder(order);
-		
 		return this.toDto(table);
 	}
 	

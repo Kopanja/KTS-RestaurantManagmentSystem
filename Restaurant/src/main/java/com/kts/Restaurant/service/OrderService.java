@@ -26,8 +26,7 @@ public class OrderService {
 	@Autowired
 	ItemService itemService;
 	
-	@Autowired
-	NotifficationService notifficationService;
+	
 	
 	
 	public OrderDTO toDto(Order order) {
@@ -43,7 +42,7 @@ public class OrderService {
 	
 	public Order createOrderFromItemList(List<Item> items) {
 		List<OrderedItem> orderedItems = orderedItemService.createOrderedItemListFromItems(items);
-	
+		
 		return new Order(orderedItems);
 	}
 
@@ -51,12 +50,6 @@ public class OrderService {
 		return orderRepo.findById(id).orElse(null);
 	}
 
-	public void orderNotiffication(Order order) {
-		List<OrderedItem> drinks = orderedItemService.findDrinksFromOrder(order.getId());
-		List<OrderedItem> foods = orderedItemService.findFoodsFromOrder(order.getId());
-		
-		notifficationService.notifyBartender(drinks);
-	}
 	public Order addItemsToExistingOrder(Order order, List<Item> items) {
 		List<OrderedItem> orderedItems = orderedItemService.createOrderedItemListFromItems(items);
 		for(OrderedItem i : orderedItems) {

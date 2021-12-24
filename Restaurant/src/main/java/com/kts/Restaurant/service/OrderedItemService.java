@@ -37,12 +37,4 @@ public class OrderedItemService {
 		}
 		return orderedItems;
 	}
-	
-	public List<OrderedItem> findDrinksFromOrder(Long orderId){
-		return orderedItemRepo.findDrinksFromOrder(orderId);
-	}
-	
-	public List<OrderedItem> findFoodsFromOrder(Long orderId){
-		return orderedItemRepo.findFoodsFromOrder(orderId);
-	}
 }
