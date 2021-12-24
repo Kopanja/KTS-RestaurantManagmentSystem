@@ -30,6 +30,9 @@ public class TableService {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	WebSocketService webSocketService;
+	
 	TableMapper mapper = new TableMapper();
 	
 	public Table findByName(String name) {
@@ -75,6 +78,7 @@ public class TableService {
 		Order order = orderService.createOrderFromItemList(items);
 		table.setOrder(order);
 		table = tableRepo.save(table);
+		webSocketService.sendDrinkOrder(order.getId());
 		return this.toDto(table);
 	}
 	

@@ -8,4 +8,7 @@ export class Order {
     constructor() {
         this.items = [];
       }
+    setItems(items : OrderedItem[]):void{
+      this.items = items;
+    }
 }

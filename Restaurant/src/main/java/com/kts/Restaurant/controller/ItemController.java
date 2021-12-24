@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kts.Restaurant.dto.ItemDTO;
+import com.kts.Restaurant.dto.OrderedItemDTO;
 import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Item;
@@ -21,6 +23,7 @@ import com.kts.Restaurant.repository.ItemRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.repository.ОrderRepository;
 import com.kts.Restaurant.service.ItemService;
+import com.kts.Restaurant.service.OrderedItemService;
 
 @RestController
 @RequestMapping(value="api/item")
@@ -38,14 +41,22 @@ public class ItemController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	OrderedItemService orderedItemService;
 	
 	
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ItemDTO>> getTableLayout() {
+    public ResponseEntity<List<ItemDTO>> getItemList() {
         
-		List<ItemDTO> tables = itemService.getAll();
-        return new ResponseEntity<>(tables, HttpStatus.OK);
+		List<ItemDTO> items = itemService.getAll();
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value= "/{orderId}/ordered-items",method = RequestMethod.GET)
+    public ResponseEntity<List<OrderedItemDTO>> getOrderedItemst(@PathVariable Long orderId) {
+        
+		List<OrderedItemDTO> orderedItems = orderedItemService.findAll();
+        return new ResponseEntity<>(orderedItems, HttpStatus.OK);
     }
 }
