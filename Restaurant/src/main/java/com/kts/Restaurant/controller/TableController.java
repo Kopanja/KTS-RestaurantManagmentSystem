@@ -22,6 +22,7 @@ import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.repository.ItemRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.service.TableService;
+import com.kts.Restaurant.service.WaiterService;
 import com.kts.Restaurant.util.mapper.ItemMapper;
 
 
@@ -36,6 +37,9 @@ public class TableController {
 	ItemRepository itemRepo;
 	
 	@Autowired
+	WaiterService waiterService;
+	
+	@Autowired
 	UserRepository userRepo;
 	
 	
@@ -45,7 +49,7 @@ public class TableController {
 		for(ItemDTO i : items) {
 			newItems.add(itemRepo.findByName(i.getName()));
 		}
-		TableDTO table = tableService.placeNewOrderForTable(name, newItems);
+		TableDTO table = waiterService.placeNewOrderForTable(name, newItems);
 		System.out.println(table);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
@@ -56,7 +60,7 @@ public class TableController {
 		for(ItemDTO i : items) {
 			newItems.add(itemRepo.findByName(i.getName()));
 		}
-		TableDTO table = tableService.updateOrderForTable(name, newItems);
+		TableDTO table = waiterService.updateOrderForTable(name, newItems);
 		System.out.println(table);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }

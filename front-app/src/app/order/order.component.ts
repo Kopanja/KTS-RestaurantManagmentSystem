@@ -3,6 +3,9 @@ import { SittingTableClass } from '../model/sitting-table-class.model';
 import { SelectedTableService } from '../services/selected-table.service';
 import { Order } from '../model/order.model';
 import { Item } from '../model/item.model';
+
+
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -20,8 +23,10 @@ export class OrderComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
+     
   }
+
+
 
   calcPrice(){
     let price = 0;

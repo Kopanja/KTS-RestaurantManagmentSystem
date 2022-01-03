@@ -4,11 +4,13 @@ import { CreatorToolComponent } from './creator-tool/creator-tool.component';
 import { RestaurantFloorComponent } from './restaurant-floor/restaurant-floor.component';
 import { WaiterPageComponent } from './waiter-page/waiter-page.component';
 import { BartenderPageComponent } from './bartender-page/bartender-page.component';
+import { CookPageComponent } from './cook-page/cook-page.component';
 
 const routes: Routes = [
   {path: 'floor-layout', component: WaiterPageComponent},
   {path: 'create-layout', component: CreatorToolComponent},
-  {path: 'bartender', component: BartenderPageComponent}
+  {path: 'bartender', component: BartenderPageComponent},
+  {path : 'cook', component: CookPageComponent}
 ];
 
 @NgModule({

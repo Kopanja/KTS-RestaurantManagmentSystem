@@ -16,4 +16,10 @@ public interface OrderedItemRepository extends Neo4jRepository<OrderedItem, Long
 			+ "RETURN m,r,i")
 	List<OrderedItem> findDrinkOrderedItemByOrderId(Long orderId);
 
+	@Query("MATCH (n:Order)-[:HAS]->(m:OrderedItem)-[r:IS_ITEM]->(i:FoodItem)\r\n"
+			+ "WHERE id(n) = $orderId\r\n"
+			+ "RETURN m,r,i")
+	List<OrderedItem> findFoodOrderedItemByOrderId(Long orderId);
+	
+
 }

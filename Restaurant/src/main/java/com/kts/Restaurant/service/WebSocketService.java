@@ -19,5 +19,13 @@ public class WebSocketService {
 	public void sendDrinkOrder(Long orderId) {
 		messagingTemplate.convertAndSend("/topic/bartender", orderId);
 	}
+	
+	public void sendFoodOrder(Long orderId) {
+		messagingTemplate.convertAndSend("/topic/cook", orderId);
+	}
+	
+	public void sendOrderedItemChange(OrderDTO order) {
+		messagingTemplate.convertAndSend("/topic/table", order);
+	}
 
 }

@@ -1,0 +1,10 @@
+<div class = "container-column order-wrapper">
+    <div>{{order.tableName}}</div>
+    <div class = "item-wrapper container-row" *ngFor="let item of order.items" >
+        <div class = "item align-center">{{item.item.name}}</div>
+        <div class = "item align-left">
+            <input type="checkbox" (click)="checkBoxClicked(item)" [checked] = "item.prepared">
+            <span class="checkmark"></span>
+        </div>
+    </div>
+</div>

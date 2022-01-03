@@ -21,7 +21,7 @@ public class OrderedItemService {
 	ItemService itemService;
 	
 	public OrderedItemDTO toDto(OrderedItem item) {
-		return new OrderedItemDTO(itemService.toDto(item.getItem()), item.isPrepared());
+		return new OrderedItemDTO(item.getId(), itemService.toDto(item.getItem()), item.isPrepared());
 	}
 	
 	public OrderedItem createOrderedItemFromItem(Item item){
@@ -49,9 +49,28 @@ public class OrderedItemService {
 	public List<OrderedItemDTO>  findDrinkOrderedItemByOrderId(Long orderId){
 		List<OrderedItemDTO> orderedItems = new ArrayList<OrderedItemDTO>();
 		for(OrderedItem item : orderedItemRepo.findDrinkOrderedItemByOrderId(orderId)) {
-			System.out.println("-------------------------------------------------");
-			System.out.println(item);
-			System.out.println("-------------------------------------------------");
+			orderedItems.add(this.toDto(item));
+		}
+		return orderedItems;
+	}
+	
+	public void orderedItemChangePrepared(Long id) {
+
+		OrderedItem orderedItem = orderedItemRepo.findById(id).orElse(null);
+		if(orderedItem != null) {
+			if(orderedItem.isPrepared()) {
+				orderedItem.setPrepared(false);
+			}else {
+				orderedItem.setPrepared(true);
+			}
+			
+			orderedItemRepo.save(orderedItem);
+		}
+	}
+
+	public List<OrderedItemDTO> findFoodOrderedItemByOrderId(Long orderId) {
+		List<OrderedItemDTO> orderedItems = new ArrayList<OrderedItemDTO>();
+		for(OrderedItem item : orderedItemRepo.findFoodOrderedItemByOrderId(orderId)) {
 			orderedItems.add(this.toDto(item));
 		}
 		return orderedItems;

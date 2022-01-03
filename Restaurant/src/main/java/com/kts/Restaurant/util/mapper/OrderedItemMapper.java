@@ -15,7 +15,7 @@ public class OrderedItemMapper implements DTOMapperInterface<OrderedItem, Ordere
 
 	@Override
 	public OrderedItemDTO toDto(OrderedItem entity) {
-		return new OrderedItemDTO(itemMapper.toDto(entity.getItem()), entity.isPrepared());
+		return new OrderedItemDTO(entity.getId(), itemMapper.toDto(entity.getItem()), entity.isPrepared());
 	}
 
 }

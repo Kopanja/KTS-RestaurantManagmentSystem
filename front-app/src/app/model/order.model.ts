@@ -2,7 +2,9 @@ import { OrderedItem } from "./ordered-item.model";
 
 
 export class Order {
+    orderId: number;
     items: OrderedItem[];
+    tableName : string;
 
 
     constructor() {

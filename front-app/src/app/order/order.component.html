@@ -2,9 +2,9 @@
     <p class = "text item">Table: {{tableName}}</p>
     <div class = "order-box container-column item">
         <div class = "container-row item" *ngFor="let item of order?.items">
-            <p class = "text item order-item-text">.</p>
-            <p class = "text item order-item-text">{{item.item.name}}</p>
-            <p class = "text item order-item-text">{{item.item.price}}</p>   
+            <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">.</p>
+            <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.name}}</p>
+            <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.price}}</p>   
         </div>
         
         <div class = "container-row item" *ngFor="let item of itemsPreOrder">

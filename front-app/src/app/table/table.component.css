@@ -35,3 +35,11 @@
 .notification{
     background-color: #45FF04;
 }
+
+.container {
+    display: flex; 
+    flex-direction: row;
+  }
+  .item {
+    flex-basis: auto; /* default auto */
+  }

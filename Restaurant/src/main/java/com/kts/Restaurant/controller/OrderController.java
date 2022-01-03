@@ -17,8 +17,11 @@ import com.kts.Restaurant.dto.OrderDTO;
 import com.kts.Restaurant.dto.OrderedItemDTO;
 import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.Item;
+import com.kts.Restaurant.model.Order;
+import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.service.OrderService;
 import com.kts.Restaurant.service.OrderedItemService;
+import com.kts.Restaurant.service.TableService;
 
 @RestController
 @RequestMapping(value="api/order")
@@ -28,14 +31,47 @@ public class OrderController {
 	OrderService orderService;
 	
 	@Autowired
+	TableService tableService;
+	
+	@Autowired
 	OrderedItemService orderedItemService;
 	
 	@RequestMapping(value="/{orderId}/drinks",method = RequestMethod.GET)
-    public ResponseEntity<List<OrderedItemDTO>> placeNewOrderToTable(@PathVariable Long orderId) {
+    public ResponseEntity<OrderDTO> findDrinksInOrder(@PathVariable Long orderId) {
 		
 		List<OrderedItemDTO> orderedDrinks = orderedItemService.findDrinkOrderedItemByOrderId(orderId);
+		String tableName = tableService.findTableByOrderId(orderId).getName();
+		OrderDTO dto = new OrderDTO();
+		dto.setItems(orderedDrinks);
+		dto.setTableName(tableName);
+		dto.setOrderId(orderId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/{orderId}/foods",method = RequestMethod.GET)
+    public ResponseEntity<OrderDTO> findFoodsInOrder(@PathVariable Long orderId) {
 		
-        return new ResponseEntity<>(orderedDrinks, HttpStatus.OK);
+		List<OrderedItemDTO> orderedDrinks = orderedItemService.findFoodOrderedItemByOrderId(orderId);
+		String tableName = tableService.findTableByOrderId(orderId).getName();
+		OrderDTO dto = new OrderDTO();
+		dto.setItems(orderedDrinks);
+		dto.setTableName(tableName);
+		dto.setOrderId(orderId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/{orderId}",method = RequestMethod.GET)
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
+		Order order = orderService.findById(orderId);
+		OrderDTO dto = orderService.toDto(order);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value="/ordered-item-made/{orderId}",method = RequestMethod.PUT)
+    public ResponseEntity<String> drinkMade(@PathVariable Long orderId, @RequestBody OrderDTO order) {
+		
+		orderService.orderedItemMade(orderId, order);
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 	
 	

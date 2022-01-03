@@ -1,19 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Item } from '../model/item.model';
 import { Order } from '../model/order.model';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { TableAndItemsPreOrder } from '../model/table-and-items-pre-order.model';
 import { SelectedTableService } from '../services/selected-table.service';
-
+import { WebSocketService } from '../services/web-socket.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges{
 
   @Input() table : SittingTableClass;
+  @Output()
+  someEvent = new EventEmitter<SittingTableClass>();
   public tableStyles : string[] = [];
   public itemsPreOrder : Item[] = [];
   public tableAndItemsPreOrder : TableAndItemsPreOrder;
@@ -21,9 +24,12 @@ export class TableComponent implements OnInit {
   public isSelected : boolean = false;
 
   
-  constructor(private selectedTableService : SelectedTableService) {
+  constructor(private selectedTableService : SelectedTableService, private webSocketService : WebSocketService, private http : HttpClient) {
     
    }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("fired");
+  }
 
   ngOnInit(): void {
     this.getTableSize();
@@ -32,15 +38,20 @@ export class TableComponent implements OnInit {
     if(this.table.order){
       this.isOrder = true;
     }
+    
     //this.getStyleObject();
     
   }
+
+
 
 
   tableStyle(data : SittingTableClass){
 
     if(data.tableId === this.tableAndItemsPreOrder.table.tableId){
       this.table = data;
+     // console.log(this.table);
+      this.someEvent.emit(this.table);
       if(this.tableAndItemsPreOrder.table.order !== null){
         
         this.isOrder = true;
@@ -54,36 +65,56 @@ export class TableComponent implements OnInit {
     
   }
 
-  updateItemsPreOrder(data : Item[]){
 
-  }
   tableClick(){
-    //this.tableStyles.push("occupied");
-    //this.selectedTableService.changeTableState(this.table);
-    //this.selectedTableService.changeItemsState(this.itemsPreOrder);
+    console.log(this.table.order);
     this.selectedTableService.changeTableAndPreOrderItems(this.tableAndItemsPreOrder);
+    
   }
 
+  //Treba da se napravi po kategorijama kada budu implementirane
+  countPreparedDrinks(){
+    let count = 0;
+    this.table.order?.items.forEach(element => {
+      if(element.prepared){
+        count = count + 1;
+      }
+    });
+    return count;
+  }
+
+  countPreparedFoods(){
+    let count = 0;
+    this.table.order?.items.forEach(element => {
+      if(element.prepared){
+        count = count + 1;
+      }
+    });
+    return count;
+  }
 
   calcXDrink(){
-    let box = document.getElementById("table" + this.tableAndItemsPreOrder.table.tableId);
-    if(box !== null){
-      let boundingClientRect = box.getBoundingClientRect();
-      return 0;
+      if(this.table.icon === "tableMedium.png"){
+        return -25;
+      }
+      return -10;
+      //return (boundingClientRect.x)
+    }
+
+    calcXFood(){
+      if(this.table.icon === "tableMedium.png"){
+        return 90;
+      }
+      return 70;
       //return (boundingClientRect.x)
     }
     
-    return 0;
-  }
+  
 
   calcYDrink(){
-    let box = document.getElementById("table" + this.tableAndItemsPreOrder.table.tableId);
-    if(box !== null){
-      let boundingClientRect = box.getBoundingClientRect();
-      return 0;
-      //return (boundingClientRect.y)
-    }
-    
+    return 0;
+  }
+  calcYFood(){
     return 0;
   }
 

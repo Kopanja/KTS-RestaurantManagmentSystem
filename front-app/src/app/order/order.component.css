@@ -32,8 +32,11 @@ color: #000000;
     flex-basis: auto; /* default auto */
   }
 
-.order-item-text{
+.text-not-prepared{
   color: #C8C000;
+}
+.text-prepared{
+  color: #1CC800;
 }
 .order-box{
   background: #FFFFFF;

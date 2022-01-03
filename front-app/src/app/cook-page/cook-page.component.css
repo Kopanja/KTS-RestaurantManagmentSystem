@@ -1,0 +1,41 @@
+.div-body {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: #00509D;
+}
+
+.container {
+    display: flex; 
+    flex-direction: column;
+  }
+
+  .container2 {
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .item {
+    flex-basis: auto; /* default auto */
+  }
+.div-border {
+    border-radius: 25px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    width: 90%;
+    height: 90%;
+    border: 2px solid #FFFF;;
+    
+}
+.text{
+    margin-top: 3%;
+    font-weight: 900;
+    font-size: 40px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.015em;
+    color: #FFFF;
+    }

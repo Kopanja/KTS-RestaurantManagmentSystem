@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kts.Restaurant.dto.TableDTO;
-import com.kts.Restaurant.model.Item;
-import com.kts.Restaurant.model.Order;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.model.TableType;
 import com.kts.Restaurant.repository.TableRepository;
@@ -29,9 +27,6 @@ public class TableService {
 	
 	@Autowired
 	OrderService orderService;
-	
-	@Autowired
-	WebSocketService webSocketService;
 	
 	TableMapper mapper = new TableMapper();
 	
@@ -65,7 +60,10 @@ public class TableService {
 				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder()), t.getName()));
 
 			}else {
-				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), t.getName()));
+				TableDTO dto = new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), t.getName());
+				//dto.setOrder(new OrderDTO());
+				tableDTOs.add(dto);
+			
 
 			}
 			
@@ -73,22 +71,7 @@ public class TableService {
 		return tableDTOs;
 	}
 	
-	public TableDTO placeNewOrderForTable(String tableName, List<Item> items) {
-		Table table = tableRepo.findByName(tableName);
-		Order order = orderService.createOrderFromItemList(items);
-		table.setOrder(order);
-		table = tableRepo.save(table);
-		webSocketService.sendDrinkOrder(order.getId());
-		return this.toDto(table);
-	}
 	
-	public TableDTO updateOrderForTable(String tableName, List<Item> newItems) {
-		Table table = tableRepo.findByName(tableName);
-		Order order = orderService.findById(table.getOrder().getId());
-		order = orderService.addItemsToExistingOrder(order, newItems);
-		table.setOrder(order);
-		return this.toDto(table);
-	}
 	
 	public TableDTO toDto(Table table) {
 		return new TableDTO(table.getId(), table.getType().getId(), table.getX(), table.getY(),table.getType().getNumOfSeats(), table.getType().getIcon(), orderService.toDto(table.getOrder()), table.getName());
@@ -103,6 +86,11 @@ public class TableService {
 	
 	public Table save(Table table) {
 		return tableRepo.save(table);
+	}
+	
+	public Table findTableByOrderId(Long orderId) {
+		return tableRepo.findTableByOrderId(orderId);
+		
 	}
 	
 	public void resetDB() {

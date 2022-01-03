@@ -1,4 +1,11 @@
 <div>
-<img [id] = "'table' + table.tableId" src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="100" height="100" (click) = "tableClick()"  [ngClass]="{'occupied' : this.isOrder, 'table-selected' : this.isSelected}">
-<img *ngIf="isOrder" src= "../../assets/drinkTableItem.png" class = "notification" alt="Girl in a jacket" width="20" height="20" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXDrink(), 'top.px' : calcYDrink()}">
+    <img [id] = "'table' + table.tableId" src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="100" height="100" (click) = "tableClick()"  [ngClass]="{'occupied' : this.isOrder, 'table-selected' : this.isSelected}">
+    <div  *ngIf="isOrder" class="container" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXDrink(), 'top.px' : calcYDrink()}">
+        <img src= "../../assets/drinkTableItem.png" class = "notification item" alt="Girl in a jacket" width="20" height="20">
+        <p class = "item">{{countPreparedDrinks()}}/{{table.order?.items?.length}}</p>
+    </div>
+    <div  *ngIf="isOrder" class="container" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXFood(), 'top.px' : calcYFood()}">
+        <p class = "item">{{countPreparedFoods()}}/{{table.order?.items?.length}}</p>
+        <img src= "../../assets/foodTableItem.png" class = "notification item" alt="Girl in a jacket" width="20" height="20">
+    </div>
 </div>

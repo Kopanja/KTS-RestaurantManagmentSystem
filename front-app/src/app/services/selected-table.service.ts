@@ -34,6 +34,9 @@ export class SelectedTableService {
     this.changeTableAndPreOrderItems(this.tableAndPreOrderItems$.getValue());
   }
 
+  getTableState(){
+    return this.tableAndPreOrderItems$.getValue().table;
+  }
 
   addItemToOrder(item : Item){
     this.tableAndPreOrderItems$.getValue().items.push(item);

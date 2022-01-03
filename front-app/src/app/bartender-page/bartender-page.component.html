@@ -1,6 +1,11 @@
 <div class = "div-body container">
     <p class = "item text">DRINK ORDERS</p>
     <div class = "div-border container2 item">
-        <div class = "item" *ngFor="let order of orders" >{{order}}</div>
+        <div class = "container item" *ngFor="let order of orders" >
+            <app-order-card [order] = "order"></app-order-card>
+        </div>
     </div>
 </div>
+
+
+

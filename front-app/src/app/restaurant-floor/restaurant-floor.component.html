@@ -1,7 +1,7 @@
 
 <div id="restaurant-floor" class = "item">
     <div *ngFor = "let table of restaurantLayout" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXPosition(table), 'top.px' : calcYPosition(table)}">   
-        <app-table [table] = "table"></app-table>
+        <app-table [table] = "table" (someEvent)="updateChild($event)"></app-table>
         <!--img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50"-->   
     </div>
     

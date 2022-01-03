@@ -2,6 +2,7 @@ package com.kts.Restaurant.dto;
 
 public class OrderedItemDTO {
 
+	private Long id;
 	private ItemDTO item;
 	private boolean prepared;
 	
@@ -15,8 +16,9 @@ public class OrderedItemDTO {
 
 
 
-	public OrderedItemDTO(ItemDTO item, boolean prepared) {
+	public OrderedItemDTO(Long id,ItemDTO item, boolean prepared) {
 		super();
+		this.id = id;
 		this.item = item;
 		this.prepared = prepared;
 	}
@@ -47,6 +49,28 @@ public class OrderedItemDTO {
 
 	public void setPrepared(boolean prepared) {
 		this.prepared = prepared;
+	}
+
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "OrderedItemDTO [id=" + id + ", item=" + item + ", prepared=" + prepared + "]";
 	}
 	
 	

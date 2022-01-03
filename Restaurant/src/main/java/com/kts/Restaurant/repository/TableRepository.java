@@ -16,6 +16,10 @@ public interface TableRepository extends Neo4jRepository<Table, Long> {
 	
 	public Table findByName(String name);
 	
+	@Query("MATCH (n:Table)-[:HAS_ORDER]->(o:Order)\r\n"
+			+ "WHERE id(o) = $orderId\r\n"
+			+ "RETURN n")
+	public Table findTableByOrderId(Long orderId);
 	
 	@Query("CREATE (tl:TableType {icon : \"tableLarge.png\", name : \"6seat\", numOfSeats : 6})\r\n"
 			+ "CREATE (tm:TableType {icon : \"tableMedium.png\", name : \"4seat\", numOfSeats : 4})\r\n"
@@ -47,4 +51,7 @@ public interface TableRepository extends Neo4jRepository<Table, Long> {
 			+ "MERGE (tl2)-[:IS_TYPE]->(tl)\r\n"
 			+ "MERGE (tl3)-[:IS_TYPE]->(tl)")
 	public void createDBData();
+
+
+	
 }

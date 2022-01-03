@@ -24,6 +24,9 @@ export class DevPageComponent implements OnInit {
   changeToBartender(){
     this.router.navigate(["/bartender"]);
   }
+  changeToCook(){
+    this.router.navigate(["/cook"]);
+  }
   resetDB(){
     this.http.get<string>("http://localhost:8080/api/restaurant/reset-db").subscribe(data => {console.log(data)});
   }

@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.OrderDTO;
 import com.kts.Restaurant.dto.OrderedItemDTO;
+import com.kts.Restaurant.model.DrinkItem;
+import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.Order;
 import com.kts.Restaurant.model.OrderedItem;
+import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.repository.ОrderRepository;
 
 @Service
@@ -26,17 +29,23 @@ public class OrderService {
 	@Autowired
 	ItemService itemService;
 	
+	@Autowired
+	TableService tableService;
 	
+	@Autowired
+	WebSocketService webSocketService;
 	
 	
 	public OrderDTO toDto(Order order) {
 		List<OrderedItem> items = order.getItems();
 		List<OrderedItemDTO> itemDTOs = new ArrayList<OrderedItemDTO>();
 		for(OrderedItem i : items) {
+			System.out.println(i);
 			itemDTOs.add(orderedItemService.toDto(i));
 			
 		}
-		return new OrderDTO(itemDTOs);
+		Table table = tableService.findTableByOrderId(order.getId());
+		return new OrderDTO(order.getId(),table.getName(), itemDTOs);
 		
 	}
 	
@@ -57,6 +66,68 @@ public class OrderService {
 			order.getItems().add(i);
 		}
 		return orderRepo.save(order);
+	}
+	
+	public List<OrderDTO> getAllOrdersWithNotPreparedDrinkItems() {
+		List<OrderDTO> ordersDTOs = new ArrayList<OrderDTO>();
+		List<Order> orders = orderRepo.getAllOrdersWithDrinkItems();
+		for(Order o : orders) {
+			for(OrderedItem oi : o.getItems()) {
+				if(!oi.isPrepared()) {
+					ordersDTOs.add(this.toDto(o));
+					break;
+				}
+			}
+			
+		}
+		return ordersDTOs;
+	}
+	
+	public boolean doesContainDrink(Order order) {
+		for(OrderedItem item : order.getItems()) {
+			if(item.getItem() instanceof DrinkItem) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public OrderDTO getOrderByTableName(String tableName) {
+		return this.toDto(orderRepo.findByTableName(tableName));
+	}
+
+	public List<OrderDTO> getAllOrdersWithNotPreparedFoodItems() {
+		List<OrderDTO> ordersDTOs = new ArrayList<OrderDTO>();
+		List<Order> orders = orderRepo.getAllOrdersWithFoodItems();
+		for(Order o : orders) {
+			for(OrderedItem oi : o.getItems()) {
+				if(!oi.isPrepared()) {
+					ordersDTOs.add(this.toDto(o));
+					break;
+				}
+			}
+			
+		}
+		return ordersDTOs;
+	}
+	
+	public void orderedItemMade(Long orderedItemId, OrderDTO order) {
+		orderedItemService.orderedItemChangePrepared(orderedItemId);
+		System.out.println(order);
+		String tableName = order.getTableName();
+		OrderDTO dto = this.getOrderByTableName(tableName);
+		System.out.println(dto);
+		webSocketService.sendOrderedItemChange(dto);
+		
+	}
+
+	public boolean doesContainFood(Order order) {
+		for(OrderedItem item : order.getItems()) {
+			if(item.getItem() instanceof FoodItem) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
