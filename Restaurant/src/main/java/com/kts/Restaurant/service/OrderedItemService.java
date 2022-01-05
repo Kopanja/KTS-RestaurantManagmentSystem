@@ -76,5 +76,9 @@ public class OrderedItemService {
 		return orderedItems;
 	}
 	
+	public void delete(OrderedItem item) {
+		orderedItemRepo.delete(item);
+	}
+	
 	
 }

@@ -49,9 +49,7 @@ export class SelectedTableService {
       this.tableAndPreOrderItems$.getValue().items.splice(index, 1);
     }
   }
-  placeOrder(){
-    
-    
+  placeOrder(){ 
     let items : Item[] = this.tableAndPreOrderItems$.getValue().items;
     let path = this.path + "/" + this.tableAndPreOrderItems$.getValue().table.name + "/place-order";
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -66,6 +64,13 @@ export class SelectedTableService {
       return this.http.post<SittingTableClass>(path, JSON.stringify(items), {headers});
     }
     
+  }
+
+  billOrder(){
+    let items : Item[] = this.tableAndPreOrderItems$.getValue().items;
+    let path = this.path + "/" + this.tableAndPreOrderItems$.getValue().table.name + "/bill-order";
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<SittingTableClass>(path, JSON.stringify(items), {headers});
   }
 
   

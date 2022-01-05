@@ -50,7 +50,6 @@ public class TableController {
 			newItems.add(itemRepo.findByName(i.getName()));
 		}
 		TableDTO table = waiterService.placeNewOrderForTable(name, newItems);
-		System.out.println(table);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
 	
@@ -61,9 +60,17 @@ public class TableController {
 			newItems.add(itemRepo.findByName(i.getName()));
 		}
 		TableDTO table = waiterService.updateOrderForTable(name, newItems);
-		System.out.println(table);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
+	
+	@RequestMapping(value="/{name}/bill-order",method = RequestMethod.POST)
+    public ResponseEntity<Boolean> billOrder(@PathVariable String name, @RequestBody List<ItemDTO> items) {
+		System.out.println("Usao u Bill Order komandu");
+		waiterService.billOrder(name,items);
+        return new ResponseEntity<>(true,HttpStatus.OK);
+    }
+	
+	
 	
 	@RequestMapping(value="/deleteAll",method = RequestMethod.DELETE)
     public ResponseEntity<Table> deleteAll() {

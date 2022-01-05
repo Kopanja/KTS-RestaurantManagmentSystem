@@ -50,4 +50,22 @@ export class OrderComponent implements OnInit {
   deleteClick(item : Item){
     this.selectedTableService.removeItemFromOrder(item);
   }
+
+  isOrderComplete():boolean{
+    if(this.order === null || this.order === undefined){
+      return false;
+    }
+    let isComplete = true;
+    this.order?.items.forEach(item => {
+      if(!item.prepared){
+        isComplete = false;
+      }
+    });
+    return isComplete;
+  }
+  
+  billOrderClicked(){
+    this.selectedTableService.billOrder().subscribe();
+    console.log("Clicked");
+  }
 }

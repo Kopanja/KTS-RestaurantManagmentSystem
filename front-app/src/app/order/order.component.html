@@ -17,4 +17,7 @@
     </div>
     <p class = "text item">Total Price: {{calcPrice()}}</p>
     <button (click)="placeOrderClicked()">Place Order</button>
+  
+    <button *ngIf="isOrderComplete()" (click) ="billOrderClicked()">Bill Order</button>
+  
 </div>

@@ -40,7 +40,6 @@ public class OrderService {
 		List<OrderedItem> items = order.getItems();
 		List<OrderedItemDTO> itemDTOs = new ArrayList<OrderedItemDTO>();
 		for(OrderedItem i : items) {
-			System.out.println(i);
 			itemDTOs.add(orderedItemService.toDto(i));
 			
 		}
@@ -113,10 +112,10 @@ public class OrderService {
 	
 	public void orderedItemMade(Long orderedItemId, OrderDTO order) {
 		orderedItemService.orderedItemChangePrepared(orderedItemId);
-		System.out.println(order);
+	
 		String tableName = order.getTableName();
 		OrderDTO dto = this.getOrderByTableName(tableName);
-		System.out.println(dto);
+	
 		webSocketService.sendOrderedItemChange(dto);
 		
 	}
@@ -128,6 +127,17 @@ public class OrderService {
 			}
 		}
 		return false;
+	}
+	
+	public void deleteOrderAndItsOrderedItems(Order order) {
+		for(OrderedItem oItem : order.getItems()) {
+			orderedItemService.delete(oItem);
+		}
+		this.delete(order);
+	}
+	
+	public void delete(Order order) {
+		orderRepo.delete(order);
 	}
 	
 }

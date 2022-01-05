@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.TableDTO;
+import com.kts.Restaurant.model.Bill;
 import com.kts.Restaurant.model.DrinkItem;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.Order;
+import com.kts.Restaurant.model.OrderedItem;
 import com.kts.Restaurant.model.Table;
 
 @Service
@@ -20,6 +23,9 @@ public class WaiterService {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	BillService billService;
 	
 	@Autowired
 	WebSocketService webSocketService;
@@ -60,5 +66,14 @@ public class WaiterService {
 			webSocketService.sendFoodOrder(order.getId());
 		}
 		return tableService.toDto(table);
+	}
+	
+	public void billOrder(String tableName, List<ItemDTO> items) {
+		Table table = tableService.findByName(tableName);
+		Order order = orderService.findById(table.getOrder().getId());
+		Bill bill = billService.createBillFromOrder(order);
+		orderService.deleteOrderAndItsOrderedItems(order);
+		System.out.println(bill);
+		
 	}
 }
