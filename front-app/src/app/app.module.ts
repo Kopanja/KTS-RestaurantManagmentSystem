@@ -16,6 +16,9 @@ import { DevPageComponent } from './dev-page/dev-page.component';
 import { CookPageComponent } from './cook-page/cook-page.component';
 import { BartenderPageComponent } from './bartender-page/bartender-page.component';
 import { OrderCardComponent } from './order-card/order-card.component';
+import { ManagerPageComponent } from './manager-page/manager-page.component';
+import { HeaderTitleComponent } from './util/header-title/header-title.component';
+import { ManagerPageSideMenuComponent } from './manager-page/manager-page-side-menu/manager-page-side-menu.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { OrderCardComponent } from './order-card/order-card.component';
     CookPageComponent,
     BartenderPageComponent,
     OrderCardComponent,
+    ManagerPageComponent,
+    HeaderTitleComponent,
+    ManagerPageSideMenuComponent,
   
   ],
   imports: [

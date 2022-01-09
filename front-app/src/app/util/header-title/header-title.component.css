@@ -1,0 +1,10 @@
+.mainHeaderTitle {
+    background-color: #00509D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    text-transform: uppercase;
+    padding: 20px;
+}

@@ -27,6 +27,11 @@ export class DevPageComponent implements OnInit {
   changeToCook(){
     this.router.navigate(["/cook"]);
   }
+
+  managerMenu() {
+    this.router.navigate(['/manager'])
+  }
+
   resetDB(){
     this.http.get<string>("http://localhost:8080/api/restaurant/reset-db").subscribe(data => {console.log(data)});
   }

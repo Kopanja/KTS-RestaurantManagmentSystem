@@ -1,0 +1,16 @@
+.managerPage {
+    display: flex;
+}
+
+.managerPage > manager-page-side-menu {
+    background-color: #C4C4C4;
+}
+
+.managerPage > .managerPageMainWrapper {
+    background-color: red;
+    color: white;
+}
+
+.managerPageMainWrapper {
+    width: 100%;
+}
