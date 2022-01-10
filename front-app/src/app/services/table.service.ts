@@ -17,8 +17,8 @@ export class TableService {
 
   }
 
-  getTableLayout():Observable<SittingTableClass[]>{
-    return this.http.get<SittingTableClass[]>(this.path + "/table-layout");
+  getTableLayout(floorName:string):Observable<SittingTableClass[]>{
+    return this.http.get<SittingTableClass[]>(this.path + "/" + floorName + "/table-layout");
   }
 
   deleteTableLayout(){

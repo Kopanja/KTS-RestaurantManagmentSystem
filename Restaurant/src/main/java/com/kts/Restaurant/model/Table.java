@@ -138,6 +138,13 @@ public class Table {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Table [id=" + id + ", name=" + name + ", x=" + x + ", y=" + y + ", type=" + type + ", order=" + order
+				+ "]";
+	}
 	
 	
 	

@@ -19,6 +19,7 @@ import { OrderCardComponent } from './order-card/order-card.component';
 import { ManagerPageComponent } from './manager-page/manager-page.component';
 import { HeaderTitleComponent } from './util/header-title/header-title.component';
 import { ManagerPageSideMenuComponent } from './manager-page/manager-page-side-menu/manager-page-side-menu.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ManagerPageSideMenuComponent } from './manager-page/manager-page-side-m
     BrowserAnimationsModule,
     DragDropModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

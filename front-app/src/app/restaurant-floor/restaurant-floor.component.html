@@ -1,5 +1,8 @@
 
 <div id="restaurant-floor" class = "item">
+    <select class = "select-floors"  [ngModel]="selectedFloor" (ngModelChange)="onChange($event)">
+        <option *ngFor="let floor of floors" [ngValue]="floor.name">{{floor.name}}</option>
+    </select>
     <div *ngFor = "let table of restaurantLayout" [ngStyle] = "{'position' : 'absolute', 'left.px' : calcXPosition(table), 'top.px' : calcYPosition(table)}">   
         <app-table [table] = "table" (someEvent)="updateChild($event)"></app-table>
         <!--img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50"-->   

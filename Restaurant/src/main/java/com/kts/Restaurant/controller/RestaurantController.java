@@ -43,10 +43,11 @@ public class RestaurantController {
     }
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(value="/table-layout",method = RequestMethod.GET)
-    public ResponseEntity<List<TableDTO>> getTableLayout() {
+	@RequestMapping(value="/{name}/table-layout",method = RequestMethod.GET)
+    public ResponseEntity<List<TableDTO>> getTableLayout(@PathVariable String name) {
         
-		List<TableDTO> tables = tableService.getTableList();
+		System.out.println(name);
+		List<TableDTO> tables = tableService.getTableListByFloorName(name);
         return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 	@CrossOrigin(origins = "http://localhost:4200")

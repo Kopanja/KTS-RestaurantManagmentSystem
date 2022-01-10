@@ -53,6 +53,11 @@ public class Floor {
 	public void setTables(List<Table> tables) {
 		this.tables = tables;
 	}
+
+	@Override
+	public String toString() {
+		return "Floor [id=" + id + ", name=" + name + ", tables=" + tables + "]";
+	}
 	
 	
 	

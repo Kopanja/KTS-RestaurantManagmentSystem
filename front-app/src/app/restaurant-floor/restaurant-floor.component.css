@@ -14,3 +14,7 @@
 .item {
     flex-basis: auto; /* default auto */
   }
+
+.select-floors{
+    float: right;
+}

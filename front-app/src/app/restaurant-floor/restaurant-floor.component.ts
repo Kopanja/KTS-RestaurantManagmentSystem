@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
-import { SittingTableTypeClass } from '../model/sitting-table-type-class.model';
-import { CdkDragEnd} from '@angular/cdk/drag-drop';
 import { TableService } from '../services/table.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WebSocketService } from '../services/web-socket.service';
-import { SelectedTableService } from '../services/selected-table.service';
+
 
 @Component({
   selector: 'app-restaurant-floor',
@@ -14,11 +11,12 @@ import { SelectedTableService } from '../services/selected-table.service';
 })
 export class RestaurantFloorComponent implements OnInit {
   public restaurantLayout : SittingTableClass[] = [];
-
-  constructor(private tableService : TableService, private webSocketService : WebSocketService, private http : HttpClient, private selectedTableService : SelectedTableService) { }
+  public floors = [{name : "Floor1"}, {name : "Floor2"}];
+  public selectedFloor = "Floor1";
+  constructor(private tableService : TableService, private webSocketService : WebSocketService) { }
 
   ngOnInit(): void {
-    this.tableService.getTableLayout().subscribe(data =>{
+    this.tableService.getTableLayout(this.selectedFloor).subscribe(data =>{
       this.restaurantLayout = data;
     });
     this.webSocketService.subscribe("/topic/table", (message:any): any=>{
@@ -73,6 +71,13 @@ export class RestaurantFloorComponent implements OnInit {
   deleteFloorLayout(){
     this.tableService.deleteTableLayout().subscribe(data => {console.log(data)});
   }
+
+  onChange(floor:any) {
+    this.selectedFloor = floor;
+    this.tableService.getTableLayout(this.selectedFloor).subscribe(data =>{
+      this.restaurantLayout = data;
+    });
+}
 
 
 }

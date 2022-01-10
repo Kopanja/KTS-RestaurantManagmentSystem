@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kts.Restaurant.dto.TableDTO;
+import com.kts.Restaurant.model.Floor;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.model.TableType;
+import com.kts.Restaurant.repository.FloorRepository;
 import com.kts.Restaurant.repository.TableRepository;
 import com.kts.Restaurant.repository.TableTypeRepository;
 import com.kts.Restaurant.util.mapper.TableMapper;
@@ -27,6 +29,9 @@ public class TableService {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	FloorRepository floorRepo;
 	
 	TableMapper mapper = new TableMapper();
 	
@@ -71,6 +76,21 @@ public class TableService {
 		return tableDTOs;
 	}
 	
+	public List<TableDTO> getTableListByFloorName(String name) {
+		Floor floor = floorRepo.findByName(name);
+		List<Table> tables = floor.getTables();
+		List<TableDTO> tableDTOs = new ArrayList<TableDTO>();
+		for(Table t : tables) {		
+			if(t.getOrder() != null && t.getOrder().getItems() != null) {
+				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder()), t.getName()));
+			}else {
+				TableDTO dto = new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), t.getName());
+				tableDTOs.add(dto);
+			}
+		}
+		return tableDTOs;
+	}
+	
 	
 	
 	public TableDTO toDto(Table table) {
@@ -97,6 +117,8 @@ public class TableService {
 		tableRepo.deleteEveryNodeAndRel();
 		tableRepo.createDBData();
 	}
+
+	
 
 	
 
