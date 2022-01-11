@@ -19,13 +19,18 @@ export class BartenderPageComponent implements OnInit {
     this.webSocketService.subscribe("/topic/bartender", (message:any): any=>{
       let exist = false;
       let counter = 0;
+      
       for(let order of this.orders) {
-        if(order.orderId == message){
-          exist = true;
-          break;
+        if(order !== undefined){
+          if(order.orderId == message){
+            exist = true;
+            break;
+          }
         }
+        
         counter = counter + 1
      }
+     
       this.getDrinks(message, exist, counter);
     })
   }
@@ -40,6 +45,7 @@ export class BartenderPageComponent implements OnInit {
   }
   getDrinks(message : any, exist:boolean, counter : number): void {
     this.http.get<Order>("http://localhost:8080/api/order/" + message + "/drinks").subscribe(data =>{console.log(data);
+    
     if(exist){
       this.orders[counter] = data;
     }else{
@@ -47,11 +53,17 @@ export class BartenderPageComponent implements OnInit {
       this.orders.push(order);
     } 
     
+    
   });
   }
 
   doOrdersExist():boolean {
     return this.orders.length > 0;
+  }
+
+  orderComplete(order : Order){
+    let index = this.orders.indexOf(order);
+    delete this.orders[index];
   }
 
 }

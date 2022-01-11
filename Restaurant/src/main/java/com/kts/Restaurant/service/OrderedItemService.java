@@ -54,18 +54,22 @@ public class OrderedItemService {
 		return orderedItems;
 	}
 	
-	public void orderedItemChangePrepared(Long id) {
+	public Boolean orderedItemChangePrepared(Long id) {
 
+		boolean isPrepared = false;
 		OrderedItem orderedItem = orderedItemRepo.findById(id).orElse(null);
 		if(orderedItem != null) {
 			if(orderedItem.isPrepared()) {
 				orderedItem.setPrepared(false);
 			}else {
 				orderedItem.setPrepared(true);
+				isPrepared = true;
 			}
 			
 			orderedItemRepo.save(orderedItem);
+			
 		}
+		return isPrepared;
 	}
 
 	public List<OrderedItemDTO> findFoodOrderedItemByOrderId(Long orderId) {

@@ -7,4 +7,7 @@
             <span class="checkmark"></span>
         </div>
     </div>
+    <div *ngIf="isOrderComplete()" class="item">
+        <button (click)="closeClick()">Close</button>
+    </div>
 </div>

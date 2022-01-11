@@ -110,13 +110,14 @@ public class OrderService {
 		return ordersDTOs;
 	}
 	
-	public void orderedItemMade(Long orderedItemId, OrderDTO order) {
-		orderedItemService.orderedItemChangePrepared(orderedItemId);
+	public boolean orderedItemMade(Long orderedItemId, OrderDTO order) {
+		boolean isPrepared = orderedItemService.orderedItemChangePrepared(orderedItemId);
 	
 		String tableName = order.getTableName();
 		OrderDTO dto = this.getOrderByTableName(tableName);
 	
 		webSocketService.sendOrderedItemChange(dto);
+		return isPrepared;
 		
 	}
 

@@ -68,10 +68,10 @@ public class OrderController {
     }
 	
 	@RequestMapping(value="/ordered-item-made/{orderId}",method = RequestMethod.PUT)
-    public ResponseEntity<String> drinkMade(@PathVariable Long orderId, @RequestBody OrderDTO order) {
+    public ResponseEntity<Boolean> drinkMade(@PathVariable Long orderId, @RequestBody OrderDTO order) {
 		
-		orderService.orderedItemMade(orderId, order);
-        return new ResponseEntity<String>(HttpStatus.OK);
+		Boolean isPrepared = orderService.orderedItemMade(orderId, order);
+        return new ResponseEntity<Boolean>(isPrepared,HttpStatus.OK);
     }
 	
 	

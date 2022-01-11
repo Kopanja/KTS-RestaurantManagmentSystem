@@ -20,13 +20,16 @@ export class CookPageComponent implements OnInit {
       let exist = false;
       let counter = 0;
       for(let order of this.orders) {
-        if(order.orderId == message){
-          exist = true;
-          break;
+        if(order !== undefined){
+          if(order.orderId == message){
+            exist = true;
+            break;
+          }
         }
+        
         counter = counter + 1
      }
-      this.getDrinks(message, exist, counter);
+      this.getFoods(message, exist, counter);
     })
   }
 
@@ -38,7 +41,7 @@ export class CookPageComponent implements OnInit {
     }); 
 
   }
-  getDrinks(message : any, exist:boolean, counter : number): void {
+  getFoods(message : any, exist:boolean, counter : number): void {
     this.http.get<Order>("http://localhost:8080/api/order/" + message + "/foods").subscribe(data =>{console.log(data);
     if(exist){
       this.orders[counter] = data;
@@ -52,6 +55,12 @@ export class CookPageComponent implements OnInit {
 
   doOrdersExist():boolean {
     return this.orders.length > 0;
+  }
+
+  orderComplete(order : Order){
+
+    let index = this.orders.indexOf(order);
+    delete this.orders[index];
   }
 
 }

@@ -2,7 +2,7 @@
     <p class = "item text">FOOD ORDERS</p>
     <div class = "div-border container2 item">
         <div class = "container item" *ngFor="let order of orders" >
-            <app-order-card [order] = "order"></app-order-card>
+            <app-order-card *ngIf="order" [order] = "order" (orderCompleteEvent)="orderComplete($event)"></app-order-card>
         </div>
     </div>
 </div>
