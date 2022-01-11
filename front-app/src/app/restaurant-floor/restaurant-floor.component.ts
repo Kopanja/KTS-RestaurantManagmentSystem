@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Floor } from '../model/floor';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { TableService } from '../services/table.service';
 import { WebSocketService } from '../services/web-socket.service';
@@ -11,14 +12,19 @@ import { WebSocketService } from '../services/web-socket.service';
 })
 export class RestaurantFloorComponent implements OnInit {
   public restaurantLayout : SittingTableClass[] = [];
-  public floors = [{name : "Floor1"}, {name : "Floor2"}];
-  public selectedFloor = "Floor1";
+  public floors : Floor[] = [];
+  public selectedFloor : string;
   constructor(private tableService : TableService, private webSocketService : WebSocketService) { }
 
   ngOnInit(): void {
-    this.tableService.getTableLayout(this.selectedFloor).subscribe(data =>{
-      this.restaurantLayout = data;
-    });
+    this.tableService.getAllFloors().subscribe(data => {
+      this.floors = data;
+      this.selectedFloor = this.floors[0].name;
+      this.tableService.getTableLayout(this.selectedFloor).subscribe(data =>{
+        this.restaurantLayout = data;
+      });
+    })
+    
     this.webSocketService.subscribe("/topic/table", (message:any): any=>{
       this.updateTables(message);
       

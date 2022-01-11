@@ -1,20 +1,16 @@
+
 <div>
     <h1>CREATOR TOOL</h1>
-<div id="bounding-box" >
-    <div *ngFor = "let table of sittingTableList" (cdkDragEnded) = "onItemDrop($event, table)" cdkDrag   cdkDragBoundary="#bounding-box" class="drag-box">
-        <img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="50" height="50">
-        
+<div class = "container">
+    <div id="bounding-box" class = "item">
+        <div *ngFor = "let table of sittingTableList" cdkDrag (cdkDragEnded) = "onItemDrop($event, table)"  cdkDragBoundary="#bounding-box" class="drag-box">
+            <img src= "../../assets/{{table.icon}}" alt="Girl in a jacket" width="100" height="100"> 
+        </div>
     </div>
+    <div  class = "item">
+        <app-new-table-form (newTableEvent)="newTableAdded($event)"></app-new-table-form>
+    </div>
+    
 </div>
-<div class="table-types">
-    <ul>
-        <li>
-            <input type="image" *ngFor = "let tableType of sittingTableTypeList" (click)="onClick(tableType)" src="../../assets/{{tableType.icon}}" width="50" height="50"/>
-        </li>
-        <li>
-            <button (click) = "save()">Save Restaurant Floor Layout</button>
-        </li>
-    </ul>
-   
-</div>
+<button *ngIf="doesTableExist()" (click)="save()">SAVE FLOOR</button>
 </div>

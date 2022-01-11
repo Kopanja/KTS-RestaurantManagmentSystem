@@ -30,4 +30,10 @@ public class FloorService {
 		
 		return floors;
 	}
+
+
+	public void save(Floor floor) {
+		floorRepo.save(floor);
+		
+	}
 }

@@ -34,20 +34,25 @@ export class CreatorToolComponent implements OnInit {
 
     table.x = xOffset;
     table.y = yOffset;
-    console.log(table);   
+    console.log(table);
   }
 
 
-  onClick(tableType : SittingTableTypeClass) {
+  newTableAdded(table : SittingTableClass) {
 
-    this.sittingTableList.push(new SittingTableClass(undefined,tableType.id,0,0,tableType.numOfSeats, tableType.icon, undefined, ""))
+    this.sittingTableList.push(table);
   }
 
- 
+ doesTableExist():boolean{
+   if(this.sittingTableList.length > 0){
+     return true;
+   }
+   return false;
+ }
 
   save(){
     console.log(this.sittingTableList)
-    this.tableService.submitTableLayout(this.sittingTableList).subscribe();
+    this.tableService.createNewFloor(this.sittingTableList, "Floor3").subscribe();
   }
 
   getParentPosition(el:any){

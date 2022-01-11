@@ -56,6 +56,18 @@ public class TableService {
 		
 	}
 	
+	public Table toEntity(TableDTO dto) {
+		Table table = this.mapper.toEntity(dto);
+		TableType type = tableTypeRepo.findById(dto.getTypeId()).orElse(null);
+		
+		
+		if(type != null) {
+			table.setType(type);
+		}
+		
+		return table;
+	}
+	
 	public List<TableDTO> getTableList(){
 		List<Table> tables = tableRepo.findAll();
 		List<TableDTO> tableDTOs = new ArrayList<TableDTO>();

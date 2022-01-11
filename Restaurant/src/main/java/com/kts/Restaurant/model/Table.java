@@ -66,6 +66,15 @@ public class Table {
 
 
 
+	public Table(Long id, int x, int y, String name) {
+		super();
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.name = name;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

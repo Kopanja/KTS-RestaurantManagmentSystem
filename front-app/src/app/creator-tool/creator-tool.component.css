@@ -1,19 +1,31 @@
 .drag-box {
-    width: 50px;
-    height: 50px;
-    background-color: white;
+    width: 100px;
+    height: 100px;
     padding: 1em;
     border: 1px solid gray;
     align-items: center;
     justify-content: center;
     text-align: center;
+    position: absolute;
+   
     
 }
 
+.container {
+    justify-content: flex-end;
+    align-items: left;
+    display: flex; 
+    flex-direction: row-reverse;
+}
+.item {
+    flex-basis: auto; /* default auto */
+
+  }
 #bounding-box {
-    width: 500px;
+    width: 1132px;
     height: 500px;
-    border: 1px solid gainsboro;
+    border: 3px solid gainsboro;
+    background: url("../../assets/floor.png");
 }
 
 .table-types {

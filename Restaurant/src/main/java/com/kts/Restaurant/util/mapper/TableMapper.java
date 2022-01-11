@@ -9,7 +9,7 @@ public class TableMapper implements DTOMapperInterface<Table, TableDTO> {
 	OrderMapper orderMapper = new OrderMapper();
 	@Override
 	public Table toEntity(TableDTO dto) {
-		return new Table(dto.getTableId(), dto.getX(), dto.getY());
+		return new Table(dto.getTableId(), dto.getX(), dto.getY(), dto.getName());
 	}
 
 	@Override

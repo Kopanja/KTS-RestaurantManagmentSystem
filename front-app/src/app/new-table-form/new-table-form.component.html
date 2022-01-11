@@ -1,0 +1,22 @@
+
+<div *ngIf="selectedTableType" class = "new-table-form container">
+    <div class = "item">
+        <label for="name" class = "label-text">Name:</label>
+        <input id="name" type="text" [(ngModel)] = "newTable.name">
+    </div>
+    <div class = "item">
+    <label for="selectType" class = "label-text">Select the type of table</label>
+    <select id ="selectType" [ngModel]="selectedTableType" (ngModelChange)="onChange($event)">
+        <option *ngFor="let tableType of sittingTableTypeList" [ngValue]="tableType">{{tableType.name}}</option>
+    </select>
+</div>
+<div class = "item">
+    <img src= "../../assets/{{selectedTableType.icon}}" alt="Girl in a jacket" width="100" height="100">
+</div>
+      <div class = "item">
+    <button class="button" type="submit"  (click)="onSubmit()">Add Table</button>
+</div>
+</div>
+
+  
+

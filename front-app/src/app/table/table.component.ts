@@ -28,7 +28,6 @@ export class TableComponent implements OnInit, OnChanges{
     
    }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("fired");
   }
 
   ngOnInit(): void {
@@ -67,7 +66,6 @@ export class TableComponent implements OnInit, OnChanges{
 
 
   tableClick(){
-    console.log(this.table.order);
     this.selectedTableService.changeTableAndPreOrderItems(this.tableAndItemsPreOrder);
     
   }
