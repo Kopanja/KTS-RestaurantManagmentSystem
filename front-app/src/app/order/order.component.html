@@ -1,23 +1,22 @@
 <div class = "order container-column item">
-    <p class = "text item">Table: {{tableName}}</p>
+    <p id="order-title" class = "text item">Table: {{tableName}}</p>
     <div class = "order-box container-column item">
-        <div class = "container-row item" *ngFor="let item of order?.items">
+        <div class = "order-item-container item" *ngFor="let item of order?.items">
             <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">.</p>
-            <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.name}}</p>
-            <p class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.price}}</p>   
+            <p id="ordered-item-name" class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.name}}</p>
+            <p id="ordered-item-price" class = "text item" [ngClass]="{'text-not-prepared' : !item.prepared, 'text-prepared' : item.prepared}">{{item.item.price}}</p>   
         </div>
-        
-        <div class = "container-row item" *ngFor="let item of itemsPreOrder">
+        <div class = "order-item-container item" *ngFor="let item of itemsPreOrder">
             <p class = "text item">.</p>
-            <p class = "text item">{{item.name}}</p>
-            <p class = "text item">{{item.price}}</p>
+            <p id="pre-ordered-item-name" class = "text item">{{item.name}}</p>
+            <p id="pre-ordered-item-price" class = "text item">{{item.price}}</p>
             <img src= "../../assets/delete.png" alt="Girl in a jacket" width="15" height="15" (click) = "deleteClick(item)">
     
         </div>
     </div>
-    <p class = "text item">Total Price: {{calcPrice()}}</p>
-    <button (click)="placeOrderClicked()">Place Order</button>
+    <p id = "price-total" class = "text item">Total Price: {{calcPrice()}}</p>
+    <button id = "place-order-button"  [disabled]="!doPreOrderItemsExist()" (click)="placeOrderClicked()">Place Order</button>
   
-    <button *ngIf="isOrderComplete()" (click) ="billOrderClicked()">Bill Order</button>
+    <button id = "bill-order-button" [disabled]="!isOrderComplete()" (click) ="billOrderClicked()">Bill Order</button>
   
 </div>

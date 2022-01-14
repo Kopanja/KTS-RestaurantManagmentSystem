@@ -51,6 +51,12 @@ export class OrderComponent implements OnInit {
     this.selectedTableService.removeItemFromOrder(item);
   }
 
+  doPreOrderItemsExist():boolean{
+    if(this.itemsPreOrder.length > 0){
+      return true;
+    }
+    return false;
+  }
   isOrderComplete():boolean{
     if(this.order === null || this.order === undefined){
       return false;

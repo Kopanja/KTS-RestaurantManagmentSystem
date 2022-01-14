@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import {BehaviorSubject, Observable} from "rxjs"
 import { Item } from '../model/item.model';
@@ -22,6 +22,12 @@ export class SelectedTableService {
     this.changeTableAndPreOrderItems(this.tableAndPreOrderItems$.getValue());
   }
 
+  isTableSelected():boolean{
+    if(Object.keys(this.tableAndPreOrderItems$.getValue().table).length === 0){
+      return false;
+    }
+    return true;
+  }
   changeTableAndPreOrderItems(table : TableAndItemsPreOrder){
     this.tableAndPreOrderItems$.next(table);
   }

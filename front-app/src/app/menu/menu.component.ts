@@ -17,8 +17,15 @@ export class MenuComponent implements OnInit {
     })
   }
 
+  isTableSelected() :boolean{
+    return this.selectedTableService.isTableSelected();
+  }
   onItemClick(item : Item){
-    this.selectedTableService.addItemToOrder(item);
+    console.log(this.isTableSelected());
+    if(this.isTableSelected()){
+      this.selectedTableService.addItemToOrder(item);
+    }
+    
   }
 
 }
