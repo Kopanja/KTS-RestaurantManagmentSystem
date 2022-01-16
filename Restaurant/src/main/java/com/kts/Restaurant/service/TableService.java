@@ -10,6 +10,7 @@ import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.Floor;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.model.TableType;
+import com.kts.Restaurant.repository.DBTestRepository;
 import com.kts.Restaurant.repository.FloorRepository;
 import com.kts.Restaurant.repository.TableRepository;
 import com.kts.Restaurant.repository.TableTypeRepository;
@@ -32,6 +33,9 @@ public class TableService {
 	
 	@Autowired
 	FloorRepository floorRepo;
+	
+	@Autowired
+	DBTestRepository dbTestRepo;
 	
 	TableMapper mapper = new TableMapper();
 	
@@ -126,8 +130,8 @@ public class TableService {
 	}
 	
 	public void resetDB() {
-		tableRepo.deleteEveryNodeAndRel();
-		tableRepo.createDBData();
+		dbTestRepo.deleteEveryNodeAndRel();
+		dbTestRepo.createDBData();
 	}
 
 	
