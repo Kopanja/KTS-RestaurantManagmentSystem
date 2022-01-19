@@ -3,7 +3,8 @@ package com.kts.Restaurant.model;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.stereotype.Indexed;
+import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.schema.Relationship.Direction;
 
 
 @Node
@@ -15,6 +16,11 @@ public abstract class Item {
 	private String name;
 	
 	private String description;
+	
+	@Relationship(type = "HAS_CATEGORY", direction = Direction.OUTGOING)
+	public ItemCategory category;
+	
+	private boolean active;
 	
 	private int price;
 	
@@ -31,6 +37,23 @@ public abstract class Item {
 	public Item(String name, int price, int cost) {
 		super();
 		this.name = name;
+		this.price = price;
+		this.cost = cost;
+	}
+
+
+	
+
+	
+
+
+
+	public Item(String name, String description, ItemCategory category, boolean active, int price, int cost) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.category = category;
+		this.active = active;
 		this.price = price;
 		this.cost = cost;
 	}
@@ -90,11 +113,38 @@ public abstract class Item {
 
 
 
+	public ItemCategory getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(ItemCategory category) {
+		this.category = category;
+	}
+
+
+
+	public boolean isActive() {
+		return active;
+	}
+
+
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", cost="
-				+ cost + "]";
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", category=" + category
+				+ ", active=" + active + ", price=" + price + ", cost=" + cost + "]";
 	}
+
+
+
 	
 	
 }
