@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +56,12 @@ public class ItemController {
         
 		List<OrderedItemDTO> orderedItems = orderedItemService.findAll();
         return new ResponseEntity<>(orderedItems, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value= "/{categoryName}",method = RequestMethod.GET)
+    public ResponseEntity<List<ItemDTO>> getItemsByCategoryName(@PathVariable String categoryName) {
+        
+		List<ItemDTO> items = itemService.getItemsByCategoryName(categoryName);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 }

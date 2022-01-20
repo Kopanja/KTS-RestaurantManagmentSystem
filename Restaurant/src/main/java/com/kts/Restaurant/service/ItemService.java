@@ -23,6 +23,8 @@ public class ItemService {
 	public ItemDTO toDto(Item item) {
 		return mapper.toDto(item);
 	}
+	
+	
 
 	public Item toEntity(ItemDTO dto) {
 		return itemRepo.findByName(dto.getName());
@@ -31,6 +33,14 @@ public class ItemService {
 		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
 		for(Item i : itemRepo.findAll()) {
 			dtos.add(mapper.toDto(i));
+		}
+		return dtos;
+	}
+	
+	public List<ItemDTO> getItemsByCategoryName(String categoryName){
+		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
+		for(Item i : itemRepo.findByCategoryName(categoryName)) {
+			dtos.add(this.toDto(i));
 		}
 		return dtos;
 	}

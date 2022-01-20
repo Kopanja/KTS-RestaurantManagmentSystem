@@ -13,6 +13,8 @@ public class ItemCategory {
 	private String type;
 	
 	private String categoryName;
+	
+	private String icon;
 
 	public ItemCategory() {
 		super();
@@ -29,6 +31,14 @@ public class ItemCategory {
 		this.id = id;
 		this.type = type;
 		this.categoryName = categoryName;
+	}
+
+	
+	public ItemCategory(String type, String categoryName, String icon) {
+		super();
+		this.type = type;
+		this.categoryName = categoryName;
+		this.icon = icon;
 	}
 
 	public Long getId() {
@@ -53,6 +63,15 @@ public class ItemCategory {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	@Override

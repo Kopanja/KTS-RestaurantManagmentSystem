@@ -1,7 +1,28 @@
-<div class = "menu item">
-    <div *ngFor = "let item of items">   
-        <img [id] = "item.name" src= "../../assets/ramen 1.png" alt="Girl in a jacket" width="50" height="50" (click)="onItemClick(item)">
-        <p>{{item.name}}</p>   
+<div  class = "menu item container">
+    <div class = "menu item container" *ngIf="categories.length === 0">
+        <div class = "item item-back" >
+            <img class = "img-item" src= "../../assets/ramen 1.png" alt="Girl in a jacket" (click)="onFoodIconClick()">
+            <p class = "txt-item">FOOD</p>
+        </div>
+        <div class = "item item-back">
+            <img class = "img-item" src= "../../assets/drink 1.png" alt="Girl in a jacket" (click)="onDrinkIconClick()">
+            <p class = "txt-item">DRINKS</p>
+        </div>
     </div>
+    <div *ngFor = "let category of categories">  
+        <div class = "category-item-back">
+            <img class = "category-item" [id] = "category.categoryName" src= "{{getCategoryIconPath(category)}}" (click)="onCategoryClick(category.categoryName)" alt="Girl in a jacket">
+            <p class = "category-txt">{{category.categoryName}}</p> 
+        </div>  
+    </div>
+    <div *ngIf="items.length !== 0">  
+        <div class = "category-item-back" *ngFor = "let item of items">
+            <img class = "category-item" [id] = "item.name" src= "../../assets/ramen 1.png" alt="Girl in a jacket">
+            <p class = "category-txt">{{item.name}}</p> 
+        </div>  
+    </div>
+
+    
+
 </div>
 

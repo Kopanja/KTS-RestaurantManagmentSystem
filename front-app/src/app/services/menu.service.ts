@@ -14,4 +14,8 @@ export class MenuService {
   getMenu():Observable<Item[]>{
     return this.http.get<Item[]>(this.path);
   }
+
+  getItemsByCategoryName(categoryName : string):Observable<Item[]>{
+    return this.http.get<Item[]>(this.path + "/" + categoryName);
+  }
 }
