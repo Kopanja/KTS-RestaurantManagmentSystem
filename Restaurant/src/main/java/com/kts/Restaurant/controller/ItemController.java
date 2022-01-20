@@ -3,6 +3,8 @@ package com.kts.Restaurant.controller;
 import java.util.List;
 
 import com.kts.Restaurant.dto.UserDTO;
+import com.kts.Restaurant.exceptions.ItemCategoryNameDoesntExists;
+import com.kts.Restaurant.exceptions.ItemWithNameDoesntExists;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,18 +43,32 @@ public class ItemController {
 	@Autowired
 	OrderedItemService orderedItemService;
 
-//	@RequestMapping(value = "/create",method = RequestMethod.POST)
-//	public ResponseEntity<ItemDTO> create(@RequestBody ItemDTO itemDTO) {
-//
-//		ItemDTO item;
-//		try {
-//			item = itemService.create(itemDTO);
-//			return new ResponseEntity<>(item, HttpStatus.OK);
-//
-//		}catch (UserWithUsernameAlreadyExistsException e){
-//			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
-//		}
-//	}
+	@RequestMapping(value = "/create",method = RequestMethod.POST)
+	public ResponseEntity<ItemDTO> create(@RequestBody ItemDTO itemDTO) {
+
+		ItemDTO item;
+		try {
+			item = itemService.create(itemDTO);
+			return new ResponseEntity<>(item, HttpStatus.OK);
+
+		}catch (ItemCategoryNameDoesntExists | ItemWithNameDoesntExists e){
+			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+	@RequestMapping(value = "/update/{name}",method = RequestMethod.PUT)
+	public ResponseEntity<ItemDTO> update(@PathVariable String name, @RequestBody ItemDTO itemDTO) {
+
+		ItemDTO item;
+		try {
+			item = itemService.update(name, itemDTO);
+			return new ResponseEntity<>(item, HttpStatus.OK);
+
+		}catch (ItemCategoryNameDoesntExists e){
+			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 
 	@RequestMapping(method = RequestMethod.GET)
