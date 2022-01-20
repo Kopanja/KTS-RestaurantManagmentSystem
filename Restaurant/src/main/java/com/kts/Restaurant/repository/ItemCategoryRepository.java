@@ -19,4 +19,6 @@ public interface ItemCategoryRepository extends Neo4jRepository<ItemCategory, Lo
 			+ "WHERE i.type = 'Drink'"
 			+ "RETURN i")
 	public List<ItemCategory> getDrinkCategories();
+
+	public ItemCategory findItemCategoryByCategoryName(String categoryName);
 }
