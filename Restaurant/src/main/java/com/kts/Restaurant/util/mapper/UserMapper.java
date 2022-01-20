@@ -15,6 +15,13 @@ public class UserMapper implements DTOMapperInterface<User, UserDTO> {
     @Override
     public UserDTO toDto(User user) {
         Salary activeSalary =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
-        return new UserDTO(user.getFirstname(), user.getLastname(), user.getUsername(), user.getPassword(), user.getRole().getRole(), user.getPin(), activeSalary.getSalaryAmount(), user.isActive());
+        double amount;
+        // condition for user deletion when there's no activeSalary
+        if(activeSalary == null){
+            amount = 0;
+        }else{
+            amount = activeSalary.getSalaryAmount();
+        }
+        return new UserDTO(user.getFirstname(), user.getLastname(), user.getUsername(), user.getPassword(), user.getRole().getRole(), user.getPin(), amount, user.isActive());
     }
 }

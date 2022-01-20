@@ -116,7 +116,6 @@ public class UserService {
             Salary newSalary = new Salary(userDTO.getSalaryAmount(), new Date(), null, true);
             user.getSalaries().add(newSalary);
         }
-
         userRepository.save(user);
         UserMapper userMapper = new UserMapper();
         return userMapper.toDto(user);
@@ -132,6 +131,7 @@ public class UserService {
         Salary salary =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
         int index = user.getSalaries().indexOf(salary);
         salary.setTo(new Date());
+        salary.setActive(false);
         salaryService.saveSalary(salary);
         user.setActive(false);
         userRepository.save(user);
@@ -150,10 +150,22 @@ public class UserService {
         return dtos;
     }
 
+    public List<UserDTO> getAllActive(){
+        List<UserDTO> dtos = new ArrayList<>();
+        UserMapper userMapper = new UserMapper();
+        List<User> users = userRepository.findAll();
+        for (User user: users) {
+            dtos.add(userMapper.toDto(user));
+        }
+        return dtos;
+    }
+
     public List<UserDTO> getAllByRole(String roleName){
         List<UserDTO> dtos = new ArrayList<>();
         Role role = roleRepository.findByRole(roleName);
-        List<User> users =  userRepository.findAllByRole(role);
+        List<User> usersa =  userRepository.findAll();
+
+        List<User> users =  userRepository.findAllByRole(role.getRole());
         if(users.size() == 0){
             return null;
         }
