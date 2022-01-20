@@ -2,13 +2,12 @@ package com.kts.Restaurant.controller;
 
 import java.util.List;
 
+import com.kts.Restaurant.dto.UserDTO;
+import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.OrderedItemDTO;
@@ -41,8 +40,20 @@ public class ItemController {
 	
 	@Autowired
 	OrderedItemService orderedItemService;
-	
-	
+
+//	@RequestMapping(value = "/create",method = RequestMethod.POST)
+//	public ResponseEntity<ItemDTO> create(@RequestBody ItemDTO itemDTO) {
+//
+//		ItemDTO item;
+//		try {
+//			item = itemService.create(itemDTO);
+//			return new ResponseEntity<>(item, HttpStatus.OK);
+//
+//		}catch (UserWithUsernameAlreadyExistsException e){
+//			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
+//		}
+//	}
+
 
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ItemDTO>> getItemList() {

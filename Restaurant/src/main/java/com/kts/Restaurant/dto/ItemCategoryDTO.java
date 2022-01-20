@@ -1,5 +1,7 @@
 package com.kts.Restaurant.dto;
 
+import com.kts.Restaurant.model.Item;
+
 public class ItemCategoryDTO {
 	private Long id;
 	private String type;
@@ -7,7 +9,9 @@ public class ItemCategoryDTO {
 	private String icon;
 	
 	
-	
+	public ItemCategoryDTO() {
+
+	}
 	public ItemCategoryDTO(String type, String categoryName, String icon) {
 		super();
 		this.type = type;
