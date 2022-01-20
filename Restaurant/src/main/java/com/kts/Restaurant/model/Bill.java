@@ -24,14 +24,10 @@ public class Bill {
 	@Relationship(type = "BILLED_ITEM", direction = Direction.OUTGOING)
 	public List<BilledItem> items;
 
-	
-	
-	
+
 	public Bill() {
 		super();
 	}
-
-
 
 
 	public Bill(Long id, double price, double cost, Date date, List<BilledItem> items) {

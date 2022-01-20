@@ -36,9 +36,7 @@ public class UserController {
 
         }catch (UserWithUsernameAlreadyExistsException e){
             return new ResponseEntity<>(userDTO, HttpStatus.BAD_REQUEST);
-
         }
-
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
@@ -73,10 +71,12 @@ public class UserController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+
+
     @RequestMapping(value = "/getAllByRole", method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> getALl(@RequestParam String role){
         List<UserDTO> dtos = userService.getAllByRole(role);
-        if(dtos.size() == 0) {
+        if(dtos == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);

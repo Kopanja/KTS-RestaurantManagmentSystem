@@ -65,4 +65,15 @@ public class Salary {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "id=" + id +
+                ", salaryAmount=" + salaryAmount +
+                ", since=" + since +
+                ", to=" + to +
+                ", active=" + active +
+                '}';
+    }
 }
