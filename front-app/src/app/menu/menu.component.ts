@@ -57,5 +57,9 @@ export class MenuComponent implements OnInit {
         console.log(this.items);
       })
     }
+    onBackButtonClick(){
+      this.categories = [];
+      this.items = [];
+    }
 
 }

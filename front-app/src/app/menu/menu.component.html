@@ -1,4 +1,31 @@
-<div  class = "menu item container">
+<div class = "menu-background noselect">
+    <div class = "food-drink-wraper" *ngIf="categories.length === 0">
+        <div class = "food-drink-icon-background">
+            <img  class = "food-drink-icon" src= "../../assets/ramen 1.png" alt="Girl in a jacket" (click)="onFoodIconClick()">
+            <p class = "txt">FOOD</p>
+        </div>
+        <div class = "food-drink-icon-background">
+            <img class = "food-drink-icon" src= "../../assets/drink 1.png" alt="Girl in a jacket" (click)="onDrinkIconClick()">
+            <p class = "txt">DRINKS</p>
+        </div>
+    </div>
+    <div class = "catagory-items-wrapper" *ngIf="categories.length !== 0">
+        <div class = "category-wrapper">
+            <img class = "back-button-img" src = "../../assets/previous.png" (click)="onBackButtonClick()">
+            <div class = "category-icon-background" *ngFor = "let category of categories">
+                <img class = "category-icon" [id] = "category.categoryName" src= "{{getCategoryIconPath(category)}}" (click)="onCategoryClick(category.categoryName)" alt="Girl in a jacket">
+                <p class = "category-txt">{{category.categoryName}}</p> 
+            </div>
+        </div>
+        <div class = "items-wrapper" *ngIf="items.length !== 0">  
+            <div class = "item-icon-background w3-container" *ngFor = "let item of items"  (click)="onItemClick(item)">
+                <p class = "item-txt">{{item.name}}</p> 
+            </div>  
+        </div> 
+    </div>
+</div>
+
+<!--div  class = "menu item">
     <div class = "menu item container" *ngIf="categories.length === 0">
         <div class = "item item-back" >
             <img class = "img-item" src= "../../assets/ramen 1.png" alt="Girl in a jacket" (click)="onFoodIconClick()">
@@ -9,20 +36,19 @@
             <p class = "txt-item">DRINKS</p>
         </div>
     </div>
-    <div *ngFor = "let category of categories">  
-        <div class = "category-item-back">
-            <img class = "category-item" [id] = "category.categoryName" src= "{{getCategoryIconPath(category)}}" (click)="onCategoryClick(category.categoryName)" alt="Girl in a jacket">
-            <p class = "category-txt">{{category.categoryName}}</p> 
-        </div>  
+    <div *ngIf="categories.length !== 0" class = "category-and-item-wrapper flex-item-category" id = "categories-and-items">
+        <div class = "category-wrapper flex-item-category">  
+            <div class = "category-item-back" *ngFor = "let category of categories">
+                <img class = "category-item" [id] = "category.categoryName" src= "{{getCategoryIconPath(category)}}" (click)="onCategoryClick(category.categoryName)" alt="Girl in a jacket">
+                <p class = "category-txt">{{category.categoryName}}</p> 
+            </div>  
+        </div>
+        <div class = "flex-container-row item" *ngIf="items.length !== 0">  
+            <div class = "category-item-back" *ngFor = "let item of items">
+                <img class = "category-item" [id] = "item.name" src= "../../assets/ramen 1.png" alt="Girl in a jacket">
+                <p class = "category-txt">{{item.name}}</p> 
+            </div>  
+        </div>
     </div>
-    <div *ngIf="items.length !== 0">  
-        <div class = "category-item-back" *ngFor = "let item of items">
-            <img class = "category-item" [id] = "item.name" src= "../../assets/ramen 1.png" alt="Girl in a jacket">
-            <p class = "category-txt">{{item.name}}</p> 
-        </div>  
-    </div>
-
-    
-
-</div>
+</div-->
 
