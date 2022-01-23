@@ -13,27 +13,32 @@ import java.util.List;
 @Repository
 public interface UserRepository extends Neo4jRepository<User, Long> {
 
+	 @Query("MATCH (n:User)-[a:HAS_CREDENTIALS]->(c:UsernamePasswordCredentials)\n" +
+	            "WHERE c.username = $username\n"
+	            + "WITH n,a,c\n"
+	            + "MATCH (n)-[b:HAS_ROLE]->(r:Role)" +
+	            "RETURN n,a,c,b,r")
     User findByUsername(String username);
 
-//    MATCH (n:User)-[a:HAS_ROLE]->(r:Role)
-//            WHERE r.role = $role AND n.active
-//            RETURN n,a,r
+	 @Query("MATCH (n:User)-[a:HAS_CREDENTIALS]->(c:PinCredentials) \r\n"
+	 		+ "MATCH (n)-[b:HAS_ROLE]->(r:Role)\r\n"
+	 		+ "WHERE n.firstname + n.lastname + r.role + toString(id(n)) = $tokenSubject\r\n"
+	 		+ "RETURN n,a,c,b,r")
+	 User findByGeneratedTokenSubject(String tokenSubject);
 
     @Query("MATCH (n:User)-[a:HAS_ROLE]->(r:Role)\n" +
             "WHERE r.role = $role AND n.active = true\n" +
             "RETURN n,a,r")
     List<User> findAllByRole(String role);
 
+    
+    
+    
+    @Query("MATCH (n:User)-[a:HAS_CREDENTIALS]->(c:PinCredentials)\n" +
+            "MATCH (n)-[b:HAS_ROLE]->(r:Role)\n" +
+            "RETURN n,a,c,b,r")
+	List<User> getAllPinUsers();
 
-//    MATCH (n:User)-[a:HAS_ROLE]->(r:Role)
-//    WHERE r.role = $role AND n.active
-//    RETURN n,a,r
-//
-//    MATCH (parentD)-[:CONTAINS]->(childD:Decision)-[ru:CREATED_BY]->(u:User)
-//    WHERE id(parentD) = {decisionId}
-//    MATCH (childD)-[rdc:DECISION_CHARACTERISTIC]->(characteristic:Characteristic)
-//    WHERE  (id(characteristic) = 138 AND (15000.32 < rdc.value < 50000.32))
-//    OR (id(characteristic) = 139 AND (rdc.value = 'Commercial'))
-//    WITH childD, ru, u
-//    RETURN childD
+
+
 }

@@ -12,6 +12,9 @@ import com.kts.Restaurant.model.Item;
 @Repository
 public interface ItemRepository extends Neo4jRepository<Item, Long> {
 
+	@Query("MATCH (i:Item)-[r:HAS_CATEGORY]->(c:ItemCategory)\r\n"
+			+ "WHERE i.name = $name\r\n"
+			+ "RETURN i,r,c")
 	public Item findByName(String name);
 	
 	@Query("MATCH (i:Item)-[:HAS_CATEGORY]->(c:ItemCategory)\r\n"

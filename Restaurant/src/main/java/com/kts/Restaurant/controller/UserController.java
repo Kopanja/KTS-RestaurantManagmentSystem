@@ -55,7 +55,8 @@ public class UserController {
     public ResponseEntity<UserDTO> fire(@RequestBody UserDTO userDTO) {
         UserDTO user;
         try {
-            user = userService.logicalDelete(userDTO.getUsername());
+        	user = null;
+            //user = userService.logicalDelete(userDTO.getUsername());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }catch (UserWIthUsernameNotFound e){
             return new ResponseEntity<>(userDTO, HttpStatus.BAD_REQUEST);

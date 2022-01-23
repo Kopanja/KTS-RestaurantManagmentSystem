@@ -11,13 +11,7 @@ public class UserDTO {
 
     private String lastname;
 
-    private String username;
-
-    private String password;
-
     private String role;
-
-    private String pin;
 
     private double salaryAmount;
 
@@ -28,13 +22,10 @@ public class UserDTO {
     }
 
 
-    public UserDTO(String firstname, String lastname, String username, String password, String role, String pin, double salaryAmount, Boolean active) {
+    public UserDTO(String firstname, String lastname, String role, double salaryAmount, Boolean active) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = username;
-        this.password = password;
         this.role = role;
-        this.pin = pin;
         this.salaryAmount = salaryAmount;
         this.active = active;
     }
@@ -55,21 +46,7 @@ public class UserDTO {
         this.lastname = lastname;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    
 
     public String getRole() {
         return role;
@@ -79,13 +56,6 @@ public class UserDTO {
         this.role = role;
     }
 
-    public String getPin() {
-        return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
 
     public double getSalaryAmount() {
         return salaryAmount;

@@ -19,14 +19,11 @@ public class User {
 
 	private String lastname;
 
-	private String username;
-
-	private String password;
-
+	@Relationship(type = "HAS_CREDENTIALS", direction = Relationship.Direction.OUTGOING)
+	private Credentials credentials;
+	
 	@Relationship(type = "HAS_ROLE", direction = Relationship.Direction.OUTGOING)
 	private Role role;
-
-	private String pin;
 
 	@Relationship(type = "HAS_SALARY", direction =  Relationship.Direction.OUTGOING)
 	private List<Salary> salaries;
@@ -37,14 +34,11 @@ public class User {
 		super();
 	}
 
-	public User(Long id, String firstname, String lastname, String username, Role role, String password, String pin, List<Salary> salaries, Boolean active) {
+	public User(Long id, String firstname, String lastname, Role role, List<Salary> salaries, Boolean active) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.username = username;
 		this.role = role;
-		this.password = password;
-		this.pin = pin;
 		this.salaries = salaries;
 		this.active = active;
 	}
@@ -73,14 +67,6 @@ public class User {
 		this.lastname = lastname;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public Role getRole() {
 		return role;
 	}
@@ -89,21 +75,6 @@ public class User {
 		this.role = role;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
 
 	public List<Salary> getSalaries() {
 		return salaries;
@@ -121,4 +92,21 @@ public class User {
 		this.active = active;
 	}
 
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", credentials=" + credentials
+				+ ", role=" + role + ", salaries=" + salaries + ", active=" + active + "]";
+	}
+
+	
+
+	
 }

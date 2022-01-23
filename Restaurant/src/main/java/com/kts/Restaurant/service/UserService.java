@@ -3,6 +3,7 @@ package com.kts.Restaurant.service;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
+import com.kts.Restaurant.model.PinCredentials;
 import com.kts.Restaurant.model.Role;
 import com.kts.Restaurant.model.Salary;
 import com.kts.Restaurant.model.User;
@@ -10,6 +11,7 @@ import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,12 +31,17 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
+    //SVE TREBA DA SE UPDATE ZBOG CREDENTIALS
+    
     public UserDTO create(UserDTO userDTO) {
 
+    	
         //if username already exists
-        if (userRepository.findByUsername(userDTO.getUsername()) != null) {
+        /*
+    	if (userRepository.findByUsername(userDTO.getUsername()) != null) {
             throw new UserWithUsernameAlreadyExistsException();
         }
+        */
         User newUser = new User();
 
         // new Salary
@@ -49,9 +56,11 @@ public class UserService {
         // other
         newUser.setFirstname(userDTO.getFirstname());
         newUser.setLastname(userDTO.getLastname());
-        newUser.setUsername(userDTO.getUsername());
-        newUser.setPassword(userDTO.getPassword());
-        newUser.setPin(userDTO.getPin());
+       
+        //Treba da se promeni sa SET CREDENTIALS
+        // newUser.setUsername(userDTO.getUsername());
+        //newUser.setPassword(userDTO.getPassword());
+        //newUser.setPin(userDTO.getPin());
 
         // role
         Role role = roleRepository.findByRole(userDTO.getRole());
@@ -74,7 +83,8 @@ public class UserService {
         // save nazad User u bazu
         // vrati userDTO
 
-        User user = userRepository.findByUsername(userDTO.getUsername());
+        //User user = userRepository.findByUsername(userDTO.getUsername());
+        User user = null;
         if(user == null){
             throw new UserWIthUsernameNotFound();
         }
@@ -85,15 +95,17 @@ public class UserService {
 //            }
 //            user.setUsername(userDTO.getUsername());
 //        }
-        user.setUsername(userDTO.getUsername());
+        
+        //user.setUsername(userDTO.getUsername());
 
         //set new changes
         user.setFirstname(userDTO.getFirstname());
         user.setLastname(userDTO.getLastname());
         Role roleDb = roleRepository.findByRole(userDTO.getRole());
         user.setRole(roleDb);
-        user.setPin(userDTO.getPin());
-        user.setPassword(userDTO.getPassword());
+       
+        //user.setPin(userDTO.getPin());
+        //user.setPassword(userDTO.getPassword());
 
         Salary salaryDb =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
         // salary check if amount of active is changed
@@ -175,6 +187,38 @@ public class UserService {
         }
         return dtos;
 
+    }
+    
+    public User findByUsername(String username) {
+    	User user = userRepository.findByUsername(username);
+    	if(user != null) {
+    		return user;
+    	}
+    	return null;
+    }
+    
+    public User findByPin(String pin) {
+    	for(User user : userRepository.getAllPinUsers()) {
+    		PinCredentials userPin = (PinCredentials) user.getCredentials();
+    		if(BCrypt.checkpw(pin, userPin.getPin())){
+    			return user;
+    		}
+    	}
+    	return null;
+    }
+    
+    public User findByGeneratedTokenSubject(String tokenSubject) {
+    	return userRepository.findByGeneratedTokenSubject(tokenSubject);
+    	
+    }
+    
+    public String generateTokenSubjectForPinUser(User user) {
+    	return user.getFirstname() + user.getLastname() + user.getRole().getRole() + user.getId();
+    }
+    
+    public List<User> getAllPinBasedUsers(){
+    	List<User> users = userRepository.getAllPinUsers();
+    	return users;
     }
 }
 

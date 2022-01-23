@@ -8,6 +8,7 @@ import com.kts.Restaurant.model.ItemCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.kts.Restaurant.dto.ItemCategoryDTO;
@@ -58,6 +59,7 @@ public class ItemCategoryController {
     }
 
 
+  
 	@RequestMapping(value= "/food-categories",method = RequestMethod.GET)
     public ResponseEntity<List<ItemCategoryDTO>> getFoodCategories() {
         
