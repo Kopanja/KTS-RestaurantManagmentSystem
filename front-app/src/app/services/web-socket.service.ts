@@ -17,7 +17,8 @@ export class WebSocketService {
       this.subscribeToTopic(topic,callback);
       return;
     }
-    this.stompClient.connect({}, ():any=>{
+    console.log("KONEKTUJEM SEEEEE")
+    this.stompClient.connect({'Authorization' : 'Bearer ' + sessionStorage.getItem("token")}, ():any=>{
       this.subscribeToTopic(topic,callback);
     });
   }

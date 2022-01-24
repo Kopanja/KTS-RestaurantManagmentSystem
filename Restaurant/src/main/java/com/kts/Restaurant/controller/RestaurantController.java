@@ -66,6 +66,7 @@ public class RestaurantController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value= "/table-layout",method = RequestMethod.POST)
 	public ResponseEntity<String> createNewTableLayout(@RequestBody List<TableDTO> tables){
+		
         tableService.deleteAll();
         for(TableDTO dto : tables) {
         	System.out.println(dto);

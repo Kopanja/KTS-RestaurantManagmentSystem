@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kts.Restaurant.dto.AuthenticationResponseDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
 import com.kts.Restaurant.security.service.AuthenticationService;
@@ -33,19 +34,23 @@ public class AuthenticationController {
 	
 	@PostMapping(value = "/usrn-pass-login")
 	@CrossOrigin()
-	public ResponseEntity<String> usernameAndPasswordLogin(@RequestBody UsernamePasswordCredentialsDTO authenticationRequest,
+	public ResponseEntity<?> usernameAndPasswordLogin(@RequestBody UsernamePasswordCredentialsDTO authenticationRequest,
 			HttpServletResponse response) throws Exception {
-		String jwt = null;
 		
+		
+		AuthenticationResponseDTO res = null;
+		System.out.println(authenticationRequest.getUsername());
+		System.out.println(authenticationRequest.getPassword());
 		try {
-			jwt = authService.loginUsernamePassword(authenticationRequest);
+			res = authService.loginUsernamePassword(authenticationRequest);
 		} catch (AuthenticationException e) {
 			return new ResponseEntity<String>("Incorrect username or password", HttpStatus.FORBIDDEN);
 		} 
 		
 		//final UserDetails userDetails = menagmentService.loadUserByUsername(authenticationRequest.getUsername());	
 		//String jwt = jwtTokenUtil.createToken(userDetails);
-		return new ResponseEntity<String>(jwt, HttpStatus.OK);
+		
+		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/pin-login")

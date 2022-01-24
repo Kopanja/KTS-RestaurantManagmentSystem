@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,15 +44,16 @@ public class JWTFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-			
 		final String authorizationHeader = request.getHeader("Authorization");
-		
+		System.out.println(request.getRequestURL());
+		System.out.println(authorizationHeader);
 		String username = null;
 		String jwt = null;
-
+		
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			jwt = authorizationHeader.substring(7);
 			username = jwtUtil.extractUsername(jwt);
+			
 		}
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UsernamePasswordCredentials credentials = credentialService.findByUsername(username);

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,17 @@ import { HeaderTitleComponent } from './util/header-title/header-title.component
 import { ManagerPageSideMenuComponent } from './manager-page/manager-page-side-menu/manager-page-side-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewTableFormComponent } from './new-table-form/new-table-form.component';
+import { LoginUsrnPassComponent } from './login-usrn-pass/login-usrn-pass.component';
+import { LoginPinComponent } from './login-pin/login-pin.component';
+import { AuthenticationService } from './services/authentication.service';
+import { CanActivateAuthGuard } from './services/can-activate-auth.guard';
+import { ItemCategoryService } from './services/item-category.service';
+import { JwtUtilServiceService } from './services/jwt-util-service.service';
+import { MenuService } from './services/menu.service';
+import { SelectedTableService } from './services/selected-table.service';
+import { TableTypeService } from './services/table-type.service';
+import { WebSocketService } from './services/web-socket.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +51,8 @@ import { NewTableFormComponent } from './new-table-form/new-table-form.component
     HeaderTitleComponent,
     ManagerPageSideMenuComponent,
     NewTableFormComponent,
+    LoginUsrnPassComponent,
+    LoginPinComponent,
   
   ],
   imports: [
@@ -51,7 +64,21 @@ import { NewTableFormComponent } from './new-table-form/new-table-form.component
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    AuthenticationService,
+    CanActivateAuthGuard,
+    ItemCategoryService,
+    JwtUtilServiceService,
+    MenuService,
+    SelectedTableService,
+    TableTypeService,
+    WebSocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

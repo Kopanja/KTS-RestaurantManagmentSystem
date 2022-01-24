@@ -15,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kts.Restaurant.dto.AuthenticationResponseDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
+import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
 import com.kts.Restaurant.model.PinCredentials;
 import com.kts.Restaurant.model.User;
@@ -43,7 +45,7 @@ public class AuthenticationService {
 	}
 	
 	
-	public String loginUsernamePassword(UsernamePasswordCredentialsDTO authenticationRequest) throws AuthenticationException {
+	public AuthenticationResponseDTO loginUsernamePassword(UsernamePasswordCredentialsDTO authenticationRequest) throws AuthenticationException {
 		
 		Authentication authentication = null;
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),authenticationRequest.getPassword());
@@ -52,9 +54,13 @@ public class AuthenticationService {
 		User user = userService.findByUsername(authenticationRequest.getUsername());
 		List<GrantedAuthority> authorities = createAuthorities(user);
 		String jwt = tokenUtils.createToken(authToken, authorities);
-		System.out.println(jwt);
-		System.out.println(user);
-		return jwt;
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setFirstname(user.getFirstname());
+		userDTO.setLastname(user.getLastname());
+		
+		
+		return new AuthenticationResponseDTO(jwt, userDTO);
 	}
 	
 	private List<GrantedAuthority> createAuthorities(User user){

@@ -25,7 +25,7 @@ public class UsernameParsswordAuthenticationProvider implements AuthenticationPr
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
+		System.out.println("usao u provider");
 		UsernamePasswordAuthenticationToken token = null;
 
 		String username = authentication.getName();

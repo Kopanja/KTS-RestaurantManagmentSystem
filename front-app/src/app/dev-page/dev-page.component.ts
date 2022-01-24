@@ -36,4 +36,8 @@ export class DevPageComponent implements OnInit {
     this.http.get<string>("http://localhost:8080/api/restaurant/reset-db").subscribe(data => {console.log(data)});
   }
 
+  changeToUsrnPassLogin(){
+    this.router.navigate(['/usr-pass-login'])
+  }
+
 }
