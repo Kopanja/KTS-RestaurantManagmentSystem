@@ -1,5 +1,6 @@
 package com.kts.Restaurant.dto;
 
+import com.kts.Restaurant.model.Credentials;
 import com.kts.Restaurant.model.Role;
 
 import java.util.List;
@@ -17,17 +18,20 @@ public class UserDTO {
 
     private Boolean active;
 
+    private Credentials credentials;
+
     public UserDTO() {
 
     }
 
 
-    public UserDTO(String firstname, String lastname, String role, double salaryAmount, Boolean active) {
+    public UserDTO(String firstname, String lastname, String role, double salaryAmount, Boolean active, Credentials credentials) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.role = role;
         this.salaryAmount = salaryAmount;
         this.active = active;
+        this.credentials = credentials;
     }
 
     public String getFirstname() {

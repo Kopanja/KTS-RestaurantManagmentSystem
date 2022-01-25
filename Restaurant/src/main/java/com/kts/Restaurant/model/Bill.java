@@ -8,19 +8,27 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.Relationship.Direction;
+import org.springframework.data.neo4j.core.support.DateString;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Node
 public class Bill {
 	
 	@Id @GeneratedValue
 	private Long id;
-	
+
 	private double price;
 	
 	private double cost;
-	
+
+	@DateString("yyyy-dd-MM")
 	private Date date;
-	
+
+
+	@Relationship(type = "HAD_WAITER", direction = Direction.OUTGOING)
+	private User waiter;
+
 	@Relationship(type = "BILLED_ITEM", direction = Direction.OUTGOING)
 	public List<BilledItem> items;
 
@@ -30,13 +38,14 @@ public class Bill {
 	}
 
 
-	public Bill(Long id, double price, double cost, Date date, List<BilledItem> items) {
+	public Bill(Long id, double price, double cost, Date date, List<BilledItem> items, User waiter) {
 		super();
 		this.id = id;
 		this.price = price;
 		this.cost = cost;
 		this.date = date;
 		this.items = items;
+		this.waiter = waiter;
 	}
 
 
@@ -110,7 +119,13 @@ public class Bill {
 	}
 
 
+	public User getWaiter() {
+		return waiter;
+	}
 
+	public void setWaiter(User waiter) {
+		this.waiter = waiter;
+	}
 
 	@Override
 	public String toString() {
