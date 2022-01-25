@@ -55,19 +55,18 @@ public class AuthenticationController {
 	
 	@PostMapping(value = "/pin-login")
 	@CrossOrigin()
-	public ResponseEntity<String> pinBasedLogin(@RequestBody PinCredentialsDTO authenticationRequest,
+	public ResponseEntity<?> pinBasedLogin(@RequestBody PinCredentialsDTO authenticationRequest,
 			HttpServletResponse response) throws Exception {
-		String jwt = null;
-		
+		AuthenticationResponseDTO res = null;
 		try {
-			jwt = authService.loginPin(authenticationRequest);
+			res = authService.loginPin(authenticationRequest);
 		} catch (AuthenticationException e) {
 			return new ResponseEntity<String>("Incorrect username or password", HttpStatus.FORBIDDEN);
 		} 
 		
 		//final UserDetails userDetails = menagmentService.loadUserByUsername(authenticationRequest.getUsername());	
 		//String jwt = jwtTokenUtil.createToken(userDetails);
-		return new ResponseEntity<String>(jwt, HttpStatus.OK);
+		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
 	}
 
 }

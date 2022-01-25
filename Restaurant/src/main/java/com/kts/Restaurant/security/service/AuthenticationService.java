@@ -71,11 +71,12 @@ public class AuthenticationService {
 	}
 
 
-	public String loginPin(PinCredentialsDTO authenticationRequest) {
+	public AuthenticationResponseDTO loginPin(PinCredentialsDTO authenticationRequest) {
 		Authentication authentication = null;
 		String jwt = null;
 		String pin = authenticationRequest.getPin();
 		User user = userService.findByPin(pin);
+		UserDTO userDTO = null;
 		if(user != null) {
 			String username = userService.generateTokenSubjectForPinUser(user);
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username,pin);
@@ -86,10 +87,14 @@ public class AuthenticationService {
 			jwt = tokenUtils.createToken(authToken, authorities);
 			System.out.println(jwt);
 			System.out.println(user);
+			userDTO = new UserDTO();
+			userDTO.setFirstname(user.getFirstname());
+			userDTO.setLastname(user.getLastname());
 			
 		}
+		return new AuthenticationResponseDTO(jwt, userDTO);
 		
-		return jwt;
+		
 		
 		 
 	}

@@ -32,6 +32,8 @@ import { SelectedTableService } from './services/selected-table.service';
 import { TableTypeService } from './services/table-type.service';
 import { WebSocketService } from './services/web-socket.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     NewTableFormComponent,
     LoginUsrnPassComponent,
     LoginPinComponent,
+    UserListComponent,
+    UserComponent,
   
   ],
   imports: [

@@ -40,4 +40,8 @@ export class DevPageComponent implements OnInit {
     this.router.navigate(['/usr-pass-login'])
   }
 
+  changeToPinLogin(){
+    this.router.navigate(['/pin-login'])
+  }
+
 }
