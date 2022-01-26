@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.kts.Restaurant.dto.BillCreateDTO;
 import com.kts.Restaurant.dto.BillWaiterStatisticsDTO;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.model.*;
+import com.kts.Restaurant.util.mapper.BillCreateMapper;
 import com.kts.Restaurant.util.mapper.BillMapper;
 import com.kts.Restaurant.util.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,29 +18,29 @@ import com.kts.Restaurant.repository.BillRepository;
 
 @Service
 public class BillService {
-	
+
 	@Autowired
 	BillRepository billRepo;
-	
+
 	@Autowired
 	BilledItemService billedItemService;
-	
-	public Bill createBillFromOrder(Order order){
-		ArrayList<BilledItem> items = new ArrayList<BilledItem>();
-		double price = 0;
-		double cost = 0;
-		Date date = new Date();
-		for(OrderedItem oi : order.getItems()) {
-			Item item = oi.getItem();
-			BilledItem billedItem = billedItemService.save(new BilledItem(null,item));
-			items.add(billedItem);
-			price += item.getPrice();
-			cost += item.getCost();
-		}
-		Bill bill = new Bill(null, price, cost,date, items, order.getUser());
-		bill = this.save(bill);
-		return bill;
-	}
+
+//	public Bill createBillFromOrder(Order order){
+//		ArrayList<BilledItem> items = new ArrayList<BilledItem>();
+//		double price = 0;
+//		double cost = 0;
+//		Date date = new Date();
+//		for(OrderedItem oi : order.getItems()) {
+//			Item item = oi.getItem();
+//			BilledItem billedItem = billedItemService.save(new BilledItem(null,item));
+//			items.add(billedItem);
+//			price += item.getPrice();
+//			cost += item.getCost();
+//		}
+//		BillCreateDTO bill = new BillCreateDTO(null, price, cost,date, items, order.getUser());
+//		bill = this.save(bill);
+//		return bill;
+//	}
 
 	public List<BillWaiterStatisticsDTO> getAllBills() {
 		List<BillWaiterStatisticsDTO> dtos = new ArrayList<>();
@@ -54,12 +56,14 @@ public class BillService {
 
 		return dtos;
 	}
-	
-	
-	public Bill save(Bill bill) {
-		return billRepo.save(bill);
-	}
-	
-	
 
+	public BillCreateDTO save(BillCreateDTO billDTO) {
+		BillCreateMapper billCreateMapper = new BillCreateMapper();
+		Bill bill = billCreateMapper.toEntity(billDTO);
+		bill = billRepo.save(bill);
+
+		BillCreateDTO billCreated = billCreateMapper.toDto(bill);
+
+		return billCreated;
+	}
 }

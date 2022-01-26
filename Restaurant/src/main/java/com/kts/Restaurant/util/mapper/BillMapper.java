@@ -13,7 +13,7 @@ public class BillMapper implements DTOMapperInterface<Bill, BillWaiterStatistics
 
     @Override
     public BillWaiterStatisticsDTO toDto(Bill entity) {
-        return new BillWaiterStatisticsDTO(entity.getPrice(), entity.getCost(), entity.getWaiter());
+        return new BillWaiterStatisticsDTO(entity.getPrice(), entity.getCost(), entity.getDate());
     }
 
 }

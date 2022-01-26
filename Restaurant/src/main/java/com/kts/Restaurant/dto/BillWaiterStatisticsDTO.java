@@ -7,15 +7,27 @@ import java.util.Date;
 import java.util.List;
 
 public class BillWaiterStatisticsDTO {
-    private double price;
-    private double cost;
-//    private Date date;
-    private User waiter;
+    public double price;
+    public double cost;
 
-    public BillWaiterStatisticsDTO(double price, double cost, User waiter) {
+    @Override
+    public String toString() {
+        return "BillWaiterStatisticsDTO{" +
+                "price=" + price +
+                ", cost=" + cost +
+                ", date=" + date +
+                '}';
+    }
+
+    public Date date;
+
+    public BillWaiterStatisticsDTO() {
+        super();
+    }
+
+    public BillWaiterStatisticsDTO(double price, double cost, Date date) {
         this.price = price;
         this.cost = cost;
-//        this.date = date;
-        this.waiter = waiter;
+        this.date = date;
     }
 }

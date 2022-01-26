@@ -3,6 +3,8 @@ package com.kts.Restaurant.model;
 import java.util.Date;
 import java.util.List;
 
+import com.kts.Restaurant.util.DateStringConverter;
+import org.springframework.data.neo4j.core.convert.ConvertWith;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -22,7 +24,7 @@ public class Bill {
 	
 	private double cost;
 
-	@DateString("yyyy-dd-MM")
+	@ConvertWith(converter =  DateStringConverter.class)
 	private Date date;
 
 
@@ -37,6 +39,11 @@ public class Bill {
 		super();
 	}
 
+	public Bill(double cost,double price, Date date) {
+		this.price = price;
+		this.cost = cost;
+		this.date = date;
+	}
 
 	public Bill(Long id, double price, double cost, Date date, List<BilledItem> items, User waiter) {
 		super();
