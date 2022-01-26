@@ -12,6 +12,6 @@ export class JwtUtilServiceService {
     let decodedJwtJsonData = window.atob(jwtData);
     let decodedJwtData = JSON.parse(decodedJwtJsonData);
 
-    return [decodedJwtData.role];
+    return decodedJwtData.role;
   }
 }

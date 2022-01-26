@@ -34,6 +34,9 @@ import { WebSocketService } from './services/web-socket.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user/user.component';
+import { HomeComponent } from './home/home.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,9 @@ import { UserComponent } from './user/user.component';
     LoginPinComponent,
     UserListComponent,
     UserComponent,
+    HomeComponent,
+    AdminPageComponent,
+    NavbarComponent,
   
   ],
   imports: [

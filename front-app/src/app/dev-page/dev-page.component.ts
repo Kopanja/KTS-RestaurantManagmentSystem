@@ -29,7 +29,7 @@ export class DevPageComponent implements OnInit {
   }
 
   managerMenu() {
-    this.router.navigate(['/manager'])
+    this.router.navigate(['/menager'])
   }
 
   resetDB(){
