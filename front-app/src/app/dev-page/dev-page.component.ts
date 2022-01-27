@@ -29,7 +29,7 @@ export class DevPageComponent implements OnInit {
   }
 
   managerMenu() {
-    this.router.navigate(['/manager'])
+    this.router.navigate(['/menager'])
   }
 
   resetDB(){
@@ -38,6 +38,10 @@ export class DevPageComponent implements OnInit {
 
   changeToUsrnPassLogin(){
     this.router.navigate(['/usr-pass-login'])
+  }
+
+  changeToPinLogin(){
+    this.router.navigate(['/pin-login'])
   }
 
 }

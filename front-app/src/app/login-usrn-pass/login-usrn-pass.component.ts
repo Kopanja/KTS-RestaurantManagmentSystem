@@ -23,7 +23,7 @@ export class LoginUsrnPassComponent implements OnInit {
   }
 
   login():void{
-    this.authenticationService.login(this.user.name, this.user.password);
+    this.authenticationService.loginUsrnPass(this.user.name, this.user.password);
   }
 
 }

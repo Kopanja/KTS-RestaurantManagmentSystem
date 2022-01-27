@@ -49,7 +49,7 @@ public class UserService {
         salary.setActive(true);
         salary.setSalaryAmount(userDTO.getSalaryAmount());
         salary.setSince(new Date());
-        List salaries = new ArrayList<>();
+        List<Salary> salaries = new ArrayList<>();
         salaries.add(salary);
         newUser.setSalaries(salaries);
 
@@ -121,7 +121,7 @@ public class UserService {
             // add new Salary
             salaryDb.setActive(false);
             salaryDb.setTo(new Date());
-            salaryService.saveSalary(salaryDb);
+            //salaryService.saveSalary(salaryDb);
 
             //on User
             user.getSalaries().add(index, salaryDb);
@@ -175,7 +175,7 @@ public class UserService {
     public List<UserDTO> getAllByRole(String roleName){
         List<UserDTO> dtos = new ArrayList<>();
         Role role = roleRepository.findByRole(roleName);
-        List<User> usersa =  userRepository.findAll();
+        //List<User> usersa =  userRepository.findAll();
 
         List<User> users =  userRepository.findAllByRole(role.getRole());
         if(users.size() == 0){
@@ -191,10 +191,7 @@ public class UserService {
     
     public User findByUsername(String username) {
     	User user = userRepository.findByUsername(username);
-    	if(user != null) {
-    		return user;
-    	}
-    	return null;
+        return user;
     }
     
     public User findByPin(String pin) {
@@ -217,8 +214,7 @@ public class UserService {
     }
     
     public List<User> getAllPinBasedUsers(){
-    	List<User> users = userRepository.getAllPinUsers();
-    	return users;
+        return userRepository.getAllPinUsers();
     }
 }
 

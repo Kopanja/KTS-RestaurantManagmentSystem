@@ -3,68 +3,53 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtUtilServiceService } from './jwt-util-service.service';
 import { LoginResponse } from '../model/login-response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private readonly loginPath = 'http://localhost:8080/api/auth/usrn-pass-login';
+  private readonly loginUsrnPassPath = 'http://localhost:8080/api/auth/usrn-pass-login';
+  private readonly loginPinPath = 'http://localhost:8080/api/auth/pin-login';
   private loginResponse : LoginResponse;
-  constructor(private http: HttpClient, private jwtUtilsService: JwtUtilServiceService) { }
+  constructor(private http: HttpClient,private router : Router, private jwtUtilsService: JwtUtilServiceService) { }
 
-  login(username: string, password: string) {
+  loginUsrnPass(username: string, password: string) {
     //localStorage.removeItem("token");
     //localStorage.removeItem("loggedInUser");
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<LoginResponse>(this.loginPath, JSON.stringify({ username, password }), { headers }).subscribe(data =>{
+    return this.http.post<LoginResponse>(this.loginUsrnPassPath, JSON.stringify({ username, password }), { headers }).subscribe(data =>{
       this.loginResponse = data;
-      console.log(this.loginResponse)
+    
     let jwtData = this.loginResponse.jwt.split('.')[1];
     let decodedJwtJsonData = window.atob(jwtData);
-    console.log(decodedJwtJsonData);
+    
     let decodedJwtData = JSON.parse(decodedJwtJsonData)
-    console.log(decodedJwtData);
-    console.log(decodedJwtData.role);
+    //console.log(this.jwtUtilsService.getRoles(this.loginResponse.jwt));
     sessionStorage.setItem("token", this.loginResponse.jwt);
     sessionStorage.setItem("loggedInUser", JSON.stringify(this.loginResponse.user));
+    console.log(this.getLoggedInUserRole());
+    this.redirectLoggedInUser();
 
     });
-    
-    
-    
-    /*
-      .map((res: any) => {
-        let token = res && res['token'];
-        if (token) {
-          localStorage.setItem('currentUser', JSON.stringify({
-            username: name,
-            roles: this.jwtUtilsService.getRoles(token),
-            token: token.split(' ')[1]
-          }));
-          return true;
-        }
-        else {
-          return false;
-        }
-      })
-      .catch((error: any) => {
-        if (error.status === 400) {
-          return Observable.throw('Ilegal login');
-        }
-        else {
-          return Observable.throw(error.json().error || 'Server error');
-        }
-      });
-      */
+  }
+
+  loginPin(pin: string) {
+    //localStorage.removeItem("token");
+    //localStorage.removeItem("loggedInUser");
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<LoginResponse>(this.loginPinPath, JSON.stringify({ pin }), { headers }).subscribe(data =>{
+      this.loginResponse = data;
+    sessionStorage.setItem("token", this.loginResponse.jwt);
+    sessionStorage.setItem("loggedInUser", JSON.stringify(this.loginResponse.user));
+    console.log(this.getLoggedInUserRole());
+    this.redirectLoggedInUser();
+ 
+    });
   }
 
   getToken(): String {
-    
-    //let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //var token = currentUser && currentUser.token;
-   // return token ? token : "";
-   return "";
+   return sessionStorage.token;
   }
 
   logout(): void {
@@ -76,12 +61,41 @@ export class AuthenticationService {
     else return false;
   }
 
+  getLoggedInUserRole(){
+    if(sessionStorage.currentUser !== null && sessionStorage.token !== ""){
+      return this.jwtUtilsService.getRoles(sessionStorage.token)[0];
+    }
+    return null;
+  }
   getCurrentUser() {
     if (localStorage.currentUser) {
-      return JSON.parse(localStorage.currentUser);
+      return JSON.parse(sessionStorage.currentUser);
     }
     else {
       return undefined;
     }
+  }
+
+  redirectLoggedInUser(){
+  
+    const userRole = this.getLoggedInUserRole();
+    if(userRole){
+
+      if(userRole.authority === "ADMIN"){
+        this.router.navigate(["/admin"]);
+      }else if(userRole.authority === "MENAGER"){
+        this.router.navigate(["/menager"])
+      }else if(userRole.authority === "COOK"){
+        this.router.navigate(["/cook"])
+      }else if(userRole.authority === "BARTENDER"){
+        this.router.navigate(["/bartender"])
+      }else if(userRole.authority === "WAITER"){
+        this.router.navigate(["/waiter"])
+      }
+
+    }else{
+      this.router.navigate(["/home"])
+    }
+    
   }
 }
