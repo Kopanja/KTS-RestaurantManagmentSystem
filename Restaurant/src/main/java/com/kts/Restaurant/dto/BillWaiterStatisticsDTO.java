@@ -9,6 +9,7 @@ import java.util.List;
 public class BillWaiterStatisticsDTO {
     public double price;
     public double cost;
+    public User user;
 
     @Override
     public String toString() {

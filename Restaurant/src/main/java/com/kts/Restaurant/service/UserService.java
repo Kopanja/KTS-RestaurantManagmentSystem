@@ -3,10 +3,8 @@ package com.kts.Restaurant.service;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
-import com.kts.Restaurant.model.PinCredentials;
-import com.kts.Restaurant.model.Role;
-import com.kts.Restaurant.model.Salary;
-import com.kts.Restaurant.model.User;
+import com.kts.Restaurant.model.*;
+import com.kts.Restaurant.repository.BillRepository;
 import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.util.mapper.UserMapper;
@@ -14,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -31,6 +26,9 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
     
+
+    @Autowired
+    BillRepository billRepository;
 
     //SVE TREBA DA SE UPDATE ZBOG CREDENTIALS
     
@@ -230,6 +228,33 @@ public class UserService {
     
     public List<User> getAllPinBasedUsers(){
         return userRepository.getAllPinUsers();
+    }
+
+    public Map getWaiterStatistics() {
+        List<User> waiters = userRepository.getAllWaiters();
+        List<Bill> bills = billRepository.findAll();
+        Map<Long, Double> idResult = new HashMap<Long, Double>();
+
+        for (User waiter: waiters) {
+            idResult.put(waiter.getId(), 0.0);
+        }
+
+        for(Bill bill: bills) {
+            Long key = bill.getWaiter().getId();
+            if(!idResult.containsKey(key)) continue;
+            double value = (double)idResult.get(key) + (bill.getPrice() - bill.getCost());
+            idResult.put(key, value);
+        }
+        Map result = new HashMap<User, Double>();
+        for(Long elemKey: idResult.keySet()) {
+            for(User user: waiters) {
+                if(user.getId() == elemKey) {
+                    result.put(user, idResult.get(elemKey));
+                }
+            }
+        }
+
+        return result;
     }
 }
 

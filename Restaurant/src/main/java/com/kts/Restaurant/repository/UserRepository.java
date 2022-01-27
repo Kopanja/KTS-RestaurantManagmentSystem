@@ -39,6 +39,11 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
             "RETURN n,a,c,b,r")
 	List<User> getAllPinUsers();
 
+	@Query("MATCH (n:User)-[b:HAS_ROLE]->(r:Role)\n" +
+			"WHERE r.role = 'WAITER'" +
+			"RETURN n,r")
+	List<User> getAllWaiters();
+
 
 
 }

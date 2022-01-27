@@ -1,10 +1,13 @@
 package com.kts.Restaurant.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import org.neo4j.driver.internal.value.DateValue;
 import org.springframework.data.neo4j.core.convert.Neo4jPersistentPropertyConverter;
 import org.neo4j.driver.Value;
 
@@ -12,16 +15,20 @@ public class DateStringConverter implements Neo4jPersistentPropertyConverter<Dat
 
     @Override
     public Value write(Date source) {
-        System.out.println("WRITE");
-        System.out.println(source);
-        return (Value) source;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(source);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(strDate, formatter);
+
+        DateValue d = new DateValue(localDate);
+        return d;
     }
 
     @Override
     public Date read(Value source) {
-        System.out.println(source.asString());
         try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(source.asString());
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(source.toString());
             System.out.println("Uspeo da parsiram");
             return date;
         } catch (ParseException e) {
@@ -29,11 +36,4 @@ public class DateStringConverter implements Neo4jPersistentPropertyConverter<Dat
             return null;
         }
     }
-
-    public LocZalDate convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
-
 }

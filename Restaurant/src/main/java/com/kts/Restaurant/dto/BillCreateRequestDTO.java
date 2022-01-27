@@ -5,14 +5,14 @@ import java.util.Date;
 public class BillCreateRequestDTO {
     public double price;
     public double cost;
-    public String date;
+    public Date date;
 
     public BillCreateRequestDTO() {
         super();
     }
 
 
-    public BillCreateRequestDTO(double cost, double price, String date) {
+    public BillCreateRequestDTO(double cost, double price, Date date) {
         super();
         this.cost = cost;
         this.price = price;
@@ -27,7 +27,7 @@ public class BillCreateRequestDTO {
         return cost;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
     public void setPrice(double price) {
@@ -38,7 +38,7 @@ public class BillCreateRequestDTO {
         this.cost = cost;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
