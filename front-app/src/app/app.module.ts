@@ -37,6 +37,8 @@ import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NewUserFormComponent } from './new-user-form/new-user-form.component';
+import { ItemListComponent } from './item-list/item-list.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     AdminPageComponent,
     NavbarComponent,
+    NewUserFormComponent,
+    ItemListComponent,
   
   ],
   imports: [

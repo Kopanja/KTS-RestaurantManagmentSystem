@@ -19,5 +19,10 @@ public class UsernamePasswordCredentialsService {
 		return cred;
 	}
 	
+	public UsernamePasswordCredentials create(String username, String password) {
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+		return credRepo.save(credentials);
+	}
+	
 	
 }

@@ -5,9 +5,9 @@
         <form class="form-signin" (ngSubmit)="login()">
           <h2 class="form-signin-heading">Please sign in</h2>
           <label for="pin" class="sr-only">PIN</label>
-          <input type="text" id="pin" class="form-control" name="name" [(ngModel)]="user.pin" placeholder="XXXX"
+          <input type="text" id="inputPin" class="form-control" name="name" [(ngModel)]="user.pin" placeholder="XXXX"
             required autofocus>
-          <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+          <button id = "login-button" class="btn btn-primary btn-block" type="submit">Sign in</button>
         </form>
         <div *ngIf=wrongPin class="alert alert-warning box-msg" role="alert">
           Wrong username or password.

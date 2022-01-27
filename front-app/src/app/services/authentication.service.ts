@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { JwtUtilServiceService } from './jwt-util-service.service';
 import { LoginResponse } from '../model/login-response';
 import { Router } from '@angular/router';
+import { UserRegistration } from '../model/user-registration';
+import { Role } from '../model/role';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,8 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
   private readonly loginUsrnPassPath = 'http://localhost:8080/api/auth/usrn-pass-login';
   private readonly loginPinPath = 'http://localhost:8080/api/auth/pin-login';
+  private readonly registrationPath = 'http://localhost:8080/api/auth/register';
+  private readonly rolesPath = 'http://localhost:8080/api/role/getAll';
   private loginResponse : LoginResponse;
   constructor(private http: HttpClient,private router : Router, private jwtUtilsService: JwtUtilServiceService) { }
 
@@ -35,8 +39,7 @@ export class AuthenticationService {
   }
 
   loginPin(pin: string) {
-    //localStorage.removeItem("token");
-    //localStorage.removeItem("loggedInUser");
+    
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<LoginResponse>(this.loginPinPath, JSON.stringify({ pin }), { headers }).subscribe(data =>{
       this.loginResponse = data;
@@ -48,12 +51,18 @@ export class AuthenticationService {
     });
   }
 
+  registerNewUser(registrationRequest: UserRegistration) {
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.registrationPath, JSON.stringify(registrationRequest), { headers }).subscribe();
+  }
+
   getToken(): String {
    return sessionStorage.token;
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
+   localStorage.removeItem("token");
+  localStorage.removeItem("loggedInUser");
   }
 
   isLoggedIn(): boolean {
@@ -97,5 +106,9 @@ export class AuthenticationService {
       this.router.navigate(["/home"])
     }
     
+  }
+
+  getAllRoles():Observable<Role[]>{
+    return this.http.get<Role[]>(this.rolesPath);
   }
 }

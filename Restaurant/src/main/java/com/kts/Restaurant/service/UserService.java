@@ -30,8 +30,14 @@ public class UserService {
 
     @Autowired
     RoleRepository roleRepository;
+    
 
     //SVE TREBA DA SE UPDATE ZBOG CREDENTIALS
+    
+    public User save(User user) {
+    	return userRepository.save(user);
+    }
+    
     
     public UserDTO create(UserDTO userDTO) {
 
@@ -71,6 +77,9 @@ public class UserService {
         UserMapper userMapper = new UserMapper();
         return userMapper.toDto(newUser);
     }
+    
+    
+    
 
 
 
@@ -187,6 +196,12 @@ public class UserService {
         }
         return dtos;
 
+    }
+    
+    public UserDTO findById(Long id) {
+    	User user = userRepository.findById(id).orElse(null);
+    	UserMapper userMapper = new UserMapper();
+    	return userMapper.toDto(user);
     }
     
     public User findByUsername(String username) {
