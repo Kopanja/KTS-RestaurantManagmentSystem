@@ -8,6 +8,8 @@ import java.util.List;
 public class UserDTO {
 
 
+	private Long id;
+
     private String firstname;
 
     private String lastname;
@@ -25,7 +27,8 @@ public class UserDTO {
     }
 
 
-    public UserDTO(String firstname, String lastname, String role, double salaryAmount, Boolean active, Credentials credentials) {
+    public UserDTO(Long id,String firstname, String lastname, String role, double salaryAmount, Boolean active) {
+    	this.id= id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.role = role;
@@ -76,4 +79,20 @@ public class UserDTO {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Boolean getActive() {
+		return active;
+	}
+
 }

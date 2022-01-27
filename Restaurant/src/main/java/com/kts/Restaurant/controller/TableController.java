@@ -39,8 +39,7 @@ public class TableController {
 	@Autowired
 	WaiterService waiterService;
 	
-	@Autowired
-	UserRepository userRepo;
+	
 	
 	
 	@RequestMapping(value="/{name}/place-order",method = RequestMethod.POST)
@@ -70,7 +69,7 @@ public class TableController {
         return new ResponseEntity<>(true,HttpStatus.OK);
     }
 	
-	
+	/*
 	
 	@RequestMapping(value="/deleteAll",method = RequestMethod.DELETE)
     public ResponseEntity<Table> deleteAll() {
@@ -79,4 +78,5 @@ public class TableController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    */
 }

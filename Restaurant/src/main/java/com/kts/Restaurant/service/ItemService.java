@@ -33,7 +33,7 @@ public class ItemService {
 		Item newItem = null;
 		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")){
 			newItem = new FoodItem();
-		}else if(itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Dring")){
+		}else if(itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Drink")){
 			newItem = new DrinkItem();
 		}
 

@@ -22,6 +22,6 @@ public class UserMapper implements DTOMapperInterface<User, UserDTO> {
         }else{
             amount = activeSalary.getSalaryAmount();
         }
-        return new UserDTO(user.getFirstname(), user.getLastname(), user.getRole().getRole(), amount, user.isActive(), user.getCredentials());
+        return new UserDTO(user.getId(),user.getFirstname(), user.getLastname(), user.getRole().getRole(), amount, user.isActive());
     }
 }

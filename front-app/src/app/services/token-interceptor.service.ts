@@ -12,9 +12,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     let token: string|null = "";
-    console.log("intercepted");
     if(sessionStorage.getItem("token")){
       token = sessionStorage.getItem("token");
     }
@@ -25,7 +23,6 @@ export class TokenInterceptorService implements HttpInterceptor {
         'Authorization': str
       }
     });
-    console.log(request);
     return next.handle(request);
   }
 }

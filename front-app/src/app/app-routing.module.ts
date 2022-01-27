@@ -11,6 +11,8 @@ import { LoginPinComponent } from './login-pin/login-pin.component';
 import { CanActivateAuthGuard } from './services/can-activate-auth.guard';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { HomeComponent } from './home/home.component';
+import { UserComponent } from './user/user.component';
+import { NewUserFormComponent } from './new-user-form/new-user-form.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,20 @@ const routes: Routes = [
   },
   {
     path: 'menager', component: ManagerPageComponent,
+    canActivate: [CanActivateAuthGuard],
+    data: {
+      roles: ['ADMIN', 'MENAGER']
+    }
+  },
+  {
+    path: 'new-user', component: NewUserFormComponent,
+    canActivate: [CanActivateAuthGuard],
+    data: {
+      roles: ['ADMIN']
+    }
+  },
+  {
+    path: 'user/:id', component: UserComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
       roles: ['ADMIN', 'MENAGER']

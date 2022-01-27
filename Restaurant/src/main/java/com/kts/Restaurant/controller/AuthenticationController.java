@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kts.Restaurant.dto.AuthenticationResponseDTO;
+import com.kts.Restaurant.dto.NewUserDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
+import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.security.service.AuthenticationService;
 
 @RestController
@@ -67,6 +69,24 @@ public class AuthenticationController {
 		//final UserDetails userDetails = menagmentService.loadUserByUsername(authenticationRequest.getUsername());	
 		//String jwt = jwtTokenUtil.createToken(userDetails);
 		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping(value = "/register")
+	@CrossOrigin()
+	public ResponseEntity<?> register(@RequestBody NewUserDTO newUserDTO,
+			HttpServletResponse response) throws Exception {
+		System.out.println(newUserDTO);
+		User newUser = authService.register(newUserDTO);
+		if(newUser != null) {
+			System.out.println(newUser);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+			
+			
+		}else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 }
