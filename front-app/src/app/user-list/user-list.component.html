@@ -1,0 +1,14 @@
+<table *ngIf="this.users">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Role</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+      <td>{{user.role}}</td>
+      <button (click) = "detailsClick(user)">Details</button>
+    </tr>
+</table>

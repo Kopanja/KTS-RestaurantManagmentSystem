@@ -20,6 +20,7 @@ import com.kts.Restaurant.security.authProviders.UsernameParsswordAuthentication
 import com.kts.Restaurant.security.filters.JWTFilter;
 
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -35,6 +36,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JWTFilter jWTFilter;
 	
+	@Autowired
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 	
 	
 	@Override
@@ -52,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 			
 			// za neautorizovane zahteve posalji 401 gresku
-			
+			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 			// za cors
 			.cors().and()
 			

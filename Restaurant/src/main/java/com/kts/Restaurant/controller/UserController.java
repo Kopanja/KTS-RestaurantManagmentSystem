@@ -71,6 +71,15 @@ public class UserController {
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> getById(@PathVariable Long id){
+        UserDTO dto = userService.findById(id);
+        if(dto == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
 
 

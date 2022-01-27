@@ -42,6 +42,10 @@ public class FloorLayoutComponent  {
 		this.driver = driver;
 	}
 	
+	public void ensureTablesAreDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.visibilityOfAllElements(this.tables));
+	}
 	
 	public List<WebElement> getTables() {
 		return tables;

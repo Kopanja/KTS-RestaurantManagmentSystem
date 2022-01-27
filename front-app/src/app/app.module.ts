@@ -32,6 +32,13 @@ import { SelectedTableService } from './services/selected-table.service';
 import { TableTypeService } from './services/table-type.service';
 import { WebSocketService } from './services/web-socket.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserComponent } from './user/user.component';
+import { HomeComponent } from './home/home.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NewUserFormComponent } from './new-user-form/new-user-form.component';
+import { ItemListComponent } from './item-list/item-list.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +60,13 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     NewTableFormComponent,
     LoginUsrnPassComponent,
     LoginPinComponent,
+    UserListComponent,
+    UserComponent,
+    HomeComponent,
+    AdminPageComponent,
+    NavbarComponent,
+    NewUserFormComponent,
+    ItemListComponent,
   
   ],
   imports: [

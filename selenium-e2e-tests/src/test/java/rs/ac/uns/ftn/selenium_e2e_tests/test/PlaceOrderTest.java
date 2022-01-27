@@ -22,6 +22,7 @@ import rs.ac.uns.ftn.selenium_e2e_tests.pages.CookPage;
 import rs.ac.uns.ftn.selenium_e2e_tests.pages.FloorLayoutComponent;
 import rs.ac.uns.ftn.selenium_e2e_tests.pages.MenuComponent;
 import rs.ac.uns.ftn.selenium_e2e_tests.pages.OrderComponent;
+import rs.ac.uns.ftn.selenium_e2e_tests.pages.PinPage;
 import rs.ac.uns.ftn.selenium_e2e_tests.pages.TableComponent;
 
 public class PlaceOrderTest {
@@ -35,6 +36,10 @@ public class PlaceOrderTest {
 	MenuComponent menuComponent;
 	BartenderPage bartenderPage;
 	CookPage cookPage;
+	PinPage pinLoginPageBartender;
+	PinPage pinLoginPageWaiter;
+	PinPage pinLoginPageCook;
+	
 
 	@Before
 	public void setupSelenium() {
@@ -45,7 +50,7 @@ public class PlaceOrderTest {
 		waiterBrowser.manage().window().maximize();
 		// browser.manage().window().setSize(new Dimension(960, 1080));
 		// browser.manage().window().setPosition(new Point(0,0));
-		waiterBrowser.navigate().to("http://localhost:4200/floor-layout");
+		waiterBrowser.navigate().to("http://localhost:4200/pin-login");
 
 		waiterBrowser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		waiterBrowser.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -56,7 +61,7 @@ public class PlaceOrderTest {
 		// browser2.manage().window().maximize();
 		bartenderBrowser.manage().window().setSize(new Dimension(960, 590));
 		bartenderBrowser.manage().window().setPosition(new Point(960, 0));
-		bartenderBrowser.navigate().to("http://localhost:4200/bartender");
+		bartenderBrowser.navigate().to("http://localhost:4200/pin-login");
 
 		bartenderBrowser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		bartenderBrowser.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -67,7 +72,7 @@ public class PlaceOrderTest {
 		// browser2.manage().window().maximize();
 		cookBrowser.manage().window().setSize(new Dimension(960, 590));
 		cookBrowser.manage().window().setPosition(new Point(960, 590));
-		cookBrowser.navigate().to("http://localhost:4200/cook");
+		cookBrowser.navigate().to("http://localhost:4200/pin-login");
 
 		cookBrowser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		cookBrowser.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -78,26 +83,50 @@ public class PlaceOrderTest {
 		tableComponent = PageFactory.initElements(waiterBrowser, TableComponent.class);
 		orderComponent = PageFactory.initElements(waiterBrowser, OrderComponent.class);
 		menuComponent = PageFactory.initElements(waiterBrowser, MenuComponent.class);
+		pinLoginPageWaiter = PageFactory.initElements(waiterBrowser, PinPage.class);
 
 		bartenderPage = PageFactory.initElements(bartenderBrowser, BartenderPage.class);
-
+		pinLoginPageBartender = PageFactory.initElements(bartenderBrowser, PinPage.class);
+		
 		cookPage = PageFactory.initElements(cookBrowser, CookPage.class);
+		pinLoginPageCook = PageFactory.initElements(cookBrowser, PinPage.class);
 
 	}
 
 	@Test
 	public void placingOrderTest() throws InterruptedException {
 
-		// check if we are on the waiter page
-		assertEquals("http://localhost:4200/floor-layout", waiterBrowser.getCurrentUrl());
+		//Logins
+		assertEquals("http://localhost:4200/pin-login", bartenderBrowser.getCurrentUrl());
+		pinLoginPageBartender.writePinInput("2222");
+		pinLoginPageBartender.logInButtonClick();
+		//Thread.sleep(2000);
+		bartenderPage.ensureOrdersAreDisplayed();
 		assertEquals("http://localhost:4200/bartender", bartenderBrowser.getCurrentUrl());
+		
+		
+		
+		
+		pinLoginPageWaiter.writePinInput("1111");
+		pinLoginPageWaiter.logInButtonClick();
+		//Thread.sleep(2000);
+		floorLayout.ensureTablesAreDisplayed();
+		assertEquals("http://localhost:4200/waiter", waiterBrowser.getCurrentUrl());
 		// select first floor for testing
 		floorLayout.getFloor1().click();
+		
+		//Treba da se promeni sa COOK userom post
+		pinLoginPageCook.writePinInput("3333");
+		pinLoginPageCook.logInButtonClick();
+		//Thread.sleep(2000);
+		cookPage.ensureOrdersAreDisplayed();
+		assertEquals("http://localhost:4200/cook", cookBrowser.getCurrentUrl());
+		
 // -------------SELECTING TABLE TEST----------------------------
 		String selectedTableCSSClass = "table-selected";
 		String occupiedTableCSSClass = "occupied";
-		String orderTitle = "Table: Table1";
-		String tableName = "Table1";
+		String orderTitle = "Table: Table6";
+		String tableName = "Table6";
 
 		tableComponent.setTableName(tableName);
 		tableComponent.ensureTableImageIsDisplayed();
