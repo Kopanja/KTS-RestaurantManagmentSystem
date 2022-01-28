@@ -1,10 +1,12 @@
 package com.kts.Restaurant.controller;
 
+import com.itextpdf.text.DocumentException;
 import com.kts.Restaurant.dto.*;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.service.ItemService;
+import com.kts.Restaurant.service.ReportService;
 import com.kts.Restaurant.service.UserService;
 import com.kts.Restaurant.service.UsernamePasswordCredentialsService;
 import com.kts.Restaurant.service.WaiterService;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,9 @@ public class ReportController {
 
     @Autowired
     private RoleRepository roleRepository;
+    
+    @Autowired
+    ReportService reportService;
 
     @Autowired
     private UsernamePasswordCredentialsService UsernamePasswordCredentialsService;
@@ -75,6 +81,19 @@ public class ReportController {
             result.add(dto);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/salary-payout", method = RequestMethod.GET)
+    public ResponseEntity<?> getTotalSalaryPayoutByUser(){
+        
+			try {
+				reportService.createTotalSalaryPayoutByUserReport();
+			} catch (FileNotFoundException | ParseException | DocumentException e) {
+				e.printStackTrace();
+			}
+		 
+        return new ResponseEntity<>(null, HttpStatus.OK);
+//        }
     }
 
 

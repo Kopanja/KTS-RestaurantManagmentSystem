@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -27,7 +30,7 @@ public class SalaryService {
     public Salary saveSalary(Salary salary) {
         return salaryRepository.save(salary);
     }
-
+   
 
     public Map<Double, List<SalaryDTO>> salaryReport(Long userId, Optional<String> from, Optional<String> to) throws ParseException {
         Optional<User> user = userRepository.findById(userId);
@@ -43,6 +46,7 @@ public class SalaryService {
         Date fromDate = from.isPresent() ? sf.parse(from.get()) : new Date(0);
         Date toDate = to.isPresent() ? sf.parse(to.get()) : new Date(System.currentTimeMillis());
 
+        
         for (Salary s : salaries) {
 
             if (s.getSince().after(fromDate) && ( s.getTo() == null ||  s.getTo().before(toDate)) ) {
@@ -54,6 +58,7 @@ public class SalaryService {
 
         Map<Double, List<SalaryDTO>> retVal = new HashMap<>();
         retVal.put(ukupnaZarada, dtos);
+        
         return retVal;
 
     }

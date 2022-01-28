@@ -24,8 +24,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
-import com.itextpdf.text.pdf.draw.LineSeparator;
-import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Item;
 
 public class PDFGenerationUtil {
@@ -210,24 +208,5 @@ public class PDFGenerationUtil {
 		document.add(p2);
 	}
 
-	class PDFBackground extends PdfPageEventHelper {
 
-		@Override
-		public void onEndPage(PdfWriter writer, Document document) {
-
-			// This scales the image to the page,
-			// use the image's width & height if you don't want to scale.
-			float width = document.getPageSize().getWidth();
-			float height = document.getPageSize().getHeight();
-			try {
-				Rectangle pageSize = new Rectangle(width, height);
-				pageSize.setBackgroundColor(new BaseColor(0xFF, 0xFF, 0xDE));
-				writer.getDirectContentUnder().addImage((Image) pageSize);
-			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	}
 }

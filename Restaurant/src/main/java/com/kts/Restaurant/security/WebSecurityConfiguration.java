@@ -65,10 +65,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			 * Milan: dozvoljena ruta za sve da pristupe auth/ kako bi se ulogovali
 			 */
 		
-			.antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/item/*.pdf").permitAll()
+			//.antMatchers("/api/auth/**").permitAll()
+			//.antMatchers("/api/item/*.pdf").permitAll()
 			//.antMatchers("/api/item-category/**").hasAnyAuthority("BARTENDER", "ADMIN")
-			//.antMatchers("/api/**").permitAll()
+			.antMatchers("/api/**").permitAll()
 			// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated();
 			
