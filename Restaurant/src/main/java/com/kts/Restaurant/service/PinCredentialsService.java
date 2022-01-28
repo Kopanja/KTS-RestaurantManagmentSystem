@@ -17,5 +17,13 @@ public class PinCredentialsService {
 		PinCredentials credentials = new PinCredentials(pin);
 		return pinRepo.save(credentials);
 	}
+	
+	public PinCredentials findByUserId(Long id) {
+		return pinRepo.findByUserId(id);
+	}
+
+	public void delete(PinCredentials oldCredentials) {
+		pinRepo.delete(oldCredentials);
+	}
 
 }

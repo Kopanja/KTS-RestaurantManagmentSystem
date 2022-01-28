@@ -22,6 +22,14 @@ public class UsernamePasswordCredentialsService {
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
 		return credRepo.save(credentials);
 	}
+
+	public UsernamePasswordCredentials findByUserId(Long userId) {
+		return credRepo.findByUserId(userId);
+	}
+
+	public void delete(UsernamePasswordCredentials oldCredentials) {
+		credRepo.delete(oldCredentials);
+	}
 	
 	
 }

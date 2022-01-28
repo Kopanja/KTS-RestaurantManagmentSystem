@@ -21,11 +21,13 @@ import com.kts.Restaurant.dto.NewUserDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
+import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.model.Credentials;
 import com.kts.Restaurant.model.PinCredentials;
 import com.kts.Restaurant.model.Role;
 import com.kts.Restaurant.model.Salary;
 import com.kts.Restaurant.model.User;
+import com.kts.Restaurant.model.UsernamePasswordCredentials;
 import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.security.util.TokenUtils;
 import com.kts.Restaurant.service.PinCredentialsService;
@@ -162,6 +164,46 @@ public class AuthenticationService {
         return userService.save(newUser);
 		
 	}
+	
+	 public User updateUsrnPasswordCredentials(Long userId, UsernamePasswordCredentialsDTO newCredentials) {
+	    	User user = userService.findUserEntityById(userId);
+	    	UsernamePasswordCredentials oldCredentials = usrnPassCredService.findByUserId(userId);
+	    	if(user == null){
+	            throw new UserWIthUsernameNotFound();
+	        }
+	    	
+	    	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials();
+	    	if(newCredentials.getUsername().equals("")) {
+	    		credentials.setUsername(oldCredentials.getUsername()); 	
+	    	}else {
+	    		credentials.setUsername(newCredentials.getUsername());
+	    	}
+	    	if(newCredentials.getPassword().equals("")) {
+	    		credentials.setPassword(oldCredentials.getPassword());
+	    	}else {
+	    		credentials.setPassword(passwordEncoder.encode(newCredentials.getPassword()));
+	    	}	
+	    			
+	    	usrnPassCredService.delete(oldCredentials);
+	    	user.setCredentials(credentials);
+	    	return userService.save(user);
+	    }
+	 
+	 public User updatePinCredentials(Long userId, PinCredentialsDTO newCredentials) {
+	    	User user = userService.findUserEntityById(userId);
+	    	PinCredentials oldCredentials = pinService.findByUserId(userId);
+	    	
+	    	if(user == null){
+	            throw new UserWIthUsernameNotFound();
+	        }
+	    	
+	    	PinCredentials credentials = new PinCredentials(
+	    			passwordEncoder.encode(newCredentials.getPin())
+	    			);
+	    	pinService.delete(oldCredentials);
+	    	user.setCredentials(credentials);
+	    	return userService.save(user);
+	    }
 	
 	
 

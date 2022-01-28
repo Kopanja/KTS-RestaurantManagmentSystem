@@ -17,6 +17,10 @@ public abstract class Item {
 	
 	private String description;
 	
+	private String imgPath;
+	
+	private String alergens;
+	
 	@Relationship(type = "HAS_CATEGORY", direction = Direction.OUTGOING)
 	public ItemCategory category;
 	
@@ -45,6 +49,22 @@ public abstract class Item {
 	
 
 	
+
+
+
+	public Item(Long id, String name, String description, String imgPath, String alergens, ItemCategory category,
+			boolean active, int price, int cost) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.imgPath = imgPath;
+		this.alergens = alergens;
+		this.category = category;
+		this.active = active;
+		this.price = price;
+		this.cost = cost;
+	}
 
 
 
@@ -137,11 +157,40 @@ public abstract class Item {
 
 
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+
+
+	public String getAlergens() {
+		return alergens;
+	}
+
+
+
+	public void setAlergens(String alergens) {
+		this.alergens = alergens;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", category=" + category
-				+ ", active=" + active + ", price=" + price + ", cost=" + cost + "]";
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", imgPath=" + imgPath
+				+ ", alergens=" + alergens + ", category=" + category + ", active=" + active + ", price=" + price
+				+ ", cost=" + cost + "]";
 	}
+
+
+
+	
 
 
 

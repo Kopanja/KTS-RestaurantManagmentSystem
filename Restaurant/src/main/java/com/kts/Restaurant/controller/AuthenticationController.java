@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,31 +16,35 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kts.Restaurant.dto.AuthenticationResponseDTO;
 import com.kts.Restaurant.dto.NewUserDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
+import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
+import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
+import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.security.service.AuthenticationService;
 
 @RestController
-@RequestMapping(value="api/auth")
+@RequestMapping(value = "api/auth")
 public class AuthenticationController {
-	
+
 	@Autowired
 	AuthenticationService authService;
-	
+
 	@PostMapping(value = "/usrn-pass-login")
 	@CrossOrigin()
 	public ResponseEntity<?> usernameAndPasswordLogin(@RequestBody UsernamePasswordCredentialsDTO authenticationRequest,
 			HttpServletResponse response) throws Exception {
-		
-		
+
 		AuthenticationResponseDTO res = null;
 		System.out.println(authenticationRequest.getUsername());
 		System.out.println(authenticationRequest.getPassword());
@@ -47,14 +52,15 @@ public class AuthenticationController {
 			res = authService.loginUsernamePassword(authenticationRequest);
 		} catch (AuthenticationException e) {
 			return new ResponseEntity<String>("Incorrect username or password", HttpStatus.FORBIDDEN);
-		} 
-		
-		//final UserDetails userDetails = menagmentService.loadUserByUsername(authenticationRequest.getUsername());	
-		//String jwt = jwtTokenUtil.createToken(userDetails);
-		
+		}
+
+		// final UserDetails userDetails =
+		// menagmentService.loadUserByUsername(authenticationRequest.getUsername());
+		// String jwt = jwtTokenUtil.createToken(userDetails);
+
 		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/pin-login")
 	@CrossOrigin()
 	public ResponseEntity<?> pinBasedLogin(@RequestBody PinCredentialsDTO authenticationRequest,
@@ -64,29 +70,47 @@ public class AuthenticationController {
 			res = authService.loginPin(authenticationRequest);
 		} catch (AuthenticationException e) {
 			return new ResponseEntity<String>("Incorrect username or password", HttpStatus.FORBIDDEN);
-		} 
-		
-		//final UserDetails userDetails = menagmentService.loadUserByUsername(authenticationRequest.getUsername());	
-		//String jwt = jwtTokenUtil.createToken(userDetails);
+		}
+
+		// final UserDetails userDetails =
+		// menagmentService.loadUserByUsername(authenticationRequest.getUsername());
+		// String jwt = jwtTokenUtil.createToken(userDetails);
 		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping(value = "/register")
 	@CrossOrigin()
-	public ResponseEntity<?> register(@RequestBody NewUserDTO newUserDTO,
-			HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> register(@RequestBody NewUserDTO newUserDTO, HttpServletResponse response)
+			throws Exception {
 		System.out.println(newUserDTO);
 		User newUser = authService.register(newUserDTO);
-		if(newUser != null) {
+		if (newUser != null) {
 			System.out.println(newUser);
 			return new ResponseEntity<>(HttpStatus.CREATED);
-			
-			
-		}else {
+
+		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+
+	}
+
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
+	@RequestMapping(value = "{userId}/updatePin", method = RequestMethod.PUT)
+	public ResponseEntity<?> updatePin(@PathVariable Long userId, @RequestBody PinCredentialsDTO credentialsDTO) {
+
+		authService.updatePinCredentials(userId, credentialsDTO);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
+	@RequestMapping(value = "{userId}/updateUsrnPass", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateUsrnPass(@PathVariable Long userId,
+			@RequestBody UsernamePasswordCredentialsDTO credentialsDTO) {
+
+		authService.updateUsrnPasswordCredentials(userId, credentialsDTO);
+		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 }

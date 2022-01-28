@@ -1,6 +1,7 @@
 package com.kts.Restaurant.service;
 
 import com.kts.Restaurant.dto.UserDTO;
+import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
 import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import com.kts.Restaurant.model.*;
@@ -81,7 +82,7 @@ public class UserService {
     }
     
     
-    
+   
 
 
 
@@ -94,20 +95,12 @@ public class UserService {
         // save nazad User u bazu
         // vrati userDTO
 
-        //User user = userRepository.findByUsername(userDTO.getUsername());
-        User user = null;
+        User user = userRepository.findById(userDTO.getId()).orElse(null);
+       // User user = null;
         if(user == null){
             throw new UserWIthUsernameNotFound();
         }
-        //username check is free
-//        if (userDTO.getUsername() != user.getUsername()) {
-//            if( userRepository.findByUsername(userDTO.getUsername()).hashCode() != user.hashCode()  ){
-//                throw new UserWithUsernameAlreadyExistsException();
-//            }
-//            user.setUsername(userDTO.getUsername());
-//        }
-        
-        //user.setUsername(userDTO.getUsername());
+
 
         //set new changes
         user.setFirstname(userDTO.getFirstname());
@@ -115,8 +108,6 @@ public class UserService {
         Role roleDb = roleRepository.findByRole(userDTO.getRole());
         user.setRole(roleDb);
        
-        //user.setPin(userDTO.getPin());
-        //user.setPassword(userDTO.getPassword());
 
         Salary salaryDb =  user.getSalaries().stream().filter(s -> s.getActive().equals(true)).findFirst().orElse(null);
         // salary check if amount of active is changed
@@ -205,6 +196,15 @@ public class UserService {
     	UserMapper userMapper = new UserMapper();
     	return userMapper.toDto(user);
     }
+    
+    public User findUserEntityById(Long id) {
+    	User user = userRepository.findById(id).orElse(null);
+    	if(user == null){
+            throw new UserWIthUsernameNotFound();
+        }
+    	return user;
+    }
+    
     
     public User findByUsername(String username) {
     	User user = userRepository.findByUsername(username);

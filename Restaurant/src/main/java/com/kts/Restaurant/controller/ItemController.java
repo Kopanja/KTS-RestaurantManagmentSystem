@@ -1,5 +1,8 @@
 package com.kts.Restaurant.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import com.kts.Restaurant.dto.UserDTO;
@@ -7,10 +10,12 @@ import com.kts.Restaurant.exceptions.ItemCategoryNameDoesntExists;
 import com.kts.Restaurant.exceptions.ItemWithNameDoesntExists;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.MediaType;
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.OrderedItemDTO;
 import com.kts.Restaurant.dto.TableDTO;
@@ -43,6 +48,31 @@ public class ItemController {
 	@Autowired
 	OrderedItemService orderedItemService;
 
+	
+	   @GetMapping("/{itemName}/image")
+	    public ResponseEntity<?> getProfileImage(@PathVariable String itemName) {        
+	        try {
+	            Path imagePath = Paths.get(".\\src\\main\\resources\\images\\items\\ClassicBurger.jpg");
+	            if (imagePath != null) {
+	                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
+	                
+	                return ResponseEntity
+	                        .ok()
+	                        .contentLength(imagePath.toFile().length())
+	                        .contentType(MediaType.IMAGE_JPEG)
+	                        .body(resource); 
+	                        
+	               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
+	                
+	            } else {
+	                return ResponseEntity.status(HttpStatus.OK).build();
+	            }
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
+	    }
+	
+	
 	@RequestMapping(value = "/create",method = RequestMethod.POST)
 	public ResponseEntity<ItemDTO> create(@RequestBody ItemDTO itemDTO) {
 
