@@ -1,46 +1,36 @@
-package com.kts.Restaurant.model;
+package com.kts.Restaurant.dto;
 
 import com.kts.Restaurant.util.DateStringConverter;
 import org.springframework.data.neo4j.core.convert.ConvertWith;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.Date;
 
-@Node
-public class Salary {
-
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class SalaryDTO {
 
     private double salaryAmount;
 
-    @ConvertWith(converter =  DateStringConverter.class)
     private Date since;
 
-    @ConvertWith(converter =  DateStringConverter.class)
     private Date to;
 
     private Boolean active;
 
-    public Salary() {
-        super();
+
+
+    public SalaryDTO() {
     }
 
-    public Salary(double salaryAmount, Date since, Date to, Boolean active) {
+    public SalaryDTO(double salaryAmount, Date since, Date to, Boolean active) {
         this.salaryAmount = salaryAmount;
         this.since = since;
         this.to = to;
         this.active = active;
     }
 
+
     public double getSalaryAmount() {
         return salaryAmount;
     }
-
 
     public void setSalaryAmount(double salaryAmount) {
         this.salaryAmount = salaryAmount;
@@ -72,9 +62,8 @@ public class Salary {
 
     @Override
     public String toString() {
-        return "Salary{" +
-                "id=" + id +
-                ", salaryAmount=" + salaryAmount +
+        return "SalaryDTO{" +
+                "salaryAmount=" + salaryAmount +
                 ", since=" + since +
                 ", to=" + to +
                 ", active=" + active +
