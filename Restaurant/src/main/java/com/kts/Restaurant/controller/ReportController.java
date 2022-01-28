@@ -58,6 +58,7 @@ public class ReportController {
                 waiterStatistics = waiterService.getWaiterStatistics(from.get(), to.get());
             }
         }
+        // TODO: prebaci ispod logiku i service i neka on vraca vec dto
         // map result to DTO
         List<WaiterStatistictsResponseDTO> result = new ArrayList<>();
         for (User user: waiterStatistics.keySet()) {
