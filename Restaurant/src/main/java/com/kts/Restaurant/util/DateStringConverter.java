@@ -29,10 +29,10 @@ public class DateStringConverter implements Neo4jPersistentPropertyConverter<Dat
     public Date read(Value source) {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(source.toString());
-            System.out.println("Uspeo da parsiram");
+//            System.out.println("Uspeo da parsiram");
             return date;
         } catch (ParseException e) {
-            System.out.println("Nisam uspeo da parsiram");
+//            System.out.println("Nisam uspeo da parsiram");
             return null;
         }
     }

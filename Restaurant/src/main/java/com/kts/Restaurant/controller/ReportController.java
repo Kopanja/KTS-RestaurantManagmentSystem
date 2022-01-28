@@ -5,11 +5,9 @@ import com.kts.Restaurant.dto.*;
 import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.repository.RoleRepository;
-import com.kts.Restaurant.service.ItemService;
-import com.kts.Restaurant.service.ReportService;
-import com.kts.Restaurant.service.UserService;
-import com.kts.Restaurant.service.UsernamePasswordCredentialsService;
-import com.kts.Restaurant.service.WaiterService;
+
+import com.kts.Restaurant.service.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -18,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value="api/report")
@@ -36,6 +31,9 @@ public class ReportController {
     
     @Autowired
     ReportService reportService;
+
+    @Autowired
+    private BillService billService;
 
     @Autowired
     private UsernamePasswordCredentialsService UsernamePasswordCredentialsService;
@@ -94,6 +92,30 @@ public class ReportController {
 		 
         return new ResponseEntity<>(null, HttpStatus.OK);
 //        }
+    }
+
+    @RequestMapping(value = {"/bill", "/bill/{from}", "/bill/{from}/{to}" }, method = RequestMethod.GET)
+    public ResponseEntity< List<ItemReportDTO> > totalProfitAndAllUserSalaries(
+            @PathVariable Optional<String> from,
+            @PathVariable Optional<String>  to
+    ) throws ParseException {
+        List<ItemReportDTO> retValue = billService.billReport(from, to);
+
+
+        return new ResponseEntity<>(retValue, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = {"/waiter", "/waiter/{from}", "/waiter/{from}/{to}" }, method = RequestMethod.GET)
+    public ResponseEntity< List<WaiterReportDTO> > waiterReport(
+            @PathVariable Optional<String> from,
+            @PathVariable Optional<String>  to
+    ) throws ParseException {
+        List<WaiterReportDTO> retValue = billService.billReportWaiter(from, to);
+
+
+        return new ResponseEntity<>(retValue, HttpStatus.OK);
+
     }
 
 

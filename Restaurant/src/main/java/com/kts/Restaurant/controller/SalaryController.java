@@ -1,6 +1,7 @@
 package com.kts.Restaurant.controller;
 
 import com.kts.Restaurant.dto.SalaryDTO;
+import com.kts.Restaurant.dto.UserSalaryDTO;
 import com.kts.Restaurant.model.Role;
 import com.kts.Restaurant.model.Salary;
 import com.kts.Restaurant.service.SalaryService;
@@ -29,13 +30,13 @@ public class SalaryController {
 
 
     @RequestMapping(value = {"/user/{id}", "/user/{id}/{from}", "/user/{id}/{from}/{to}" }, method = RequestMethod.GET)
-    public ResponseEntity< Map<Double, List<SalaryDTO>> > totalProfitAndAllUserSalaries(
+    public ResponseEntity< Map<UserSalaryDTO, List<SalaryDTO>> > totalProfitAndAllUserSalaries(
             @PathVariable Long id,
             @PathVariable Optional<String> from,
             @PathVariable Optional<String>  to
     ) throws ParseException {
 
-        Map<Double, List<SalaryDTO>> retValue = new HashMap<>();
+        Map<UserSalaryDTO, List<SalaryDTO>> retValue = new HashMap<>();
         retValue = salaryService.salaryReport(id,from,to);
         if (retValue.size() == 0) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
