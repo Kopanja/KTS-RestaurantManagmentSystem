@@ -1,5 +1,7 @@
 package com.kts.Restaurant.service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +12,22 @@ import com.kts.Restaurant.repository.ItemCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.repository.ItemRepository;
+import com.kts.Restaurant.util.PDFGenerationUtil;
 import com.kts.Restaurant.util.mapper.ItemMapper;
 
 @Service
 public class ItemService {
-	
 
 	@Autowired
 	ItemRepository itemRepo;
-
 
 	@Autowired
 	BillRepository billRepo;
@@ -32,13 +39,14 @@ public class ItemService {
 		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()) == null) {
 			throw new ItemCategoryNameDoesntExists();
 		}
-		if (itemRepo.findByName(itemDTO.getName()) != null){
+		if (itemRepo.findByName(itemDTO.getName()) != null) {
 			throw new ItemWithNameAlreadyExistsException();
 		}
 		Item newItem = null;
-		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")){
+		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")) {
 			newItem = new FoodItem();
-		}else if(itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Drink")){
+		} else if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType()
+				.equals("Drink")) {
 			newItem = new DrinkItem();
 		}
 
@@ -53,12 +61,11 @@ public class ItemService {
 		return itemMapper.toDto(newItem);
 	}
 
-
 	public ItemDTO update(String oldName, ItemDTO itemDTO) {
 		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()) == null) {
 			throw new ItemCategoryNameDoesntExists();
 		}
-		if (itemRepo.findByName(oldName) == null){
+		if (itemRepo.findByName(oldName) == null) {
 			throw new ItemWithNameDoesntExists();
 		}
 		// obrisi stari item postavljajuci ga na false
@@ -68,9 +75,10 @@ public class ItemService {
 
 		// pravi nov
 		Item newUpdatedItem = null;
-		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")){
+		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")) {
 			newUpdatedItem = new FoodItem();
-		}else if(itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Dring")){
+		} else if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType()
+				.equals("Dring")) {
 			newUpdatedItem = new DrinkItem();
 		}
 
@@ -86,46 +94,92 @@ public class ItemService {
 
 	}
 
-
-
-
 	public ItemDTO toDto(Item item) {
 		ItemMapper mapper = new ItemMapper();
 		return mapper.toDto(item);
 	}
-	
-	
 
 	public Item toEntity(ItemDTO dto) {
 		return itemRepo.findByName(dto.getName());
 	}
-	public List<ItemDTO> getAll(){
+
+	public List<ItemDTO> getAll() {
 		List<ItemDTO> dtos = new ArrayList<>();
 		ItemMapper mapper = new ItemMapper();
-		for(Item i : itemRepo.findAll()) {
+		for (Item i : itemRepo.findAll()) {
 			dtos.add(mapper.toDto(i));
 		}
 		return dtos;
+	}
+
+	public List<ItemDTO> getItemsByCategoryName(String categoryName) {
+		List<ItemDTO> dtos = new ArrayList<>();
+		ItemMapper mapper = new ItemMapper();
+		for (Item i : itemRepo.findByCategoryName(categoryName)) {
+			dtos.add(mapper.toDto(i));
+		}
+		return dtos;
+	}
+
+	public void createFoodMenuPdf() throws FileNotFoundException, DocumentException {
+		Rectangle layout = new Rectangle(PageSize.A4);
+	    layout.setBackgroundColor(new BaseColor(0xFF, 0xFF, 0xDE));
+		Document document = new Document(layout);
+		List<ItemCategory> categories = itemCatRepository.getFoodCategories();
+		List<Item> items = null;
+		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\food-menu.pdf"));
+		document.open();
+		PDFGenerationUtil.addFoodTitle(document);
+		
+		for(ItemCategory cat : categories) {
+			PDFGenerationUtil.addCategory(cat.getCategoryName(), document);
+			items = itemRepo.findByCategoryName(cat.getCategoryName());
+			for(Item i : items) {
+				PDFGenerationUtil.addItem(document, i);
+				PDFGenerationUtil.emptySpace(document);
+			}
+			document.newPage();
+			
+		}
+	
+		document.close();
+
 	}
 	
-	public List<ItemDTO> getItemsByCategoryName(String categoryName){
-		List<ItemDTO> dtos = new ArrayList<>();
-		ItemMapper mapper = new ItemMapper();
-		for(Item i : itemRepo.findByCategoryName(categoryName)) {
-			dtos.add(mapper.toDto(i));
+	public void createDrinkMenuPdf() throws FileNotFoundException, DocumentException {
+		Rectangle layout = new Rectangle(PageSize.A4);
+	    layout.setBackgroundColor(new BaseColor(0xFF, 0xFF, 0xDE));
+		Document document = new Document(layout);
+		List<ItemCategory> categories = itemCatRepository.getDrinkCategories();
+		List<Item> items = null;
+		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\drink-menu.pdf"));
+		document.open();
+		PDFGenerationUtil.addDrinkTitle(document);
+		
+		for(ItemCategory cat : categories) {
+			PDFGenerationUtil.addCategory(cat.getCategoryName(), document);
+			items = itemRepo.findByCategoryName(cat.getCategoryName());
+			for(Item i : items) {
+				PDFGenerationUtil.addItem(document, i);
+				PDFGenerationUtil.emptySpace(document);
+			}
+			document.newPage();
 		}
-		return dtos;
+	
+		document.close();
+
 	}
 
-
-    public Item getMostSoldItem() {
+	public Item getMostSoldItem() {
 		List<Item> items = itemRepo.findAll();
 		List<Bill> bills = billRepo.findAll();
 
-		// TODO: prolazis kroz sve billove i bill iteme od tih billova i napravis hash mapu sa <Item, int> i svaki put kad naidjes na taj billITem(item) ti povecas counter za 1
+		// TODO: prolazis kroz sve billove i bill iteme od tih billova i napravis hash
+		// mapu sa <Item, int> i svaki put kad naidjes na taj billITem(item) ti povecas
+		// counter za 1
 		// na kragu vratis sve iteme i broj prodatih tih itema
 		// ako hoces sabiraj i profite i stavljaj isto
 
 		return null;
-    }
+	}
 }

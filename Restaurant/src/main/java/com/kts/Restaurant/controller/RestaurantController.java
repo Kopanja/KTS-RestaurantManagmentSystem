@@ -1,5 +1,6 @@
 package com.kts.Restaurant.controller;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.DocumentException;
 import com.kts.Restaurant.dto.FloorDTO;
 import com.kts.Restaurant.dto.TableDTO;
 import com.kts.Restaurant.model.Floor;
 import com.kts.Restaurant.model.FoodItem;
 import com.kts.Restaurant.model.Table;
 import com.kts.Restaurant.service.FloorService;
+import com.kts.Restaurant.service.ItemService;
 import com.kts.Restaurant.service.TableService;
+import com.kts.Restaurant.util.PDFGenerationUtil;
 
 
 @RestController
@@ -32,6 +36,9 @@ public class RestaurantController {
 	
 	@Autowired
 	FloorService floorService;
+	
+	@Autowired
+	ItemService itemService;
 	
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -54,6 +61,19 @@ public class RestaurantController {
         
 		List<TableDTO> tables = tableService.getTableListByFloorName(name);
         return new ResponseEntity<>(tables, HttpStatus.OK);
+    }
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value="/pdf",method = RequestMethod.GET)
+    public ResponseEntity<String> getPdf() {
+        
+		try {
+			itemService.createFoodMenuPdf();
+		} catch (FileNotFoundException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return new ResponseEntity<>("pdf made", HttpStatus.OK);
     }
 	
 	@CrossOrigin(origins = "http://localhost:4200")

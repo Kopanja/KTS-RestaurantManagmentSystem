@@ -65,7 +65,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			 * Milan: dozvoljena ruta za sve da pristupe auth/ kako bi se ulogovali
 			 */
 		
-			.antMatchers("/api/**").permitAll()
+			.antMatchers("/api/auth/**").permitAll()
+			.antMatchers("/api/item/*.pdf").permitAll()
 			//.antMatchers("/api/item-category/**").hasAnyAuthority("BARTENDER", "ADMIN")
 			//.antMatchers("/api/**").permitAll()
 			// svaki zahtev mora biti autorizovan
@@ -96,7 +97,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		 * Milan ISA: imate avatar.png u static folderu kao resurs pa sam dodao /*.png filter da bi se i png slike mogle prikazivati na stranicama
 		 */
 		web.ignoring().antMatchers("/ws/**");
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/*.png", "/pics/*.png", "/*.jpg", "/pics/*.jpg");
+		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/*.png", "/pics/*.png", "/*.jpg", "/pics/*.jpg", "/item/*.pdf");
 	}
 
 }

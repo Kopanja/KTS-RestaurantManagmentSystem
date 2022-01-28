@@ -1,5 +1,6 @@
 package com.kts.Restaurant.controller;
 
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
+
+import com.itextpdf.text.DocumentException;
 import com.kts.Restaurant.dto.ItemDTO;
 import com.kts.Restaurant.dto.OrderedItemDTO;
 import com.kts.Restaurant.dto.TableDTO;
@@ -60,6 +63,62 @@ public class ItemController {
 	                        .ok()
 	                        .contentLength(imagePath.toFile().length())
 	                        .contentType(MediaType.IMAGE_JPEG)
+	                        .body(resource); 
+	                        
+	               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
+	                
+	            } else {
+	                return ResponseEntity.status(HttpStatus.OK).build();
+	            }
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
+	    }
+	  
+	   @GetMapping("/food-menu.pdf")
+	    public ResponseEntity<?> getMenuPdf() {  
+		   try {
+			itemService.createFoodMenuPdf();
+		} catch (FileNotFoundException | DocumentException e1) {
+			e1.printStackTrace();
+		}
+	        try {
+	            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\food-menu.pdf");
+	            if (imagePath != null) {
+	                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
+	                System.out.println("A");
+	                return ResponseEntity
+	                        .ok()
+	                        .contentLength(imagePath.toFile().length())
+	                        .contentType(MediaType.APPLICATION_PDF)
+	                        .body(resource); 
+	                        
+	               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
+	                
+	            } else {
+	                return ResponseEntity.status(HttpStatus.OK).build();
+	            }
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
+	    }
+	   
+	   @GetMapping("/drink-menu.pdf")
+	    public ResponseEntity<?> getDrinkMenuPdf() {  
+		   try {
+			itemService.createDrinkMenuPdf();
+		} catch (FileNotFoundException | DocumentException e1) {
+			e1.printStackTrace();
+		}
+	        try {
+	            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\drink-menu.pdf");
+	            if (imagePath != null) {
+	                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
+	                System.out.println("A");
+	                return ResponseEntity
+	                        .ok()
+	                        .contentLength(imagePath.toFile().length())
+	                        .contentType(MediaType.APPLICATION_PDF)
 	                        .body(resource); 
 	                        
 	               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
