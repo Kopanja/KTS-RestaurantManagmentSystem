@@ -1,6 +1,7 @@
 package com.kts.Restaurant.service;
 
 import com.kts.Restaurant.dto.SalaryDTO;
+import com.kts.Restaurant.dto.UserSalaryDTO;
 import com.kts.Restaurant.exceptions.UserNotFoundException;
 import com.kts.Restaurant.model.Salary;
 import com.kts.Restaurant.model.User;
@@ -29,11 +30,13 @@ public class SalaryService {
     }
 
 
-    public Map<Double, List<SalaryDTO>> salaryReport(Long userId, Optional<String> from, Optional<String> to) throws ParseException {
+    public Map<UserSalaryDTO, List<SalaryDTO>> salaryReport(Long userId, Optional<String> from, Optional<String> to) throws ParseException {
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new UserNotFoundException();
         }
+
+        UserSalaryDTO userSalaryDTO = new UserSalaryDTO(user.get().getFirstname(),user.get().getLastname(),user.get().getRole().getRole(),user.get().isActive());
         Double ukupnaZarada = 0.0;
         List<Salary> salaries = user.get().getSalaries();
         List<SalaryDTO> dtos = new ArrayList<>();
@@ -51,9 +54,9 @@ public class SalaryService {
             }
 
         }
-
-        Map<Double, List<SalaryDTO>> retVal = new HashMap<>();
-        retVal.put(ukupnaZarada, dtos);
+        userSalaryDTO.setTotalSalary(ukupnaZarada);
+        Map<UserSalaryDTO, List<SalaryDTO>> retVal = new HashMap<>();
+        retVal.put(userSalaryDTO, dtos);
         return retVal;
 
     }
