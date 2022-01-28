@@ -1,5 +1,6 @@
 package com.kts.Restaurant.dto;
 
+import com.kts.Restaurant.model.Credentials;
 import com.kts.Restaurant.model.Role;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public class UserDTO {
 
 
 	private Long id;
-	
+
     private String firstname;
 
     private String lastname;
@@ -17,7 +18,13 @@ public class UserDTO {
 
     private double salaryAmount;
 
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
     private Boolean active;
+
+    private Credentials credentials;
 
     public UserDTO() {
 
@@ -31,6 +38,7 @@ public class UserDTO {
         this.role = role;
         this.salaryAmount = salaryAmount;
         this.active = active;
+        this.credentials = credentials;
     }
 
     public String getFirstname() {
@@ -49,7 +57,19 @@ public class UserDTO {
         this.lastname = lastname;
     }
 
-    
+
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", role='" + role + '\'' +
+                ", salaryAmount=" + salaryAmount +
+                ", active=" + active +
+                ", credentials=" + credentials +
+                '}';
+    }
 
     public String getRole() {
         return role;
@@ -90,5 +110,5 @@ public class UserDTO {
 	public Boolean getActive() {
 		return active;
 	}
-    
+
 }

@@ -65,7 +65,7 @@ public class TableController {
 	@RequestMapping(value="/{name}/bill-order",method = RequestMethod.POST)
     public ResponseEntity<Boolean> billOrder(@PathVariable String name, @RequestBody List<ItemDTO> items) {
 		System.out.println("Usao u Bill Order komandu");
-		waiterService.billOrder(name,items);
+//		waiterService.billOrder(name,items);
         return new ResponseEntity<>(true,HttpStatus.OK);
     }
 	

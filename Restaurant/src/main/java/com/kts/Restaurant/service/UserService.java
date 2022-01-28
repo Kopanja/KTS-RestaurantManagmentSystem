@@ -3,21 +3,20 @@ package com.kts.Restaurant.service;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
-import com.kts.Restaurant.model.PinCredentials;
-import com.kts.Restaurant.model.Role;
-import com.kts.Restaurant.model.Salary;
-import com.kts.Restaurant.model.User;
+import com.kts.Restaurant.model.*;
+import com.kts.Restaurant.repository.BillRepository;
 import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.util.mapper.UserMapper;
+import org.apache.commons.lang3.time.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -31,6 +30,9 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
     
+
+    @Autowired
+    BillRepository billRepository;
 
     //SVE TREBA DA SE UPDATE ZBOG CREDENTIALS
     
@@ -231,5 +233,7 @@ public class UserService {
     public List<User> getAllPinBasedUsers(){
         return userRepository.getAllPinUsers();
     }
+
+
 }
 

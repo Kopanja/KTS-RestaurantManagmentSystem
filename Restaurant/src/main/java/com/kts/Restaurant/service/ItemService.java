@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kts.Restaurant.exceptions.*;
 import com.kts.Restaurant.model.*;
+import com.kts.Restaurant.repository.BillRepository;
 import com.kts.Restaurant.repository.ItemCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class ItemService {
 
 	@Autowired
 	ItemRepository itemRepo;
+
+
+	@Autowired
+	BillRepository billRepo;
 
 	@Autowired
 	ItemCategoryRepository itemCatRepository;
@@ -95,7 +100,7 @@ public class ItemService {
 		return itemRepo.findByName(dto.getName());
 	}
 	public List<ItemDTO> getAll(){
-		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
+		List<ItemDTO> dtos = new ArrayList<>();
 		ItemMapper mapper = new ItemMapper();
 		for(Item i : itemRepo.findAll()) {
 			dtos.add(mapper.toDto(i));
@@ -104,7 +109,7 @@ public class ItemService {
 	}
 	
 	public List<ItemDTO> getItemsByCategoryName(String categoryName){
-		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
+		List<ItemDTO> dtos = new ArrayList<>();
 		ItemMapper mapper = new ItemMapper();
 		for(Item i : itemRepo.findByCategoryName(categoryName)) {
 			dtos.add(mapper.toDto(i));
@@ -113,4 +118,14 @@ public class ItemService {
 	}
 
 
+    public Item getMostSoldItem() {
+		List<Item> items = itemRepo.findAll();
+		List<Bill> bills = billRepo.findAll();
+
+		// TODO: prolazis kroz sve billove i bill iteme od tih billova i napravis hash mapu sa <Item, int> i svaki put kad naidjes na taj billITem(item) ti povecas counter za 1
+		// na kragu vratis sve iteme i broj prodatih tih itema
+		// ako hoces sabiraj i profite i stavljaj isto
+
+		return null;
+    }
 }

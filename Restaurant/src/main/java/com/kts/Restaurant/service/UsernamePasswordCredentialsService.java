@@ -13,7 +13,6 @@ public class UsernamePasswordCredentialsService {
 	UsernamePasswordCredentialsRepository credRepo;
 
 	public UsernamePasswordCredentials findByUsername(String username) {
-		// TODO Auto-generated method stub
 		UsernamePasswordCredentials cred = credRepo.findByUsername(username);
 		System.out.println(cred);
 		return cred;
