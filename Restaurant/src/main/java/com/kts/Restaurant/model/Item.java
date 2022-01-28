@@ -21,6 +21,8 @@ public abstract class Item {
 	
 	private String alergens;
 	
+	private String prepTime;
+	
 	@Relationship(type = "HAS_CATEGORY", direction = Direction.OUTGOING)
 	public ItemCategory category;
 	
@@ -177,6 +179,18 @@ public abstract class Item {
 
 	public void setAlergens(String alergens) {
 		this.alergens = alergens;
+	}
+
+
+
+	public String getPrepTime() {
+		return prepTime;
+	}
+
+
+
+	public void setPrepTime(String prepTime) {
+		this.prepTime = prepTime;
 	}
 
 
