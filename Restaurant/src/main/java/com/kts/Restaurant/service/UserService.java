@@ -8,10 +8,14 @@ import com.kts.Restaurant.repository.BillRepository;
 import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.repository.UserRepository;
 import com.kts.Restaurant.util.mapper.UserMapper;
+import org.apache.commons.lang3.time.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -230,31 +234,6 @@ public class UserService {
         return userRepository.getAllPinUsers();
     }
 
-    public Map getWaiterStatistics() {
-        List<User> waiters = userRepository.getAllWaiters();
-        List<Bill> bills = billRepository.findAll();
-        Map<Long, Double> idResult = new HashMap<Long, Double>();
 
-        for (User waiter: waiters) {
-            idResult.put(waiter.getId(), 0.0);
-        }
-
-        for(Bill bill: bills) {
-            Long key = bill.getWaiter().getId();
-            if(!idResult.containsKey(key)) continue;
-            double value = (double)idResult.get(key) + (bill.getPrice() - bill.getCost());
-            idResult.put(key, value);
-        }
-        Map result = new HashMap<User, Double>();
-        for(Long elemKey: idResult.keySet()) {
-            for(User user: waiters) {
-                if(user.getId() == elemKey) {
-                    result.put(user, idResult.get(elemKey));
-                }
-            }
-        }
-
-        return result;
-    }
 }
 
