@@ -37,7 +37,7 @@ public class SalaryController {
     ) throws ParseException {
 
         Map<UserSalaryDTO, List<SalaryDTO>> retValue = new HashMap<>();
-        retValue = salaryService.salaryReport(id,from,to);
+        retValue = salaryService.salaryReport1(id,from,to);
         if (retValue.size() == 0) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
