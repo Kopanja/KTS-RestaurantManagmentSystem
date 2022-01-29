@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class TableController {
 	
 	
 	
-	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@RequestMapping(value="/{name}/place-order",method = RequestMethod.POST)
     public ResponseEntity<TableDTO> placeNewOrderToTable(@PathVariable String name, @RequestBody List<ItemDTO> items) {
 		List<Item> newItems = new ArrayList<Item>();
@@ -51,7 +52,7 @@ public class TableController {
 		TableDTO table = waiterService.placeNewOrderForTable(name, newItems);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
-	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@RequestMapping(value="/{name}/place-order",method = RequestMethod.PUT)
     public ResponseEntity<TableDTO> updateExistingOrder(@PathVariable String name, @RequestBody List<ItemDTO> items) {
 		List<Item> newItems = new ArrayList<Item>();
@@ -61,7 +62,7 @@ public class TableController {
 		TableDTO table = waiterService.updateOrderForTable(name, newItems);
         return new ResponseEntity<>(table, HttpStatus.OK);
     }
-	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@RequestMapping(value="/{name}/bill-order",method = RequestMethod.POST)
     public ResponseEntity<Boolean> billOrder(@PathVariable String name, @RequestBody List<ItemDTO> items) {
 		System.out.println("Usao u Bill Order komandu");

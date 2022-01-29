@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
@@ -44,6 +45,7 @@ public class ReportController {
     @Autowired
     private UsernamePasswordCredentialsService UsernamePasswordCredentialsService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(value = "/biggestSalary/", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getUserWithBiggestSalary (){
         // TODO: napravicu
@@ -51,6 +53,7 @@ public class ReportController {
 //        }
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(path = {"/waiterReport", "/waiterReport/{from}", "/waiterReport/{from}/{to}"})
     public ResponseEntity<List<WaiterStatistictsResponseDTO>> waiterProfitStatistics(
             @PathVariable Optional<String>  from,
@@ -86,7 +89,7 @@ public class ReportController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(value = "/salary-payout", method = RequestMethod.GET)
     public ResponseEntity<?> getTotalSalaryPayoutByUser(){
         
@@ -99,7 +102,7 @@ public class ReportController {
         return new ResponseEntity<>(null, HttpStatus.OK);
 
     }
-    
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @GetMapping(value = "/pdf/{fileName}")
     public ResponseEntity<?> getReportPdf(@PathVariable String fileName) {  
 	 System.out.println("USAOOOO");
@@ -122,7 +125,7 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(value = "/report-links", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getReportLinks(){
         
@@ -132,6 +135,7 @@ public class ReportController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(value = {"/bill", "/bill/{from}", "/bill/{from}/{to}" }, method = RequestMethod.GET)
     public ResponseEntity< List<ItemReportDTO> > totalProfitAndAllUserSalaries(
             @PathVariable Optional<String> from,
@@ -144,6 +148,7 @@ public class ReportController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @RequestMapping(value = {"/waiter", "/waiter/{from}", "/waiter/{from}/{to}" }, method = RequestMethod.GET)
     public ResponseEntity< List<WaiterReportDTO> > waiterReport(
             @PathVariable Optional<String> from,

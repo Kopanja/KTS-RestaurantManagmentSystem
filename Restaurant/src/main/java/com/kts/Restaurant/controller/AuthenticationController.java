@@ -78,6 +78,7 @@ public class AuthenticationController {
 		return new ResponseEntity<AuthenticationResponseDTO>(res, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	@PostMapping(value = "/register")
 	@CrossOrigin()
 	public ResponseEntity<?> register(@RequestBody NewUserDTO newUserDTO, HttpServletResponse response)

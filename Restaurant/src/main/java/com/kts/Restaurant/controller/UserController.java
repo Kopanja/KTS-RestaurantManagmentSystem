@@ -11,6 +11,7 @@ import com.kts.Restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserController {
     RoleService roleService;
 
 //    @CrossOrigin(origins = "http://localhost:4200")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
 
@@ -39,6 +41,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
         UserDTO user;
@@ -51,6 +54,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/fire", method = RequestMethod.PUT)
     public ResponseEntity<UserDTO> fire(@RequestBody UserDTO userDTO) {
         UserDTO user;

@@ -31,7 +31,6 @@ public class ItemRepositoryTest {
 	@Test
 	public void findAllTest() {
 		List<Item> items = itemRepo.findAll();
-		System.out.println(items.size());
 		assertTrue(items.size() == 69);
 	}
 	
