@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,7 @@ public class RestaurantController {
 	ItemService itemService;
 	
 
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/reset-db",method = RequestMethod.GET)
     public ResponseEntity<String> resetDB() {
@@ -55,6 +57,7 @@ public class RestaurantController {
         return new ResponseEntity<>(s, HttpStatus.OK);
     }
 
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/{name}/table-layout",method = RequestMethod.GET)
     public ResponseEntity<List<TableDTO>> getTableLayout(@PathVariable String name) {
@@ -63,6 +66,7 @@ public class RestaurantController {
         return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/pdf",method = RequestMethod.GET)
     public ResponseEntity<String> getPdf() {
@@ -76,6 +80,7 @@ public class RestaurantController {
         return new ResponseEntity<>("pdf made", HttpStatus.OK);
     }
 	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/floors",method = RequestMethod.GET)
     public ResponseEntity<List<FloorDTO>> getAllFloors() {
@@ -83,6 +88,8 @@ public class RestaurantController {
 		List<FloorDTO> floors = floorService.getAll();
         return new ResponseEntity<>(floors, HttpStatus.OK);
     }
+	
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'WAITER')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value= "/table-layout",method = RequestMethod.POST)
 	public ResponseEntity<String> createNewTableLayout(@RequestBody List<TableDTO> tables){
@@ -99,7 +106,7 @@ public class RestaurantController {
 
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
-	
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value= "/new-floor/{name}",method = RequestMethod.POST)
 	public ResponseEntity<String> createNewFloor(@PathVariable String name, @RequestBody List<TableDTO> tables){
@@ -113,7 +120,7 @@ public class RestaurantController {
         floorService.save(floor);
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
-	
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	@RequestMapping(value="/deleteAll",method = RequestMethod.DELETE)
     public ResponseEntity<Table> deleteAll() {
 		

@@ -21,7 +21,7 @@ public class ItemCategoryController {
 	@Autowired
 	ItemCategoryService itemCategoryService;
 
-
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<ItemCategoryDTO> create(@RequestBody ItemCategoryDTO itemCategoryDTO) {
 
@@ -35,6 +35,7 @@ public class ItemCategoryController {
         }
     }
 
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
     @RequestMapping(value = "/update/{name}", method = RequestMethod.PUT)
     public ResponseEntity<ItemCategoryDTO> update(@PathVariable String name, @RequestBody ItemCategoryDTO itemCategoryDTO) {
 

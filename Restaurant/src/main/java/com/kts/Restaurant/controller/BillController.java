@@ -7,6 +7,7 @@ import com.kts.Restaurant.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ public class BillController {
     @Autowired
     BillService billService;
 
-
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'WAITER', 'BARTENDER')")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<BillCreateDTO> create(@RequestBody BillCreateRequestDTO billCreateDTO) {
         System.out.println(billCreateDTO);
@@ -38,6 +39,7 @@ public class BillController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BARTENDER')")
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<BillWaiterStatisticsDTO>> getAll() {
 

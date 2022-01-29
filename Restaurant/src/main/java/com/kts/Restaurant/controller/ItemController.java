@@ -16,6 +16,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
@@ -75,7 +76,7 @@ public class ItemController {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	        }
 	    }
-	  
+	   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
 	   @RequestMapping(value = "/menu-links", method = RequestMethod.GET)
 	    public ResponseEntity<List<String>> getMenuLinks(){
 	        
@@ -85,7 +86,6 @@ public class ItemController {
 
 	    }
 	  
-	   
 	   @GetMapping(value = "/pdf/{fileName}")
 	    public ResponseEntity<?> getMenuPdf(@PathVariable String fileName) {  
 		 System.out.println("USAOOOO");
@@ -108,7 +108,7 @@ public class ItemController {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	        }
 	    }
-	   
+	   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
 	   @GetMapping("/update-drink-menu")
 	    public ResponseEntity<String> generateDrinkMenuPdf() {  
 		   try {
@@ -119,7 +119,7 @@ public class ItemController {
 		   return new ResponseEntity<>("drink pdf updated",HttpStatus.OK);
 	       
 	    }
-	   
+	   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
 	   @GetMapping("/update-food-menu")
 	    public ResponseEntity<String> generateFoodMenuPdf() {  
 		   try {
@@ -131,7 +131,7 @@ public class ItemController {
 	       
 	    }
 	
-	
+	   @PreAuthorize("hasAnyAuthority('ADMIN')")
 	@RequestMapping(value = "/create",method = RequestMethod.POST)
 	public ResponseEntity<ItemDTO> create(@RequestBody ItemDTO itemDTO) {
 
