@@ -151,7 +151,7 @@ public class ItemService {
 		Document document = new Document(layout);
 		List<ItemCategory> categories = itemCatRepository.getFoodCategories();
 		List<Item> items = null;
-		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\food-menu.pdf"));
+		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\menu\\food-menu.pdf"));
 		document.open();
 		PDFGenerationUtil.addFoodTitle(document);
 		

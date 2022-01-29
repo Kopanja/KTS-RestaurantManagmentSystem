@@ -85,7 +85,6 @@ public class ItemController {
 
 	    }
 	  
-	   @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
 	   @GetMapping(value = "/pdf/{fileName}")
 	    public ResponseEntity<?> getMenuPdf(@PathVariable String fileName) {  
 		 System.out.println("USAOOOO");

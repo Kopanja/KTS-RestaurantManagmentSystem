@@ -110,12 +110,32 @@ public class PDFGenerationUtil {
 		table.getDefaultCell().setBorder(0);
 		table.setWidthPercentage(100);
 
+		
+		/*
+		String imageName = "";
+		if(item.getImgPath() == null) {
+			imageName = "ClassicBurger";
+		}else {
+			
+		}
+		*/
+		String imageName = item.getName().replaceAll("\\s+","");
 		Image img = null;
 		try {
 
-			img = Image.getInstance(".\\src\\main\\resources\\images\\items\\ClassicBurger.jpg");
+			String imgFolder = ".\\src\\main\\resources\\images\\items\\" + imageName + ".jpg";
+			System.out.println(imgFolder);
+			img = Image.getInstance(imgFolder);
 		} catch (DocumentException | IOException e) {
-			e.printStackTrace();
+			String imgFolder = ".\\src\\main\\resources\\images\\items\\ClassicBurger.jpg";
+			System.out.println(imgFolder);
+			try {
+				img = Image.getInstance(imgFolder);
+			} catch (BadElementException | IOException e1) {
+				// TODO Auto-generated catch block
+				//e1.printStackTrace();
+			}
+			//e.printStackTrace();
 		}
 		table.addCell(img);
 
