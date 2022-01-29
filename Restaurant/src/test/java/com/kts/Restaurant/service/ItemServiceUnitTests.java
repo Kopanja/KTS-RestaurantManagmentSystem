@@ -87,8 +87,10 @@ public class ItemServiceUnitTests {
         cat.setType("Food");
         Item newItem = new DrinkItem("newItem", 300, 100);
         when(itemCategoryRepository.findItemCategoryByCategoryName("catName")).thenReturn(cat);
+        when(itemCategoryRepository.findItemCategoryByCategoryName(null)).thenReturn(new ItemCategory());
         when(itemRepository.findByName("oldName")).thenReturn(new FoodItem());
         when(itemRepository.save(newItem)).thenReturn(newItem);
+//        when(itemService.create(itemDto)).thenReturn()
         ItemDTO returnedDTO = itemService.update(oldName,itemDto);
         assertEquals(returnedDTO.getName(), itemDto.getName());
     }

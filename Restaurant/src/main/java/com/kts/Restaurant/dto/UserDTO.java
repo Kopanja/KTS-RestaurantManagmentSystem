@@ -18,13 +18,15 @@ public class UserDTO {
 
     private double salaryAmount;
 
-    public Credentials getCredentials() {
-        return credentials;
-    }
+//    public Credentials getCredentials() {
+//        return credentials;
+//    }
 
     private Boolean active;
 
-    private Credentials credentials;
+
+
+//    private Credentials credentials;
 
     public UserDTO() {
 
@@ -38,7 +40,7 @@ public class UserDTO {
         this.role = role;
         this.salaryAmount = salaryAmount;
         this.active = active;
-        this.credentials = credentials;
+//        this.credentials = credentials;
     }
 
     public String getFirstname() {
@@ -62,12 +64,14 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
+                "id='" + id + '\'' +
+
                 "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", role='" + role + '\'' +
                 ", salaryAmount=" + salaryAmount +
                 ", active=" + active +
-                ", credentials=" + credentials +
+//                ", credentials=" + credentials +
                 '}';
     }
 

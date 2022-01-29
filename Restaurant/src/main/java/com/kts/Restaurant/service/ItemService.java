@@ -75,6 +75,7 @@ public class ItemService {
 	}
 
 	public ItemDTO update(String oldName, ItemDTO itemDTO) {
+//		System.out.println(itemDTO);
 		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()) == null) {
 			throw new ItemCategoryNameDoesntExists();
 		}
@@ -91,7 +92,7 @@ public class ItemService {
 		if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType().equals("Food")) {
 			newUpdatedItem = new FoodItem();
 		} else if (itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()).getType()
-				.equals("Dring")) {
+				.equals("Drink")) {
 			newUpdatedItem = new DrinkItem();
 		}
 
@@ -112,9 +113,11 @@ public class ItemService {
 		}else {
 			newUpdatedItem.setImgPath(itemDTO.getImgPath());
 		}
-		itemRepo.save(newUpdatedItem);
 		ItemMapper itemMapper = new ItemMapper();
-		return itemMapper.toDto(newUpdatedItem);
+
+		ItemDTO retVal = this.create(itemMapper.toDto(newUpdatedItem));
+
+		return retVal;
 
 	}
 

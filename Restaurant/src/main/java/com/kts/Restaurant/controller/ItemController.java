@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.exceptions.ItemCategoryNameDoesntExists;
+import com.kts.Restaurant.exceptions.ItemWithNameAlreadyExistsException;
 import com.kts.Restaurant.exceptions.ItemWithNameDoesntExists;
 import com.kts.Restaurant.exceptions.UserWithUsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,7 @@ public class ItemController {
 			item = itemService.create(itemDTO);
 			return new ResponseEntity<>(item, HttpStatus.OK);
 
-		}catch (ItemCategoryNameDoesntExists | ItemWithNameDoesntExists e){
+		}catch (ItemCategoryNameDoesntExists | ItemWithNameAlreadyExistsException e){
 			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -153,7 +154,7 @@ public class ItemController {
 			item = itemService.update(name, itemDTO);
 			return new ResponseEntity<>(item, HttpStatus.OK);
 
-		}catch (ItemCategoryNameDoesntExists e){
+		}catch (ItemCategoryNameDoesntExists | ItemWithNameDoesntExists e){
 			return new ResponseEntity<>(itemDTO, HttpStatus.BAD_REQUEST);
 		}
 	}

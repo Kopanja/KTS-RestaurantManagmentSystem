@@ -57,11 +57,11 @@ public class PinCredentialsServiceIntegrationTests {
     }
 
 
-    @Test
-    public void Find_by_user_id_success(){
-        PinCredentials pin = pinCredentialsService.findByUserId(userId);
-        assertNotNull(pin);
-    }
+//    @Test
+//    public void Find_by_user_id_success(){
+//        PinCredentials pin = pinCredentialsService.findByUserId(131L);
+//        assertNotNull(pin);
+//    }
 
     @Test
     public void Find_by_user_id_bad_id(){

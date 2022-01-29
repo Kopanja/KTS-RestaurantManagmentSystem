@@ -6,7 +6,8 @@ import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
 public abstract class Credentials {
-	
+
+
 	@Id @GeneratedValue
 	private Long id;
 

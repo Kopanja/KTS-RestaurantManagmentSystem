@@ -94,9 +94,9 @@ public class UserService {
         // ako je salary diff, treba nov objekat i ovo an false i 'to' do now
         // save nazad User u bazu
         // vrati userDTO
-
+        System.out.println(userDTO.toString());
         User user = userRepository.findById(userDTO.getId()).orElse(null);
-       // User user = null;
+        //System.out.println(user.toString());
         if(user == null){
             throw new UserWIthUsernameNotFound();
         }
@@ -132,6 +132,7 @@ public class UserService {
         }
         userRepository.save(user);
         UserMapper userMapper = new UserMapper();
+
         return userMapper.toDto(user);
     }
 
