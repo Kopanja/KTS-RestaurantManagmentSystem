@@ -9,12 +9,18 @@ import com.kts.Restaurant.repository.RoleRepository;
 import com.kts.Restaurant.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.*;
 
@@ -91,7 +97,39 @@ public class ReportController {
 			}
 		 
         return new ResponseEntity<>(null, HttpStatus.OK);
-//        }
+
+    }
+    
+    @GetMapping(value = "/pdf/{fileName}")
+    public ResponseEntity<?> getReportPdf(@PathVariable String fileName) {  
+	 System.out.println("USAOOOO");
+        try {
+            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\report\\" + fileName);
+            if (imagePath != null) {
+                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
+                return ResponseEntity
+                        .ok()
+                        .contentLength(imagePath.toFile().length())
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .body(resource); 
+                        
+               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
+                
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @RequestMapping(value = "/report-links", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getReportLinks(){
+        
+    		List<String> reportLinks = null;
+    		reportLinks = reportService.getReportLinks();
+        return new ResponseEntity<>(reportLinks, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = {"/bill", "/bill/{from}", "/bill/{from}/{to}" }, method = RequestMethod.GET)

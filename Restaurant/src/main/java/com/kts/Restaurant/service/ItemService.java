@@ -1,5 +1,6 @@
 package com.kts.Restaurant.service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -168,6 +169,22 @@ public class ItemService {
 	
 		document.close();
 
+	}
+	
+	public List<String> getMenuLinks(){
+		List<String> reportLinks = new ArrayList<String>();
+		File folder = new File(".\\src\\main\\resources\\pdf\\menu\\");
+		File[] listOfFiles = folder.listFiles();
+		String basePath = "http://localhost:8080/api/item/pdf/";
+		for (int i = 0; i < listOfFiles.length; i++) {
+		  if (listOfFiles[i].isFile()) {
+			  reportLinks.add((basePath +listOfFiles[i].getName()));
+		    System.out.println("File " + listOfFiles[i].getName());
+		  } else if (listOfFiles[i].isDirectory()) {
+		    System.out.println("Directory " + listOfFiles[i].getName());
+		  }
+		}
+		return reportLinks;
 	}
 
 	public Item getMostSoldItem() {

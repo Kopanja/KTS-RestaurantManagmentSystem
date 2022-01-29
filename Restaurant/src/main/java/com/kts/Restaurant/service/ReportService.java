@@ -1,5 +1,6 @@
 package com.kts.Restaurant.service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.ParseException;
@@ -48,6 +49,23 @@ public class ReportService {
 		}
 		document.add(table);
 		document.close();
+	}
+	
+	public List<String> getReportLinks(){
+		List<String> reportLinks = new ArrayList<String>();
+		File folder = new File(".\\src\\main\\resources\\pdf\\report\\");
+		String basePath = "http://localhost:8080/api/report/pdf/";
+		File[] listOfFiles = folder.listFiles();
+
+		for (int i = 0; i < listOfFiles.length; i++) {
+		  if (listOfFiles[i].isFile()) {
+			  reportLinks.add((basePath +listOfFiles[i].getName()));
+		    System.out.println("File " + listOfFiles[i].getName());
+		  } else if (listOfFiles[i].isDirectory()) {
+		    System.out.println("Directory " + listOfFiles[i].getName());
+		  }
+		}
+		return reportLinks;
 	}
 
 }

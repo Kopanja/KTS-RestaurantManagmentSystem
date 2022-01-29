@@ -75,18 +75,23 @@ public class ItemController {
 	        }
 	    }
 	  
-	   @GetMapping("/food-menu.pdf")
-	    public ResponseEntity<?> getMenuPdf() {  
-		   try {
-			itemService.createFoodMenuPdf();
-		} catch (FileNotFoundException | DocumentException e1) {
-			e1.printStackTrace();
-		}
+	   @RequestMapping(value = "/menu-links", method = RequestMethod.GET)
+	    public ResponseEntity<List<String>> getMenuLinks(){
+	        
+	    		List<String> menuLinks = null;
+	    		menuLinks = itemService.getMenuLinks();
+	        return new ResponseEntity<>(menuLinks, HttpStatus.OK);
+
+	    }
+	  
+	   
+	   @GetMapping(value = "/pdf/{fileName}")
+	    public ResponseEntity<?> getMenuPdf(@PathVariable String fileName) {  
+		 System.out.println("USAOOOO");
 	        try {
-	            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\food-menu.pdf");
+	            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\menu\\" + fileName);
 	            if (imagePath != null) {
 	                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
-	                System.out.println("A");
 	                return ResponseEntity
 	                        .ok()
 	                        .contentLength(imagePath.toFile().length())
@@ -103,32 +108,26 @@ public class ItemController {
 	        }
 	    }
 	   
-	   @GetMapping("/drink-menu.pdf")
-	    public ResponseEntity<?> getDrinkMenuPdf() {  
+	   @GetMapping("/update-drink-menu")
+	    public ResponseEntity<String> generateDrinkMenuPdf() {  
 		   try {
 			itemService.createDrinkMenuPdf();
 		} catch (FileNotFoundException | DocumentException e1) {
 			e1.printStackTrace();
 		}
-	        try {
-	            Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\drink-menu.pdf");
-	            if (imagePath != null) {
-	                Resource resource = new ByteArrayResource(Files.readAllBytes(imagePath.normalize()));
-	                System.out.println("A");
-	                return ResponseEntity
-	                        .ok()
-	                        .contentLength(imagePath.toFile().length())
-	                        .contentType(MediaType.APPLICATION_PDF)
-	                        .body(resource); 
-	                        
-	               // return new ResponseEntity<ByteArrayResource>(resource,HttpStatus.OK);
-	                
-	            } else {
-	                return ResponseEntity.status(HttpStatus.OK).build();
-	            }
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	        }
+		   return new ResponseEntity<>("drink pdf updated",HttpStatus.OK);
+	       
+	    }
+	   
+	   @GetMapping("/update-food-menu")
+	    public ResponseEntity<String> generateFoodMenuPdf() {  
+		   try {
+			itemService.createFoodMenuPdf();
+		} catch (FileNotFoundException | DocumentException e1) {
+			e1.printStackTrace();
+		}
+		   return new ResponseEntity<>("food pdf updated",HttpStatus.OK);
+	       
 	    }
 	
 	
