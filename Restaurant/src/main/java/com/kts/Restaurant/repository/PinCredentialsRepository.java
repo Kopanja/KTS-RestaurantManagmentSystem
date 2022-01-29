@@ -15,4 +15,6 @@ public interface PinCredentialsRepository extends Neo4jRepository<PinCredentials
 			+ "RETURN c")
 	PinCredentials findByUserId(Long id);
 
+	PinCredentials findByPin(String s);
+
 }
