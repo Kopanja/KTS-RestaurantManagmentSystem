@@ -7,6 +7,9 @@ public class ItemDTO {
 	private int price;
 	private int cost;
 	private String itemCategoryName;
+	private String imgPath;
+	private String alergens;
+	private String prepTime;
 
 
 	public ItemDTO() {
@@ -26,6 +29,31 @@ public class ItemDTO {
 		this.cost = cost;
 		this.description = description;
 	}
+	
+	
+	
+	public ItemDTO(String name, String description, int price, int cost, String itemCategoryName, String imgPath,
+			String alergens, String prepTime) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.cost = cost;
+		this.itemCategoryName = itemCategoryName;
+		this.imgPath = imgPath;
+		this.alergens = alergens;
+		this.prepTime = prepTime;
+	}
+
+	public ItemDTO(String name, String description, int price, int cost, String itemCategoryName) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.cost = cost;
+		this.itemCategoryName = itemCategoryName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -62,6 +90,30 @@ public class ItemDTO {
 	@Override
 	public String toString() {
 		return "ItemDTO [name=" + name + ", price=" + price + ", cost=" + cost + "]";
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getAlergens() {
+		return alergens;
+	}
+
+	public void setAlergens(String alergens) {
+		this.alergens = alergens;
+	}
+
+	public String getPrepTime() {
+		return prepTime;
+	}
+
+	public void setPrepTime(String prepTime) {
+		this.prepTime = prepTime;
 	}
 	
 	

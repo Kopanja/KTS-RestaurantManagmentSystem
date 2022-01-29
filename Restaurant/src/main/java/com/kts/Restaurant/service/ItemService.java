@@ -57,6 +57,18 @@ public class ItemService {
 		newItem.setCost(itemDTO.getCost());
 		newItem.setPrice(itemDTO.getPrice());
 		newItem.setDescription(itemDTO.getDescription());
+		if(itemDTO.getAlergens().equals("")) {
+			newItem.setAlergens("NONE");
+		}else {
+			newItem.setAlergens(itemDTO.getAlergens());
+		}
+		newItem.setPrepTime(itemDTO.getPrepTime());
+		if(itemDTO.getImgPath().equals("")) {
+			newItem.setImgPath("defaultFood.jpg");
+		}else {
+			newItem.setImgPath(itemDTO.getImgPath());
+		}
+		
 		itemRepo.save(newItem);
 		ItemMapper itemMapper = new ItemMapper();
 		return itemMapper.toDto(newItem);
@@ -89,6 +101,17 @@ public class ItemService {
 		newUpdatedItem.setCost(itemDTO.getCost());
 		newUpdatedItem.setCategory(itemCatRepository.findItemCategoryByCategoryName(itemDTO.getItemCategoryName()));
 		newUpdatedItem.setDescription(itemDTO.getDescription());
+		if(itemDTO.getAlergens().equals("")) {
+			newUpdatedItem.setAlergens("NONE");
+		}else {
+			newUpdatedItem.setAlergens(itemDTO.getAlergens());
+		}
+		newUpdatedItem.setPrepTime(itemDTO.getPrepTime());
+		if(itemDTO.getImgPath().equals("")) {
+			newUpdatedItem.setImgPath("defaultFood.jpg");
+		}else {
+			newUpdatedItem.setImgPath(itemDTO.getImgPath());
+		}
 		itemRepo.save(newUpdatedItem);
 		ItemMapper itemMapper = new ItemMapper();
 		return itemMapper.toDto(newUpdatedItem);
