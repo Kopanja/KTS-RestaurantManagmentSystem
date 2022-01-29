@@ -10,16 +10,48 @@ public class MenuComponent {
 
 	private WebDriver driver;
 	
-	@FindBy(id = "Delicious food")
+	@FindBy(id = "foodIcon")
 	private WebElement food;
 	
-	@FindBy(id = "Refreshing drink")
+	@FindBy(id = "drinkIcon")
 	private WebElement drink;
+	
+	@FindBy(id = "Coffe")
+	private WebElement coffeCategory;
+	
+	@FindBy(id = "Americano")
+	private WebElement americanoItem;
+	
+	@FindBy(id = "Mojito")
+	private WebElement mojitoItem;
+	
+	@FindBy(id = "Cocktail")
+	private WebElement cocktailCategory;
+	
+	@FindBy(id = "Pizza")
+	private WebElement pizzaCategory;
+	
+	@FindBy(id = "Margarita")
+	private WebElement margaritaItem;
+	
+	@FindBy(id = "Tiramisu")
+	private WebElement tiramisuItem;
+	
+	@FindBy(id = "Dessert")
+	private WebElement dessertCategory;
+	
+	@FindBy(className = "back-button-img")
+	private WebElement backButton;
 	
 	
 	public MenuComponent (WebDriver driver) {
 		this.driver = driver;
 		
+	}
+	
+	public void ensureElementIsClickable(WebElement element) {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(element));
 	}
 
 	public void ensureFoodIsDisplayed() {
@@ -30,6 +62,31 @@ public class MenuComponent {
 	public void ensureDrinkIsDisplayed() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions
 				.elementToBeClickable(this.drink));
+	}
+	
+	public void ensureCoffeCatIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(this.coffeCategory));
+	}
+	
+	public void ensureCocktailCatIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(this.cocktailCategory));
+	}
+	
+	public void ensureBackButtonIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(this.backButton));
+	}
+	
+	public void ensureAmericanoIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(this.americanoItem));
+	}
+	
+	public void ensureMojitoIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.elementToBeClickable(this.mojitoItem));
 	}
 
 	public WebDriver getDriver() {
@@ -43,7 +100,7 @@ public class MenuComponent {
 
 
 	public WebElement getFood() {
-		return food;
+		return this.food;
 	}
 
 
@@ -53,13 +110,87 @@ public class MenuComponent {
 
 
 	public WebElement getDrink() {
-		return drink;
+		return this.drink;
 	}
 
 
 	public void setDrink(WebElement drink) {
 		this.drink = drink;
 	}
+
+	public WebElement getCoffeCategory() {
+		return coffeCategory;
+	}
+
+	public void setCoffeCategory(WebElement coffeCategory) {
+		this.coffeCategory = coffeCategory;
+	}
+
+	public WebElement getAmericanoItem() {
+		return americanoItem;
+	}
+
+	public void setAmericanoItem(WebElement americanoItem) {
+		this.americanoItem = americanoItem;
+	}
+
+	public WebElement getMojitoItem() {
+		return mojitoItem;
+	}
+
+	public void setMojitoItem(WebElement mojitoItem) {
+		this.mojitoItem = mojitoItem;
+	}
+
+	public WebElement getCocktailCategory() {
+		return cocktailCategory;
+	}
+
+	public void setCocktailCategory(WebElement cocktailCategory) {
+		this.cocktailCategory = cocktailCategory;
+	}
+
+	public WebElement getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(WebElement backButton) {
+		this.backButton = backButton;
+	}
+
+	public WebElement getPizzaCategory() {
+		return pizzaCategory;
+	}
+
+	public void setPizzaCategory(WebElement pizzaCategory) {
+		this.pizzaCategory = pizzaCategory;
+	}
+
+	public WebElement getMargaritaItem() {
+		return margaritaItem;
+	}
+
+	public void setMargaritaItem(WebElement margaritaItem) {
+		this.margaritaItem = margaritaItem;
+	}
+
+	public WebElement getTiramisuItem() {
+		return tiramisuItem;
+	}
+
+	public void setTiramisuItem(WebElement tiramisuItem) {
+		this.tiramisuItem = tiramisuItem;
+	}
+
+	public WebElement getDessertCategory() {
+		return dessertCategory;
+	}
+
+	public void setDessertCategory(WebElement dessertCategory) {
+		this.dessertCategory = dessertCategory;
+	}
+	
+	
 	
 	
 }

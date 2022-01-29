@@ -1,11 +1,11 @@
 <div class = "menu-background noselect">
     <div class = "food-drink-wraper" *ngIf="categories.length === 0">
         <div class = "food-drink-icon-background">
-            <img  class = "food-drink-icon" src= "../../assets/ramen 1.png" alt="Girl in a jacket" (click)="onFoodIconClick()">
+            <img id="foodIcon"  class = "food-drink-icon" src= "../../assets/ramen 1.png" alt="Girl in a jacket" (click)="onFoodIconClick()">
             <p class = "txt">FOOD</p>
         </div>
         <div class = "food-drink-icon-background">
-            <img class = "food-drink-icon" src= "../../assets/drink 1.png" alt="Girl in a jacket" (click)="onDrinkIconClick()">
+            <img id="drinkIcon" class = "food-drink-icon" src= "../../assets/drink 1.png" alt="Girl in a jacket" (click)="onDrinkIconClick()">
             <p class = "txt">DRINKS</p>
         </div>
     </div>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class = "items-wrapper" *ngIf="items.length !== 0">  
-            <div class = "item-icon-background w3-container" *ngFor = "let item of items"  (click)="onItemClick(item)">
+            <div class = "item-icon-background w3-container" [id] = "item.name" *ngFor = "let item of items"  (click)="onItemClick(item)">
                 <p class = "item-txt">{{item.name}}</p> 
             </div>  
         </div> 

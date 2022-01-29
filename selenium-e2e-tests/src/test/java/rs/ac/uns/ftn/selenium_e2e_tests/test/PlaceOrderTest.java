@@ -101,7 +101,7 @@ public class PlaceOrderTest {
 		pinLoginPageBartender.writePinInput("2222");
 		pinLoginPageBartender.logInButtonClick();
 		//Thread.sleep(2000);
-		bartenderPage.ensureOrdersAreDisplayed();
+		bartenderPage.ensureTitleIsDisplayed();
 		assertEquals("http://localhost:4200/bartender", bartenderBrowser.getCurrentUrl());
 		
 		
@@ -119,7 +119,7 @@ public class PlaceOrderTest {
 		pinLoginPageCook.writePinInput("3333");
 		pinLoginPageCook.logInButtonClick();
 		//Thread.sleep(2000);
-		cookPage.ensureOrdersAreDisplayed();
+		cookPage.ensureTitleIsDisplayed();
 		assertEquals("http://localhost:4200/cook", cookBrowser.getCurrentUrl());
 		
 // -------------SELECTING TABLE TEST----------------------------
@@ -142,25 +142,50 @@ public class PlaceOrderTest {
 
 // -----------ADDING ITEMS TO ORDER LIST TEST------------------------------
 		menuComponent.ensureDrinkIsDisplayed();
-		menuComponent.ensureFoodIsDisplayed();
-		menuComponent.getFood().click();
-		// Thread.sleep(500);
 		menuComponent.getDrink().click();
-		// Thread.sleep(500);
-		menuComponent.getDrink().click();
-		// Thread.sleep(500);
+		
+		menuComponent.ensureCoffeCatIsDisplayed();
+		menuComponent.getCoffeCategory().click();
+		
+		menuComponent.ensureAmericanoIsDisplayed();
+		menuComponent.getAmericanoItem().click();
+		
+		menuComponent.ensureCocktailCatIsDisplayed();
+		menuComponent.getCocktailCategory().click();
+		
+		menuComponent.ensureMojitoIsDisplayed();
+		menuComponent.getMojitoItem().click();
+		
+		menuComponent.ensureBackButtonIsDisplayed();
+		menuComponent.getBackButton().click();
+		
+		menuComponent.ensureElementIsClickable(menuComponent.getFood());
 		menuComponent.getFood().click();
-		// Thread.sleep(500);
+		
+		menuComponent.ensureElementIsClickable(menuComponent.getPizzaCategory());
+		menuComponent.getPizzaCategory().click();
+		
+		menuComponent.ensureElementIsClickable(menuComponent.getMargaritaItem());
+		menuComponent.getMargaritaItem().click();
+		
+		menuComponent.ensureElementIsClickable(menuComponent.getDessertCategory());
+		menuComponent.getDessertCategory().click();
+		
+		menuComponent.ensureElementIsClickable(menuComponent.getTiramisuItem());
+		menuComponent.getTiramisuItem().click();
+		//menuComponent.getDrink().click();
+		//menuComponent.getFood().click();
+		//Thread.sleep(2000);
 
 		// check if items were added to order list
 		assertTrue(orderComponent.getPreOrderItemList().size() == 4);
 
 		// check if last item in list is food, with price 1000
-		assertEquals("Delicious food", orderComponent.getLastItemName().getText());
-		assertEquals("1000", orderComponent.getLastItemPrice().getText());
+		assertEquals("Tiramisu", orderComponent.getLastItemName().getText());
+		assertEquals("390", orderComponent.getLastItemPrice().getText());
 
 		// check if total price is 1300
-		assertEquals("Total Price: 2300", orderComponent.getTotalPrice().getText());
+		assertEquals("Total Price: 1700", orderComponent.getTotalPrice().getText());
 
 // -----------REMOVING LAST ITEM FROM ORDER LIST TEST------------------------------
 		orderComponent.ensureItemRemovedButtonIsDisplayed();
@@ -170,14 +195,15 @@ public class PlaceOrderTest {
 		assertTrue(orderComponent.getPreOrderItemList().size() == 3);
 
 		// check if total price is 1300
-		assertEquals("Total Price: 1300", orderComponent.getTotalPrice().getText());
+		assertEquals("Total Price: 1310", orderComponent.getTotalPrice().getText());
 
 //-----------PLACE ORDER TEST---------------------------------------
 		// check if place order is now enabled
 		assertTrue(orderComponent.getPlaceOrderButton().isEnabled());
 		orderComponent.getPlaceOrderButton().click();
 		// wait for css class to be active
-		Thread.sleep(3000);
+		bartenderPage.ensureOrdersAreDisplayed();
+		cookPage.ensureOrdersAreDisplayed();
 		// check if table is occupied
 		assertTrue(tableComponent.getTableImage().getAttribute("class").contains(occupiedTableCSSClass));
 		// check if ordered items are placed
@@ -187,15 +213,13 @@ public class PlaceOrderTest {
 		assertTrue(bartenderPage.getOrders().size() > 0);
 		// check if there are two items in bartender order
 		assertTrue(bartenderPage.getOrderedItems().size() == 2);
-		// check if last item is Refreshing drink
-		assertEquals("Refreshing drink", bartenderPage.getLastItemName().getText());
 
 		// check if ordered appeared on the bartender page
 		assertTrue(cookPage.getOrders().size() > 0);
 		// check if there are two items in bartender order
 		assertTrue(cookPage.getOrderedItems().size() == 1);
 		// check if last item is Refreshing drink
-		assertEquals("Delicious food", cookPage.getLastItemName().getText());
+		assertEquals("Margarita", cookPage.getLastItemName().getText());
 
 	}
 

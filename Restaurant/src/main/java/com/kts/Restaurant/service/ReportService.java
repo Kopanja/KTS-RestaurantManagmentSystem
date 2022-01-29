@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,14 +35,21 @@ public class ReportService {
 	
 	public void createTotalSalaryPayoutByUserReport() throws ParseException, FileNotFoundException, DocumentException {
 		List<User> employees = userService.getAllPinBasedUsers();
-		String fileName = "Salary Payout Report";
+		String localDateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_'Time'_hh'h'_mm'm'"));
+		String fileName = "SalaryPayoutReport_" + localDateString;
+		//String fileName = "SalaryPayoutReportAA";
+		//String fileName = localDateString + "SalaryPayoutReport";
 		 List<String> columnNames = new ArrayList<String>();
+		 System.out.println(fileName);
+		 String path = ".\\src\\main\\resources\\pdf\\report\\" + fileName + ".pdf";
+		 System.out.println(path);
 		 columnNames.add("NAME");
 		 columnNames.add("TOTAL SALARY PAYOUT");
 		Document document = new Document();
-		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\report\\" + fileName + ".pdf"));
+		PdfWriter.getInstance(document, new FileOutputStream(path));
+		//PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\report\\" + fileName + ".pdf"));
 		document.open();
-		PDFReportGeneratorUtil.addDocTitle(document, fileName);
+		PDFReportGeneratorUtil.addDocTitle(document, fileName, localDateString);
 		PdfPTable table = PDFReportGeneratorUtil.createTable(document, 2,columnNames);
 		for(User employee : employees) {
 			double totalSalary = salaryService.salaryReport(employee.getId(), Optional.empty(), Optional.empty()).keySet().iterator().next();

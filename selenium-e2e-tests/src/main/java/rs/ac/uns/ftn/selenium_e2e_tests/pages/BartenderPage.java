@@ -20,6 +20,9 @@ public class BartenderPage {
 	@FindBy(xpath = "//*[contains(@class, 'item-wrapper')][last()]/div[1]")
 	private WebElement lastItemName;
 	
+	@FindBy(id = "title")
+	private WebElement title;
+	
 	public BartenderPage (WebDriver driver) {
 		this.driver = driver;
 	}
@@ -27,6 +30,11 @@ public class BartenderPage {
 	public void ensureOrdersAreDisplayed() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions
 				.visibilityOfAllElements(this.orders));
+	}
+	
+	public void ensureTitleIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.visibilityOfAllElements(this.title));
 	}
 	public WebDriver getDriver() {
 		return driver;
@@ -58,6 +66,14 @@ public class BartenderPage {
 
 	public void setLastItemName(WebElement lastItemName) {
 		this.lastItemName = lastItemName;
+	}
+
+	public WebElement getTitle() {
+		return title;
+	}
+
+	public void setTitle(WebElement title) {
+		this.title = title;
 	}
 	
 	

@@ -1,5 +1,5 @@
 <div class = "div-body container">
-    <p class = "item text">DRINK ORDERS</p>
+    <p id = "title" class = "item text">DRINK ORDERS</p>
     <div class = "div-border container2 item">
         <div class = "container item" *ngFor="let order of orders" >
             <app-order-card *ngIf="order" [order] = "order" (orderCompleteEvent)="orderComplete($event)"></app-order-card>

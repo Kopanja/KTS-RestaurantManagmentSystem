@@ -22,14 +22,13 @@ public class PDFReportGeneratorUtil {
 	private static Font COURIER_SMALL_FOOTER = new Font(Font.FontFamily.COURIER, 12, Font.BOLD);
 
 	
-	public static void addDocTitle(Document document, String reportFileName) throws DocumentException {
-		String localDateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	public static void addDocTitle(Document document, String reportFileName, String localDateString) throws DocumentException {
+		
 		Paragraph p1 = new Paragraph();
 		leaveEmptyLine(p1, 1);
 		p1.add(new Paragraph(reportFileName, COURIER));
 		p1.setAlignment(Element.ALIGN_CENTER);
 		leaveEmptyLine(p1, 1);
-		p1.add(new Paragraph("Report generated on " + localDateString, COURIER_SMALL));
 
 		document.add(p1);
 

@@ -21,10 +21,18 @@ private WebDriver driver;
 	@FindBy(xpath = "//*[contains(@class, 'item-wrapper')][last()]/div[1]")
 	private WebElement lastItemName;
 	
+	@FindBy(id = "title")
+	private WebElement title;
+	
 	public CookPage (WebDriver driver) {
 		this.driver = driver;
 	}
 
+	public void ensureTitleIsDisplayed() {
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions
+				.visibilityOfAllElements(this.title));
+	}
+	
 	public void ensureOrdersAreDisplayed() {
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions
 				.visibilityOfAllElements(this.orders));
@@ -59,6 +67,14 @@ private WebDriver driver;
 
 	public void setLastItemName(WebElement lastItemName) {
 		this.lastItemName = lastItemName;
+	}
+
+	public WebElement getTitle() {
+		return title;
+	}
+
+	public void setTitle(WebElement title) {
+		this.title = title;
 	}
 	
 	
