@@ -1,6 +1,7 @@
 package com.kts.Restaurant.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -21,4 +22,12 @@ public interface ItemRepository extends Neo4jRepository<Item, Long> {
 			+ "WHERE c.categoryName = $categoryName\r\n"
 			+ "RETURN i")
 	public List<Item> findByCategoryName(String categoryName);
+
+	
+	@Query("MATCH (i:Item)-[r:HAS_CATEGORY]->(c:ItemCategory)\r\n"
+			+ "WHERE id(id) = $id\r\n"
+			+ "RETURN i,r,c")
+	public Optional<Item> findById(Long id);
+	
+	
 }

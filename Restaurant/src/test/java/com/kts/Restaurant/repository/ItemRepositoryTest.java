@@ -31,7 +31,8 @@ public class ItemRepositoryTest {
 	@Test
 	public void findAllTest() {
 		List<Item> items = itemRepo.findAll();
-		assertTrue(items.size() == 69);
+		System.out.println(items.size());
+		assertTrue(items.size() == 70);
 	}
 	
 	
@@ -46,6 +47,7 @@ public class ItemRepositoryTest {
 	public void findByCategoryNameTest() {
 		String categoryName = "Coffe";
 		List<Item> items = itemRepo.findByCategoryName(categoryName);
+		System.out.println(items.size());
 		assertTrue(items.size() == 4);
 	}
 

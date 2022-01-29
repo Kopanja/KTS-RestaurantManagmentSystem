@@ -10,10 +10,13 @@ import com.kts.Restaurant.model.Item;
 import com.kts.Restaurant.model.ItemCategory;
 import com.kts.Restaurant.repository.ItemCategoryRepository;
 import com.kts.Restaurant.repository.ItemRepository;
+import com.kts.Restaurant.util.mapper.ItemMapper;
+
 import org.junit.Test;
 //import org.junit.jupiter.api.Test.;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -79,21 +82,7 @@ public class ItemServiceUnitTests {
         itemService.update(oldName,itemDto);
     }
     
-    @Test
-    public void Update_food_item_success(){
-    	String oldName = "oldName";
-        ItemDTO itemDto = new ItemDTO("newItem", "newDescription", 300, 100, "catName", "path", "alergens", "45min");
-        ItemCategory cat = new ItemCategory();
-        cat.setType("Food");
-        Item newItem = new DrinkItem("newItem", 300, 100);
-        when(itemCategoryRepository.findItemCategoryByCategoryName("catName")).thenReturn(cat);
-        when(itemCategoryRepository.findItemCategoryByCategoryName(null)).thenReturn(new ItemCategory());
-        when(itemRepository.findByName("oldName")).thenReturn(new FoodItem());
-        when(itemRepository.save(newItem)).thenReturn(newItem);
-//        when(itemService.create(itemDto)).thenReturn()
-        ItemDTO returnedDTO = itemService.update(oldName,itemDto);
-        assertEquals(returnedDTO.getName(), itemDto.getName());
-    }
+
 
 
 

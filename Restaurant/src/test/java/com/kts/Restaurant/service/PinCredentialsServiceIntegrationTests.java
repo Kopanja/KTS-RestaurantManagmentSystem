@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:application-test.properties")
@@ -26,6 +28,7 @@ public class PinCredentialsServiceIntegrationTests {
     public static final Long userId = 118L;
 //    public PinCredentials creds = null;
 
+    
     @Test
     public void Create_pin_credentials() {
         PinCredentials creds = pinCredentialsService.create("195435");

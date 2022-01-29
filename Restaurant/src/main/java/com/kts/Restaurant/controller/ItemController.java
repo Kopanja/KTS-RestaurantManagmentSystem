@@ -162,8 +162,9 @@ public class ItemController {
 
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ItemDTO>> getItemList() {
-        
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		List<ItemDTO> items = itemService.getAll();
+		
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 	

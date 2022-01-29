@@ -12,12 +12,12 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -66,7 +66,7 @@ public class ItemControllerIntegrationTests {
                 HttpMethod.POST, new HttpEntity<Object>( dto, headers), ItemDTO.class);
         ItemDTO created = responseEntity.getBody();
         Assertions.assertNotNull(created);
-        Assertions.assertEquals( "Item1", created.getName());
+        Assertions.assertEquals(nonExistingName, created.getName());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ItemControllerIntegrationTests {
         dto.setItemCategoryName("Burger");
         dto.setImgPath("putana1");
         dto.setPrepTime("60");
-        dto.setName("novoIme");
+        dto.setName("novoIme2");
         System.out.println(dto);
         ResponseEntity<ItemDTO> responseEntity;
 
@@ -128,7 +128,7 @@ public class ItemControllerIntegrationTests {
         System.out.println(created);
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(created);
-        Assertions.assertEquals( "novoIme", created.getName());
+        Assertions.assertEquals( "novoIme2", created.getName());
 
     }
 
@@ -184,6 +184,7 @@ public class ItemControllerIntegrationTests {
 
         responseEntity = restTemplate.exchange("/api/item",
                 HttpMethod.GET, new HttpEntity<Object>(headers), ItemDTO[].class);
+        System.out.println(responseEntity);
         ItemDTO[] items = responseEntity.getBody();
         Assertions.assertNotNull(items);
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

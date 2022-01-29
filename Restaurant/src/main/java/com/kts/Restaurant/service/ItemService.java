@@ -113,11 +113,8 @@ public class ItemService {
 		}else {
 			newUpdatedItem.setImgPath(itemDTO.getImgPath());
 		}
-		ItemMapper itemMapper = new ItemMapper();
-
-		ItemDTO retVal = this.create(itemMapper.toDto(newUpdatedItem));
-
-		return retVal;
+		Item newItem = itemRepo.save(newUpdatedItem);
+		return (new ItemMapper().toDto(newItem));
 
 	}
 
@@ -134,7 +131,8 @@ public class ItemService {
 		List<ItemDTO> dtos = new ArrayList<>();
 		ItemMapper mapper = new ItemMapper();
 		for (Item i : itemRepo.findAll()) {
-			dtos.add(mapper.toDto(i));
+			Item i2 = itemRepo.findByName(i.getName());
+			dtos.add(mapper.toDto(i2));
 		}
 		return dtos;
 	}
@@ -143,7 +141,8 @@ public class ItemService {
 		List<ItemDTO> dtos = new ArrayList<>();
 		ItemMapper mapper = new ItemMapper();
 		for (Item i : itemRepo.findByCategoryName(categoryName)) {
-			dtos.add(mapper.toDto(i));
+			Item i2 = itemRepo.findByName(i.getName());
+			dtos.add(mapper.toDto(i2));
 		}
 		return dtos;
 	}

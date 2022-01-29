@@ -98,6 +98,7 @@ public class TableService {
 		List<TableDTO> tableDTOs = new ArrayList<TableDTO>();
 		for(Table t : tables) {		
 			if(t.getOrder() != null && t.getOrder().getItems() != null) {
+				System.out.println(t.getName());
 				tableDTOs.add(new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), orderService.toDto(t.getOrder()), t.getName()));
 			}else {
 				TableDTO dto = new TableDTO(t.getId(), t.getType().getId(),t.getX(), t.getY(), t.getType().getNumOfSeats(), t.getType().getIcon(), t.getName());
