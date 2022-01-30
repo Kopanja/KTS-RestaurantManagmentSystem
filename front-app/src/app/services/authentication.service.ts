@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 import { JwtUtilServiceService } from './jwt-util-service.service';
 import { LoginResponse } from '../model/login-response';
 import { Router } from '@angular/router';
@@ -75,9 +75,25 @@ export class AuthenticationService {
     });
   }
 
-  registerNewUser(registrationRequest: UserRegistration) {
+  registerNewUser(registrationRequest: UserRegistration):Observable<boolean> {
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.registrationPath, JSON.stringify(registrationRequest), { headers }).subscribe();
+    return this.http.post(this.registrationPath, JSON.stringify(registrationRequest), { headers })
+    .map((data:any)=>{
+      if(data){
+        console.log("usao u true");
+        return true;
+      }else{
+        console.log("usao u false");
+        return false;
+      }
+    })
+    .catch((error:any)=>{
+      if(error.status === 400){
+        return Observable.throwError("Credential already taken")
+      }else{
+        return Observable.throwError(error.json().error || 'Server error');
+      }
+    })
   }
 
   getToken(): String {
@@ -116,7 +132,7 @@ export class AuthenticationService {
 
       if(userRole.authority === "ADMIN"){
         this.router.navigate(["/admin"]);
-      }else if(userRole.authority === "MENAGER"){
+      }else if(userRole.authority === "MANAGER"){
         this.router.navigate(["/menager"])
       }else if(userRole.authority === "COOK"){
         this.router.navigate(["/cook"])

@@ -1,34 +1,30 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form class="form-signin" (ngSubmit)="save()">
-          <h2 class="form-signin-heading">Create New User</h2>
-          <label for="firstName" class="sr-only">FirsName</label>
-          <input type="text" id="firstName" class="form-control" name="firstname" [(ngModel)]="userRegistration.user.firstname"
+<div class = "div-body container-custom">  
+  <form class=" form-class form-container" (ngSubmit)="save()">
+    <h2 class = "txt-class">Add User</h2>
+    <label class = "item label-class" for="inputFirstName">First Name</label>
+    <input type="text" id="inputFirstName" class="form-control input-class" name="name" [(ngModel)]="userRegistration.user.firstname" placeholder="First Name"
+      required autofocus>
+    <label for="inputLastName" class = "item  label-class">Last Name</label>
+    <input type="text" id="inputLastName" class="form-control input-class" name="lastname" [(ngModel)]="userRegistration.user.lastname" placeholder="Last Name">
+      <label for="inputPassword" class = "item  label-class">Salary</label>
+      <input type="text" id="inputSalary" class="form-control input-class" name="password" [(ngModel)]="userRegistration.user.salaryAmount" placeholder="Starting Salary">
+      <label for="selectRole" class="item  label-class">Select Role</label>
+      <select id ="selectRole" name = "selectRole" [ngModel]="userRegistration.user.role" (ngModelChange)="onChange($event)">
+          <option *ngFor="let role of roles" [ngValue]="role.role">{{role.role}}</option>
+      </select>
+      <label *ngIf="isManagement" class = "item label-class" for="username">Username</label>
+      <input *ngIf="isManagement" type="text" id="inputUsername" class="form-control input-class" name="name" [(ngModel)]="userRegistration.username" placeholder="Username"
             required autofocus>
-          <label for="lastName" class="sr-only">LastName</label>
-          <input type="text" id="lastName" class="form-control" name="lastname" [(ngModel)]="userRegistration.user.lastname"
+      <label *ngIf="isManagement" for="inputPassword" class = "item  label-class">Password</label>
+      <input *ngIf="isManagement" type="password" id="inputPassword" class="form-control input-class" name="password" [(ngModel)]="userRegistration.password" placeholder="Password"
             required>
-            <label for="salary" class="sr-only">Salary</label>
-            <input type="text" id="salary" class="form-control" name="salary" [(ngModel)]="userRegistration.user.salaryAmount"
-              required>
-            <label for="selectRole" class="sr-only">Select Role</label>
-            <select id ="selectRole" name = "selectRole" [ngModel]="roles" (ngModelChange)="onChange($event)">
-                <option *ngFor="let role of roles" [ngValue]="role.role">{{role.role}}</option>
-            </select>
-            <label for="pin" class="sr-only">PIN: </label>
-            <input type="text" id="pin" class="form-control" name="pin" [(ngModel)]="userRegistration.pin"
-              required>
-              <label for="username" class="sr-only">UserName: </label>
-              <input type="text" id="username" class="form-control" name="username" [(ngModel)]="userRegistration.username"
-                required>
-                <label for="password" class="sr-only">Password:</label>
-                <input type="text" id="password" class="form-control" name="password" [(ngModel)]="userRegistration.password"
-                  required>
-          <button id = "login-button" class="btn btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+      <label *ngIf="isEmployee" for="pin" class="item label-class">CREATE PIN</label>
+      <input *ngIf="isEmployee" type="password" id="inputPin" class="form-control input-class" name="pin" [(ngModel)]="userRegistration.pin" placeholder="XXXX"
+              required autofocus>
+      <button id = "submit-button" class="submit-button" type="submit">Submit</button>
+      <div *ngIf="fail" class="error-container" role="alert">
+        {{errorMsg}}
       </div>
-      <div class="col-md-3"></div>
-    </div>
-  </div>
+  </form>
+  
+</div>

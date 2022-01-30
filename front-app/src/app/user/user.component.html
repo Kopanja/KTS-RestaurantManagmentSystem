@@ -12,7 +12,7 @@
           <select id ="selectRole" name = "selectRole" [ngModel]="user.role" (ngModelChange)="onChange($event)">
               <option *ngFor="let role of roles" [ngValue]="role.role">{{role.role}}</option>
           </select>
-          <button id = "login-button" class="submit-button" type="submit">Update</button>
+          <button id = "submit-button" class="submit-button" type="submit">Update</button>
       </form>
     
 </div>

@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
   
   public user:User;
   public roles : Role[];
-  public selectedRole : string;
+
   constructor(private route: ActivatedRoute,private userService : UserService, private authenticationService : AuthenticationService) { }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
 import { isError } from 'util';
+import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -12,7 +13,7 @@ export class UserListComponent implements OnInit {
 
   public activeUsers : User[];
   public firedUsers : User[];
-  constructor(private userService : UserService, private router:Router ) { }
+  constructor(private userService : UserService, private router:Router, private authenticationService : AuthenticationService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -37,9 +38,17 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/user/',user.id]);
   }
 
+  isAdmin():boolean{
+  
+    if(this.authenticationService.getLoggedInUserRole().authority === "ADMIN"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   fireClick(user:User){
-    this.userService.fire(user).subscribe(
-      data => {
+    this.userService.fire(user).subscribe(data => {
         this.getUsers();
       }
     )

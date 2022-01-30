@@ -17,10 +17,10 @@
       <td>{{user.role}}</td>
       <td>{{user.salaryAmount}}</td>
       <td>
-      <button (click) = "editClick(user)">Edit</button>
+      <button *ngIf="isAdmin()" (click) = "editClick(user)">Edit</button>
     </td>
     <td>
-      <button (click) = "fireClick(user)">Fire</button>
+      <button *ngIf="isAdmin()" (click) = "fireClick(user)">Fire</button>
     </td>
   </tr>
   </tbody>
