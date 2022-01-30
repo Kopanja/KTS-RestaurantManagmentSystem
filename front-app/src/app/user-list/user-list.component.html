@@ -5,7 +5,7 @@
       <th>Role</th>
       <th></th>
     </tr>
-    <tr *ngFor="let user of users">
+    <tr *ngFor="let user of users" [id] = "user.lastname">
       <td>{{user.firstname}}</td>
       <td>{{user.lastname}}</td>
       <td>{{user.role}}</td>

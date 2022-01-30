@@ -1,0 +1,40 @@
+.div-body {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: #00509D;
+}
+
+.container {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+.button-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.img-class{
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.txt-class{
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.button-class{
+    width: 200px;
+    height: 200px;
+    align-self: center;
+    background-color: #FFD500;
+    border-radius: 25px;
+}

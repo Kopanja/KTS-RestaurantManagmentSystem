@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtUtilServiceService } from './jwt-util-service.service';
@@ -18,36 +18,71 @@ export class AuthenticationService {
   private loginResponse : LoginResponse;
   constructor(private http: HttpClient,private router : Router, private jwtUtilsService: JwtUtilServiceService) { }
 
-  loginUsrnPass(username: string, password: string) {
+  loginUsrnPass(username: string, password: string) :Observable<boolean> {
     //localStorage.removeItem("token");
     //localStorage.removeItem("loggedInUser");
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<LoginResponse>(this.loginUsrnPassPath, JSON.stringify({ username, password }), { headers }).subscribe(data =>{
+    return this.http.post<LoginResponse>(this.loginUsrnPassPath, JSON.stringify({ username, password }), { headers })
+    .map((data:any) =>{
       this.loginResponse = data;
     
-    let jwtData = this.loginResponse.jwt.split('.')[1];
-    let decodedJwtJsonData = window.atob(jwtData);
+      let jwtData = this.loginResponse.jwt.split('.')[1];
+      let decodedJwtJsonData = window.atob(jwtData);
     
-    let decodedJwtData = JSON.parse(decodedJwtJsonData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
     //console.log(this.jwtUtilsService.getRoles(this.loginResponse.jwt));
-    sessionStorage.setItem("token", this.loginResponse.jwt);
+    if(this.loginResponse.jwt){
+      sessionStorage.setItem("token", this.loginResponse.jwt);
     sessionStorage.setItem("loggedInUser", JSON.stringify(this.loginResponse.user));
     console.log(this.getLoggedInUserRole());
     this.redirectLoggedInUser();
+      return true;
+    }else{
+      return false;
+    }
+    
 
+    })
+    .catch((error:any) =>{
+      if(error.status === 403){
+        return Observable.throwError("Bad credentials")
+      }else{
+        return Observable.throwError(error.json().error || 'Server error');
+      }
     });
   }
-
-  loginPin(pin: string) {
+  loginPin(pin: string) :Observable<boolean> {
     
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<LoginResponse>(this.loginPinPath, JSON.stringify({ pin }), { headers }).subscribe(data =>{
+    return this.http.post<LoginResponse>(this.loginPinPath, JSON.stringify({ pin }), { headers })
+    .map((data:any) =>{
       this.loginResponse = data;
-    sessionStorage.setItem("token", this.loginResponse.jwt);
+    
+      //let jwtData = this.loginResponse.jwt.split('.')[1];
+      //let decodedJwtJsonData = window.atob(jwtData);
+    
+      //let decodedJwtData = JSON.parse(decodedJwtJsonData)
+    //console.log(this.jwtUtilsService.getRoles(this.loginResponse.jwt));
+    console.log(this.loginResponse.jwt);
+    if(this.loginResponse.jwt){
+      sessionStorage.setItem("token", this.loginResponse.jwt);
     sessionStorage.setItem("loggedInUser", JSON.stringify(this.loginResponse.user));
     console.log(this.getLoggedInUserRole());
     this.redirectLoggedInUser();
- 
+      return true;
+    }else{
+      return false;
+    }
+    
+
+    })
+    .catch((error:any) =>{
+      console.log(error);
+      if(error.status === 403){
+        return Observable.throwError("Bad credentials")
+      }else{
+        return Observable.throwError(error.json().error || 'Server error');
+      }
     });
   }
 

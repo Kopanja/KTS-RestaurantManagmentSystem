@@ -1,21 +1,22 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form class="form-signin" (ngSubmit)="login()">
-          <h2 class="form-signin-heading">Please sign in</h2>
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" id="inputUsername" class="form-control" name="name" [(ngModel)]="user.name" placeholder="Username"
+
+  <div class = "div-body container">
+    
+      <div class = "form-class">
+        <form class="form-container" (ngSubmit)="login()">
+          <h2 class = "txt-class">Please sign in</h2>
+          <label class = "item label-class" for="username">Username</label>
+          <input type="text" id="inputUsername" class="form-control input-class" name="name" [(ngModel)]="user.name" placeholder="Username"
             required autofocus>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control" name="password" [(ngModel)]="user.password" placeholder="Password"
+          <label for="inputPassword" class = "item  label-class">Password</label>
+          <input type="password" id="inputPassword" class="form-control input-class" name="password" [(ngModel)]="user.password" placeholder="Password"
             required>
-          <button id = "login-button" class="btn btn-primary btn-block" type="submit">Sign in</button>
+          <button id = "login-button" class="submit-button" type="submit">Sign in</button>
         </form>
-        <div *ngIf=wrongUsernameOrPass class="alert alert-warning box-msg" role="alert">
-          Wrong username or password.
+        <div *ngIf=badLogin class="error-container" role="alert">
+          {{errorMsg}}
         </div>
       </div>
-      <div class="col-md-3"></div>
-    </div>
-  </div>
+      
+    
+
+</div>
