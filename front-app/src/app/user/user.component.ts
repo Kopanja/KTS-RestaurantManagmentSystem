@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user';
 import { ActivatedRoute } from '@angular/router';
+import { Role } from '../model/role';
+import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -10,7 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 export class UserComponent implements OnInit {
   
   public user:User;
-  constructor(private route: ActivatedRoute,private userService : UserService) { }
+  public roles : Role[];
+  public selectedRole : string;
+  constructor(private route: ActivatedRoute,private userService : UserService, private authenticationService : AuthenticationService) { }
 
   ngOnInit(): void {
 
@@ -20,6 +24,17 @@ export class UserComponent implements OnInit {
         this.user = data;
       });
     });
+    this.authenticationService.getAllRoles().subscribe(data => {
+      this.roles = data;
+    })
 
+  }
+  onChange(role:any) {
+    this.user.role = role;
+    console.log(this.user.role);
+ }
+  save(){
+    console.log(this.user);
+    this.userService.update(this.user).subscribe();
   }
 }

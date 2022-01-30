@@ -39,6 +39,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NewUserFormComponent } from './new-user-form/new-user-form.component';
 import { ItemListComponent } from './item-list/item-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ItemListComponent } from './item-list/item-list.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [
     AuthenticationService,

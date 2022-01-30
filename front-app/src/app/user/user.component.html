@@ -1,7 +1,18 @@
-<div class="row">
-    <div *ngIf="user" class="col-md-8">
-        <h3>{{user.firstname}}</h3>
-        <div>{{user.lastname}}</div>
-        <div>{{user.role}}</div>
-    </div>
+<div *ngIf="user" class = "div-body container-custom">  
+      <form class=" form-class form-container" (ngSubmit)="save()">
+        <h2 class = "txt-class">Update User</h2>
+        <label class = "item label-class" for="inputFirstName">First Name</label>
+        <input type="text" id="inputFirstName" class="form-control input-class" name="name" [(ngModel)]="user.firstname" placeholder="user.firstname"
+          required autofocus>
+        <label for="inputLastName" class = "item  label-class">Last Name</label>
+        <input type="text" id="inputLastName" class="form-control input-class" name="lastname" [(ngModel)]="user.lastname" placeholder="user.lastname">
+          <label for="inputPassword" class = "item  label-class">Salary</label>
+          <input type="text" id="inputSalary" class="form-control input-class" name="password" [(ngModel)]="user.salaryAmount" placeholder="user.salaryAmount">
+          <label for="selectRole" class="item  label-class">Select Role</label>
+          <select id ="selectRole" name = "selectRole" [ngModel]="user.role" (ngModelChange)="onChange($event)">
+              <option *ngFor="let role of roles" [ngValue]="role.role">{{role.role}}</option>
+          </select>
+          <button id = "login-button" class="submit-button" type="submit">Update</button>
+      </form>
+    
 </div>

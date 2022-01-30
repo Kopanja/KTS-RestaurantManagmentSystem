@@ -7,9 +7,9 @@
     background-color: #00509D;
 }
 
-.container {
+.container-custom {
     display: flex; 
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
   }
 

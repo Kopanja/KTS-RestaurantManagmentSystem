@@ -33,7 +33,9 @@ export class LoginUsrnPassComponent implements OnInit {
       
     }else{
       this.authenticationService.loginUsrnPass(this.user.name, this.user.password).subscribe(
-        (loggedIn:boolean)=>{},
+        (loggedIn:boolean)=>{
+         
+        },
         (err:Error)=>{
           if(err.toString() === 'Bad credentials'){
             this.badLogin = true;

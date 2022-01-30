@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'waiter', component: WaiterPageComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
-      roles: ['ADMIN', 'MENAGER','WAITER']
+      roles: ['ADMIN', 'MANAGER','WAITER']
     }
   },
   {
@@ -32,14 +32,14 @@ const routes: Routes = [
     path: 'bartender', component: BartenderPageComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
-      roles: ['ADMIN', 'MENAGER','BARTENDER']
+      roles: ['ADMIN', 'MANAGER','BARTENDER']
     }
   },
   {
     path: 'menager', component: ManagerPageComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
-      roles: ['ADMIN', 'MENAGER']
+      roles: ['ADMIN', 'MANAGER']
     }
   },
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
     path: 'user/:id', component: UserComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
-      roles: ['ADMIN', 'MENAGER']
+      roles: ['ADMIN', 'MANAGER']
     }
   },
   {
@@ -66,7 +66,7 @@ const routes: Routes = [
   {
     path : 'cook', component: CookPageComponent,
     data: {
-      roles: ['ADMIN', 'MENAGER','COOK']
+      roles: ['ADMIN', 'MANAGER','COOK']
     }
   },
   {path: 'usr-pass-login', component: LoginUsrnPassComponent},

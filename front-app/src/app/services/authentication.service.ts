@@ -25,12 +25,6 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(this.loginUsrnPassPath, JSON.stringify({ username, password }), { headers })
     .map((data:any) =>{
       this.loginResponse = data;
-    
-      let jwtData = this.loginResponse.jwt.split('.')[1];
-      let decodedJwtJsonData = window.atob(jwtData);
-    
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-    //console.log(this.jwtUtilsService.getRoles(this.loginResponse.jwt));
     if(this.loginResponse.jwt){
       sessionStorage.setItem("token", this.loginResponse.jwt);
     sessionStorage.setItem("loggedInUser", JSON.stringify(this.loginResponse.user));
@@ -57,12 +51,7 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(this.loginPinPath, JSON.stringify({ pin }), { headers })
     .map((data:any) =>{
       this.loginResponse = data;
-    
-      //let jwtData = this.loginResponse.jwt.split('.')[1];
-      //let decodedJwtJsonData = window.atob(jwtData);
-    
-      //let decodedJwtData = JSON.parse(decodedJwtJsonData)
-    //console.log(this.jwtUtilsService.getRoles(this.loginResponse.jwt));
+ 
     console.log(this.loginResponse.jwt);
     if(this.loginResponse.jwt){
       sessionStorage.setItem("token", this.loginResponse.jwt);

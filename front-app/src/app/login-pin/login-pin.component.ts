@@ -28,7 +28,12 @@ export class LoginPinComponent implements OnInit {
       
     }else{
       this.authenticationService.loginPin(this.user.pin).subscribe(
-        (loggedIn:boolean)=>{},
+        (loggedIn:boolean)=>{
+          if(!loggedIn){
+            this.badLogin = true;
+            this.errorMsg = "Bad credentials";
+          }
+        },
         (err:Error)=>{
           if(err.toString() === 'Bad credentials'){
             this.badLogin = true;

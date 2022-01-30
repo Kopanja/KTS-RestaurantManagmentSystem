@@ -1,14 +1,56 @@
-<table *ngIf="this.users">
+<h1>Current Employees</h1>
+<table *ngIf="this.activeUsers" class="table">
+  <thead class="table-header">
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Role</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Salary</th>
+      <th></th>
       <th></th>
     </tr>
-    <tr *ngFor="let user of users" [id] = "user.lastname">
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of activeUsers" [id] = "user.lastname">
       <td>{{user.firstname}}</td>
       <td>{{user.lastname}}</td>
       <td>{{user.role}}</td>
-      <button (click) = "detailsClick(user)">Details</button>
-    </tr>
+      <td>{{user.salaryAmount}}</td>
+      <td>
+      <button (click) = "editClick(user)">Edit</button>
+    </td>
+    <td>
+      <button (click) = "fireClick(user)">Fire</button>
+    </td>
+  </tr>
+  </tbody>
 </table>
+<h1>Past Employees</h1>
+<table *ngIf="this.firedUsers" class="table">
+  <thead class="table-header">
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Salary</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of firedUsers" [id] = "user.lastname">
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
+      <td>{{user.role}}</td>
+      <td>{{user.salaryAmount}}</td>
+      <td>
+    </td>
+    <td>  
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+

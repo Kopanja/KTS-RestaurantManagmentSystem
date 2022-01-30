@@ -7,7 +7,7 @@
     background-color: #00509D;
 }
 
-.container {
+.container-custom {
     display: flex; 
     flex-direction: row;
     justify-content: space-evenly;
@@ -31,7 +31,7 @@
     text-align: center;
 }
 
-.button-class{
+.button-class-custom{
     width: 200px;
     height: 200px;
     align-self: center;

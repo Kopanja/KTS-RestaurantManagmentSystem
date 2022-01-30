@@ -18,9 +18,18 @@ export class UserService {
     return this.http.get<User>(this.path + "/" + id);
   }
 
+  update (user : User){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.path + "/update", JSON.stringify(user), {headers});
+  }
   create(user : User){
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(this.path + "/create", JSON.stringify(user), {headers});
 
+  }
+
+  fire(user : User){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.path + "/fire", JSON.stringify(user), {headers});
   }
 }
