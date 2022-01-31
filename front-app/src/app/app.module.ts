@@ -40,6 +40,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NewUserFormComponent } from './new-user-form/new-user-form.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ItemPageComponent } from './item-page/item-page.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     NewUserFormComponent,
     ItemListComponent,
+    ItemPageComponent,
   
   ],
   imports: [

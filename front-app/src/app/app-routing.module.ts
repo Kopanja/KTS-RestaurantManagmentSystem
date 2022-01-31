@@ -13,6 +13,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { NewUserFormComponent } from './new-user-form/new-user-form.component';
+import { ItemPageComponent } from './item-page/item-page.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,13 @@ const routes: Routes = [
     canActivate: [CanActivateAuthGuard],
     data: {
       roles: ['ADMIN', 'MANAGER','WAITER']
+    }
+  },
+  {
+    path: 'items', component: ItemPageComponent,
+    canActivate: [CanActivateAuthGuard],
+    data: {
+      roles: ['ADMIN', 'MANAGER']
     }
   },
   {

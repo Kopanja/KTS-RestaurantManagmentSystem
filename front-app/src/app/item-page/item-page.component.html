@@ -1,0 +1,16 @@
+<div class = "container-row">
+    <div class = "container-column">
+        <h1>Food Items</h1>
+        <div class = "container-row">
+            <button *ngFor="let foodCategory of foodCategories" (click) = "getFoodItems(foodCategory.categoryName)">{{foodCategory.categoryName}}</button>
+        </div>
+        <app-item-list *ngIf = "foodItems" [items] = "foodItems"></app-item-list>
+    </div>
+    <div class = "container-column">
+        <h1>Drink Items</h1>
+        <div class = "container-row">
+            <button *ngFor="let drinkCategory of drinkCategories" (click) = "getDrinkItems(drinkCategory.categoryName)">{{drinkCategory.categoryName}}</button>
+        </div>
+        <app-item-list *ngIf = "drinkItems" [items] = "drinkItems"></app-item-list>
+    </div>
+</div>

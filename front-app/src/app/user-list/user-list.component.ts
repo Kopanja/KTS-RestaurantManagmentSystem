@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
-import { isError } from 'util';
 import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-user-list',

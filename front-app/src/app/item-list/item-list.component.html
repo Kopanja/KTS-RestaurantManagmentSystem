@@ -1,1 +1,30 @@
-<img [attr.src]="itemImage" *ngIf="itemImage" style="width:200px">
+<!--img [attr.src]="itemImage" *ngIf="itemImage" style="width:200px"-->
+<table *ngIf="this.items" class="table">
+    <thead class="table-header">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Prep Time</th>
+        <th scope="col">Alergens</th> 
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items" [id] = "item.name">
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.cost}}</td>
+        <td>{{item.prepTime}}</td>
+        <td>{{item.alergens}}</td>
+        <td>
+        <button *ngIf="isAdmin()" (click) = "editClick(item)">Edit</button>
+      </td>
+      <td>
+        <button *ngIf="isAdmin()" (click) = "deleteClick(item)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+

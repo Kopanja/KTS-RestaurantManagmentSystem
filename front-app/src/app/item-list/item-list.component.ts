@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Item } from '../model/item.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { Item } from '../model/item';
 import { MenuService } from '../services/menu.service';
 
 @Component({
@@ -8,14 +8,20 @@ import { MenuService } from '../services/menu.service';
   styleUrls: ['./item-list.component.css']
 })
 export class ItemListComponent implements OnInit {
-  public itemImage: any = null;
-  public items : Item[];
+  @Input() items : Item[];
+  public itemImage: any;
   constructor(private menuService : MenuService) { }
 
   ngOnInit(): void {
-    this.menuService.getMenu().subscribe(data => {
-      this.items = data;
-      console.log(this.items);
+    
+    //this.menuService.getItemImage("Classic Burger").subscribe(data =>{
+     // this.createImage(data);
+    //});
+  }
+
+  getImage(itemName : string){
+    this.menuService.getItemImage(itemName).subscribe(data =>{
+      return this.createImage(data);
     })
   }
 
@@ -25,7 +31,7 @@ export class ItemListComponent implements OnInit {
       let reader = new FileReader();
 
       reader.addEventListener("load", () => {
-        this.itemImage = reader.result;
+        return reader.result;
         
       }, false);
 
@@ -33,6 +39,17 @@ export class ItemListComponent implements OnInit {
     } else {
       console.log("greska");
     }
+  }
+
+  isAdmin():boolean{
+    return true;
+  }
+
+  editClick(item:Item){
+
+  }
+  deleteClick(item:Item){
+
   }
 
 }
