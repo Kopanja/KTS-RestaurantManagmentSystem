@@ -43,6 +43,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemPageComponent } from './item-page/item-page.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { PromoMaterialComponent } from './promo-material/promo-material.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { PromoMaterialComponent } from './promo-material/promo-material.componen
     ItemPageComponent,
     ItemDetailsComponent,
     PromoMaterialComponent,
+    ReportsComponent,
   
   ],
   imports: [

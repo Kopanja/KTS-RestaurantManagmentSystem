@@ -1,0 +1,9 @@
+.container-custom {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .link-button {
+    cursor: pointer;
+  }

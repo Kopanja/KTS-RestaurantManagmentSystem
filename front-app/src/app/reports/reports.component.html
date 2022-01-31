@@ -1,0 +1,5 @@
+<div class = "container-custom">
+    <h1>Promo Material</h1>
+    <a class = "link-button" *ngFor="let fileName of fileNames" (click)="goToLink(fileName)">{{fileName}}</a>
+    <button (click)="generateNewSalaryReport()">Generate New Salary Report</button>
+</div>
