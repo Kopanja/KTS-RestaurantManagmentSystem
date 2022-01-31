@@ -1,8 +1,9 @@
-<div class="topnav">
-    <a href="waiter">Waiter Page</a>
-    <a href="bartender">Bartender Page</a>
-    <a href="cook">Cook Page</a>
-    <a href="new-user">Add New Employee</a>
-    <a href="menager">Menager Page</a>
+<div *ngIf="isLoggedIn()" class="topnav">
+    <a *ngIf="isAdmin()" href="new-user">Add New Employee</a>
+    <a *ngIf="isAdmin() || isManager()" href = "items">Item List</a>
+    <a *ngIf="isAdmin() || isManager()" href="waiter">Waiter Page</a>
+    <a *ngIf="isAdmin() || isManager()" href="bartender">Bartender Page</a>
+    <a *ngIf="isAdmin() || isManager()" href="cook">Cook Page</a>
+    <a *ngIf="isAdmin() || isManager()" href="menager">Menager Page</a>
     <a style="float:right" class = "link-button" (click) = changeEmployeeClick()>CHANGE USER</a>
   </div>

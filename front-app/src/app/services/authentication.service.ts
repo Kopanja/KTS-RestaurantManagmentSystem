@@ -96,28 +96,29 @@ export class AuthenticationService {
     })
   }
 
-  getToken(): String {
-   return sessionStorage.token;
+  getToken() {
+   return sessionStorage.getItem("token");
   }
 
   logout(): void {
-   localStorage.removeItem("token");
-  localStorage.removeItem("loggedInUser");
+  sessionStorage.removeItem("token");
+  console.log(sessionStorage.getItem("token"));
+  sessionStorage.removeItem("loggedInUser");
   }
 
   isLoggedIn(): boolean {
-    if (this.getToken() != '') return true;
+    if (this.getToken() !== null) return true;
     else return false;
   }
 
   getLoggedInUserRole(){
-    if(sessionStorage.currentUser !== null && sessionStorage.token !== ""){
+    if(sessionStorage.getItem("loggedInUser") !== null && sessionStorage.getItem("token") !== null){
       return this.jwtUtilsService.getRoles(sessionStorage.token)[0];
     }
     return null;
   }
   getCurrentUser() {
-    if (localStorage.currentUser) {
+    if (localStorage.getItem("loggedInUser")) {
       return JSON.parse(sessionStorage.currentUser);
     }
     else {

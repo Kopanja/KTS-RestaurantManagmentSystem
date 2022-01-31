@@ -82,7 +82,7 @@ const routes: Routes = [
   {
     path : 'cook', component: CookPageComponent,
     data: {
-      roles: ['ADMIN', 'MANAGER','COOK']
+      roles: ['ADMIN','MANAGER','COOK']
     }
   },
   {path: 'usr-pass-login', component: LoginUsrnPassComponent},
