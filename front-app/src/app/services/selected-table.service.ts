@@ -1,7 +1,7 @@
 import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import {BehaviorSubject, Observable} from "rxjs"
-import { Item } from '../model/item.model';
+import { Item } from '../model/item';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from '../model/order.model';
 import { TableAndItemsPreOrder } from '../model/table-and-items-pre-order.model';

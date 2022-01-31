@@ -1,5 +1,6 @@
 .managerPage {
     display: flex;
+    justify-content: space-evenly;
 }
 
 .managerPage > manager-page-side-menu {

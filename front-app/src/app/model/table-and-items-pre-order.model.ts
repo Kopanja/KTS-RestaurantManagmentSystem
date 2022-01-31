@@ -1,4 +1,4 @@
-import { Item } from "./item.model";
+import { Item } from "./item";
 import { SittingTableClass } from "./sitting-table-class.model";
 
 export class TableAndItemsPreOrder {

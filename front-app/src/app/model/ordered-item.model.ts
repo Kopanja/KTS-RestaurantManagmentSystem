@@ -1,4 +1,4 @@
-import { Item } from "./item.model";
+import { Item } from "./item";
 
 export class OrderedItem {
     id : number;

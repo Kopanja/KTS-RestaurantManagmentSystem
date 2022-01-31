@@ -23,6 +23,19 @@ export class MenuService {
     return this.http.get<Item>(this.path + "/" + itemName);
   }
 
+  getMenuLinks():Observable<string[]>{
+    return this.http.get<string[]>(this.path + "/menu-links");
+  }
+
+  refreshFoodMenu(){
+    return this.http.get(this.path + "/update-food-menu", {responseType: 'text'});
+  }
+
+
+  refreshDrinkMenu(){
+    return this.http.get(this.path + "/update-drink-menu", {responseType: 'text'});
+  }
+
   getItemImage(itemName : string):Observable<Blob>{
     return this.http.get(`${this.path}/${itemName}/image`, {
       responseType: 'blob'
