@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output,EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { Item } from '../model/item.model';
+import { Item } from '../model/item';
 import { Order } from '../model/order.model';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { TableAndItemsPreOrder } from '../model/table-and-items-pre-order.model';

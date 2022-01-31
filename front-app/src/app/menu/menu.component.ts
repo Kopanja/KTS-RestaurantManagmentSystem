@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemCategory } from '../model/item-category';
-import { Item } from '../model/item.model';
+import { Item } from '../model/item';
 import { ItemCategoryService } from '../services/item-category.service';
 import { MenuService } from '../services/menu.service';
 import { SelectedTableService } from '../services/selected-table.service';

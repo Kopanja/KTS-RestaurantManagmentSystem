@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SittingTableClass } from '../model/sitting-table-class.model';
 import { SelectedTableService } from '../services/selected-table.service';
 import { Order } from '../model/order.model';
-import { Item } from '../model/item.model';
+import { Item } from '../model/item';
 
 
 

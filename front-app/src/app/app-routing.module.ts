@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { NewUserFormComponent } from './new-user-form/new-user-form.component';
 import { ItemPageComponent } from './item-page/item-page.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,13 @@ const routes: Routes = [
   },
   {
     path: 'user/:id', component: UserComponent,
+    canActivate: [CanActivateAuthGuard],
+    data: {
+      roles: ['ADMIN', 'MANAGER']
+    }
+  },
+  {
+    path: 'item-details/:name', component: ItemDetailsComponent,
     canActivate: [CanActivateAuthGuard],
     data: {
       roles: ['ADMIN', 'MANAGER']

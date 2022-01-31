@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item } from '../model/item.model';
+import { Item } from '../model/item';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +16,11 @@ export class MenuService {
   }
 
   getItemsByCategoryName(categoryName : string):Observable<Item[]>{
-    return this.http.get<Item[]>(this.path + "/" + categoryName);
+    return this.http.get<Item[]>(this.path + "/category/" + categoryName);
+  }
+
+  getItemByName(itemName : string):Observable<Item>{
+    return this.http.get<Item>(this.path + "/" + itemName);
   }
 
   getItemImage(itemName : string):Observable<Blob>{

@@ -41,6 +41,7 @@ import { NewUserFormComponent } from './new-user-form/new-user-form.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemPageComponent } from './item-page/item-page.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { ItemPageComponent } from './item-page/item-page.component';
     NewUserFormComponent,
     ItemListComponent,
     ItemPageComponent,
+    ItemDetailsComponent,
   
   ],
   imports: [

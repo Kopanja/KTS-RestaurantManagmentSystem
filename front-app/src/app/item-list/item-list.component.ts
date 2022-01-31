@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Item } from '../model/item';
 import { MenuService } from '../services/menu.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
@@ -9,8 +9,8 @@ import { MenuService } from '../services/menu.service';
 })
 export class ItemListComponent implements OnInit {
   @Input() items : Item[];
-  public itemImage: any;
-  constructor(private menuService : MenuService) { }
+  
+  constructor(private menuService : MenuService, private router:Router) { }
 
   ngOnInit(): void {
     
@@ -18,38 +18,10 @@ export class ItemListComponent implements OnInit {
      // this.createImage(data);
     //});
   }
+ 
 
-  getImage(itemName : string){
-    this.menuService.getItemImage(itemName).subscribe(data =>{
-      return this.createImage(data);
-    })
-  }
-
-  private createImage(image: Blob) {
-    
-    if (image && image.size > 0) {
-      let reader = new FileReader();
-
-      reader.addEventListener("load", () => {
-        return reader.result;
-        
-      }, false);
-
-      reader.readAsDataURL(image);
-    } else {
-      console.log("greska");
-    }
-  }
-
-  isAdmin():boolean{
-    return true;
-  }
-
-  editClick(item:Item){
-
-  }
-  deleteClick(item:Item){
-
+  detailsClick(item:Item){
+    this.router.navigate(['/item-details/',item.name]);
   }
 
 }

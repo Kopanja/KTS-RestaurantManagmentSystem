@@ -1,0 +1,13 @@
+<div class = "container-row"style = "justify-content: space-evenly;">
+    <div *ngIf="this.item" class = "container-row"  style = "align-self: center; margin-top: 50px;">
+        <img [attr.src]="itemImage" *ngIf="itemImage" style="width:200px" alt = "../../assets/ramen 1.png">
+        <div class = "container-column">
+        <p class = "txt-custom">{{this.item.name}}</p>
+        <p class = "txt-custom">{{this.item.description}}</p>
+        <p class = "txt-custom">Alergens: {{this.item.alergens}}</p>
+        <p class = "txt-custom">Prep Time: {{this.item.prepTime}}</p>
+        <p class = "txt-custom">Price: {{this.item.price}}</p>
+        <p class = "txt-custom">Cost: {{this.item.cost}}</p>
+        </div>
+    </div>
+</div>
