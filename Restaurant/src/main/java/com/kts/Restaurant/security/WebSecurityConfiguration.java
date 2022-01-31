@@ -61,14 +61,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			
 			// svim korisnicima dopusti da pristupe putanjama /auth/** i /h2-console/**
 			.authorizeRequests()
-			/*
-			 * Milan: dozvoljena ruta za sve da pristupe auth/ kako bi se ulogovali
-			 */
-		
+			
+			 
+			.antMatchers("/api/item/pdf/*.pdf").permitAll()
+			.antMatchers("/api/report/pdf/*.pdf").permitAll()
 			.antMatchers("/api/auth/**").permitAll()
-			//.antMatchers("/api/item/*.pdf").permitAll()
+			
 			//.antMatchers("/api/item-category/**").hasAnyAuthority("BARTENDER", "ADMIN")
-//			.antMatchers("/api/**").permitAll()
+			//.antMatchers("/api/**").permitAll()
 			// svaki zahtev mora biti autorizovan
 			.anyRequest().authenticated();
 			
@@ -93,11 +93,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
 		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
-		/*
-		 * Milan ISA: imate avatar.png u static folderu kao resurs pa sam dodao /*.png filter da bi se i png slike mogle prikazivati na stranicama
-		 */
+		 
 		web.ignoring().antMatchers("/ws/**");
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/*.png", "/pics/*.png", "/*.jpg", "/pics/*.jpg", "/item/*.pdf");
+		
+		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/*.png", "/pics/*.png", "/*.jpg", "/pics/*.jpg");
 	}
 
 }

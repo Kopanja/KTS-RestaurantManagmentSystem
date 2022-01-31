@@ -36,7 +36,8 @@ public class PinCredentialsService {
 	}
 
 
-	private boolean doesPinExist(String pin) {
+	public boolean doesPinExist(String pin) {
+		System.out.println(pin);
 		for(User user : userRepository.getAllPinUsers()) {
 			PinCredentials userPin = (PinCredentials) user.getCredentials();
 			if(BCrypt.checkpw(pin, userPin.getPin())){

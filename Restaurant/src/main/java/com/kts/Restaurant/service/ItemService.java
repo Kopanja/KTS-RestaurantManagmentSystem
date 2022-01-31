@@ -57,14 +57,14 @@ public class ItemService {
 		newItem.setCost(itemDTO.getCost());
 		newItem.setPrice(itemDTO.getPrice());
 		newItem.setDescription(itemDTO.getDescription());
-		if(itemDTO.getAlergens().equals("")) {
+		if(itemDTO.getAlergens().equals("") || itemDTO.getAlergens() == null) {
 			newItem.setAlergens("NONE");
 		}else {
 			newItem.setAlergens(itemDTO.getAlergens());
 		}
 		newItem.setPrepTime(itemDTO.getPrepTime());
-		if(itemDTO.getImgPath().equals("")) {
-			newItem.setImgPath("defaultFood.jpg");
+		if(itemDTO.getImgPath().equals("") || itemDTO.getImgPath() == null) {
+			newItem.setImgPath("ClassicBurger.jpg");
 		}else {
 			newItem.setImgPath(itemDTO.getImgPath());
 		}
@@ -118,6 +118,13 @@ public class ItemService {
 
 	}
 
+	public ItemDTO findByName(String name) {
+		Item item = itemRepo.findByName(name);
+		if(item == null) {
+			throw new ItemWithNameDoesntExists();
+		}
+		return (new ItemMapper().toDto(item));
+	}
 	public ItemDTO toDto(Item item) {
 		ItemMapper mapper = new ItemMapper();
 		return mapper.toDto(item);
@@ -178,7 +185,7 @@ public class ItemService {
 		Document document = new Document(layout);
 		List<ItemCategory> categories = itemCatRepository.getDrinkCategories();
 		List<Item> items = null;
-		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\drink-menu.pdf"));
+		PdfWriter.getInstance(document, new FileOutputStream(".\\src\\main\\resources\\pdf\\menu\\drink-menu.pdf"));
 		document.open();
 		PDFGenerationUtil.addDrinkTitle(document);
 		

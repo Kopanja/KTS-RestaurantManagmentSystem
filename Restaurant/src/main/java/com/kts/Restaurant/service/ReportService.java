@@ -20,6 +20,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.util.PDFReportGeneratorUtil;
 
@@ -34,7 +35,7 @@ public class ReportService {
 	
 	
 	public void createTotalSalaryPayoutByUserReport() throws ParseException, FileNotFoundException, DocumentException {
-		List<User> employees = userService.getAllPinBasedUsers();
+		List<UserDTO> employees = userService.getAll();
 		String localDateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_'Time'_hh'h'_mm'm'"));
 		String fileName = "SalaryPayoutReport_" + localDateString;
 		//String fileName = "SalaryPayoutReportAA";
@@ -51,7 +52,7 @@ public class ReportService {
 		document.open();
 		PDFReportGeneratorUtil.addDocTitle(document, fileName, localDateString);
 		PdfPTable table = PDFReportGeneratorUtil.createTable(document, 2,columnNames);
-		for(User employee : employees) {
+		for(UserDTO employee : employees) {
 			double totalSalary = salaryService.salaryReport(employee.getId(), Optional.empty(), Optional.empty()).keySet().iterator().next();
 			table.addCell(new Phrase(employee.getFirstname() + " " + employee.getLastname()));
 			table.addCell(new Phrase(Double.toString(totalSalary)));

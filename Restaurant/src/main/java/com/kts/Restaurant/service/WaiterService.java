@@ -129,13 +129,13 @@ public class WaiterService {
 			webSocketService.sendFoodOrder(order.getId());
 		}
 		return tableService.toDto(table);
-//	}
+	}
 //
-//	public void billOrder(String tableName, List<ItemDTO> items) {
-//		Table table = tableService.findByName(tableName);
-//		Order order = orderService.findById(table.getOrder().getId());
-//		Bill bill = billService.createBillFromOrder(order);
-//		orderService.deleteOrderAndItsOrderedItems(order);
+	public void billOrder(String tableName, List<ItemDTO> items) {
+		Table table = tableService.findByName(tableName);
+		Order order = orderService.findById(table.getOrder().getId());
+		Bill bill = billService.createBillFromOrder(order);
+		orderService.deleteOrderAndItsOrderedItems(order);
 //		System.out.println(bill);
 //
 	}

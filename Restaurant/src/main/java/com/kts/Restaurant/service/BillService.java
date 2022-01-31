@@ -7,12 +7,13 @@ import com.kts.Restaurant.dto.WaiterReportDTO;
 import com.kts.Restaurant.model.Bill;
 import com.kts.Restaurant.model.BilledItem;
 import com.kts.Restaurant.model.Item;
+import com.kts.Restaurant.model.Order;
+import com.kts.Restaurant.model.OrderedItem;
 import com.kts.Restaurant.model.User;
 import com.kts.Restaurant.repository.BillRepository;
 import com.kts.Restaurant.util.mapper.BillCreateMapper;
 import com.kts.Restaurant.util.mapper.BillMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -28,22 +29,22 @@ public class BillService {
     @Autowired
     BilledItemService billedItemService;
 
-//	public Bill createBillFromOrder(Order order){
-//		ArrayList<BilledItem> items = new ArrayList<BilledItem>();
-//		double price = 0;
-//		double cost = 0;
-//		Date date = new Date();
-//		for(OrderedItem oi : order.getItems()) {
-//			Item item = oi.getItem();
-//			BilledItem billedItem = billedItemService.save(new BilledItem(null,item));
-//			items.add(billedItem);
-//			price += item.getPrice();
-//			cost += item.getCost();
-//		}
-//		BillCreateDTO bill = new BillCreateDTO(null, price, cost,date, items, order.getUser());
-//		bill = this.save(bill);
-//		return bill;
-//	}
+	public Bill createBillFromOrder(Order order){
+		ArrayList<BilledItem> items = new ArrayList<BilledItem>();
+		double price = 0;
+		double cost = 0;
+		Date date = new Date();
+		for(OrderedItem oi : order.getItems()) {
+			Item item = oi.getItem();
+			BilledItem billedItem = billedItemService.save(new BilledItem(null,item));
+			items.add(billedItem);
+			price += item.getPrice();
+			cost += item.getCost();
+		}
+		Bill bill = new Bill(null, price, cost,date, items, order.getUser());
+		bill = billRepo.save(bill);
+		return bill;
+	}
 
     public List<BillWaiterStatisticsDTO> getAllBills() {
         List<BillWaiterStatisticsDTO> dtos = new ArrayList<>();

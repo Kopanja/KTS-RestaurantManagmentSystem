@@ -138,8 +138,8 @@ public class UserService {
 
 
     // setting active to false
-    public UserDTO logicalDelete(String username){
-        User user = userRepository.findByUsername(username);
+    public UserDTO logicalDelete(Long userId){
+        User user = userRepository.findById(userId).orElse(null);
         if(user == null){
             throw new UserWIthUsernameNotFound();
         }
@@ -170,10 +170,15 @@ public class UserService {
         UserMapper userMapper = new UserMapper();
         List<User> users = userRepository.findAll();
         for (User user: users) {
-            dtos.add(userMapper.toDto(user));
+        	if(user.isActive()) {
+        		dtos.add(userMapper.toDto(user));
+        	}
+            
         }
         return dtos;
     }
+    
+   
 
     public List<UserDTO> getAllByRole(String roleName){
         List<UserDTO> dtos = new ArrayList<>();

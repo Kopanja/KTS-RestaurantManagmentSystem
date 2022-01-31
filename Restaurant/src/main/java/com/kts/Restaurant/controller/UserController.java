@@ -60,7 +60,7 @@ public class UserController {
         UserDTO user;
         try {
         	user = null;
-            //user = userService.logicalDelete(userDTO.getUsername());
+            user = userService.logicalDelete(userDTO.getId());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }catch (UserWIthUsernameNotFound e){
             return new ResponseEntity<>(userDTO, HttpStatus.BAD_REQUEST);
@@ -75,6 +75,7 @@ public class UserController {
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+    
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> getById(@PathVariable Long id){

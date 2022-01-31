@@ -145,9 +145,9 @@ public class PDFGenerationUtil {
 		addItemNameAndPrice(item.getName(), Integer.toString(item.getPrice()), itemDetails);
 		addDescription(item.getDescription(), itemDetails);
 		//addPrepTime(item.getPrepTime(), itemDetails);
-		addPrepTime("45 min", itemDetails);
+		addPrepTime(item.getPrepTime(), itemDetails);
 		//addAlergens(item.getAlergens(), itemDetails);
-		addAlergens("susam, pavlaka kecap sir luk", itemDetails);
+		addAlergens(item.getAlergens(), itemDetails);
 		table.addCell(itemDetails);
 
 		try {

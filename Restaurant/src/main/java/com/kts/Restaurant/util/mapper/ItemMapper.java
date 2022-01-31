@@ -17,7 +17,12 @@ public class ItemMapper implements DTOMapperInterface<Item, ItemDTO> {
 	@Override
 	public ItemDTO toDto(Item entity) {
 		ItemDTO dto = new ItemDTO(entity.getName(), entity.getPrice(), entity.getCost(), entity.getDescription());
-		dto.setItemCategoryName(entity.getCategory().getCategoryName());
+		dto.setAlergens(entity.getAlergens());
+		dto.setPrepTime(entity.getPrepTime());
+		if(entity.getCategory() != null) {
+			dto.setItemCategoryName(entity.getCategory().getCategoryName());
+		}
+		
 		return dto;
 	}
 

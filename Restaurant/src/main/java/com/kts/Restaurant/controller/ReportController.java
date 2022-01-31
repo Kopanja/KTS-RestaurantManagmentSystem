@@ -102,10 +102,9 @@ public class ReportController {
         return new ResponseEntity<>(null, HttpStatus.OK);
 
     }
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+    
     @GetMapping(value = "/pdf/{fileName}")
     public ResponseEntity<?> getReportPdf(@PathVariable String fileName) {  
-	 System.out.println("USAOOOO");
         try {
             Path imagePath = Paths.get(".\\src\\main\\resources\\pdf\\report\\" + fileName);
             if (imagePath != null) {

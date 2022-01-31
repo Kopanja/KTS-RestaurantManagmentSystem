@@ -21,6 +21,7 @@ import com.kts.Restaurant.dto.NewUserDTO;
 import com.kts.Restaurant.dto.PinCredentialsDTO;
 import com.kts.Restaurant.dto.UserDTO;
 import com.kts.Restaurant.dto.UsernamePasswordCredentialsDTO;
+import com.kts.Restaurant.exceptions.PinAlreadyExists;
 import com.kts.Restaurant.exceptions.UserWIthUsernameNotFound;
 import com.kts.Restaurant.model.Credentials;
 import com.kts.Restaurant.model.PinCredentials;
@@ -131,6 +132,9 @@ public class AuthenticationService {
 		UserDTO userDTO = newUserDTO.getUser();
 		Credentials credentials = null;
 		if(!newUserDTO.getPin().equals("")) {
+			if(pinService.doesPinExist(newUserDTO.getPin())) {
+				throw new PinAlreadyExists();
+			}
 			credentials = pinService.create(passwordEncoder.encode(newUserDTO.getPin()));
 		}else {
 			credentials = usrnPassCredService.create(newUserDTO.getUsername(), passwordEncoder.encode(newUserDTO.getPassword()));
